@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.neupanesushant.kastha"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.neupanesushant.kastha"

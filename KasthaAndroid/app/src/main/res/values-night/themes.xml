@@ -2,6 +2,22 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Kastha" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryVariant">@color/green_light</item>
+        <item name="colorSecondary">@color/bluish_green</item>
+        <item name="colorSecondaryVariant">@color/bluish_green_light</item>
+        <item name="colorBackgroundFloating">@color/black</item>
+        <item name="colorSurface">@color/black</item>
+        <item name="colorError">@color/red</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnError">@color/white</item>
+
+    </style>
+
+    <style name="Theme.Kastha" parent="Base.Theme.Kastha">
+        <item name="android:textColor">?attr/colorOnBackground</item>
     </style>
 </resources>
