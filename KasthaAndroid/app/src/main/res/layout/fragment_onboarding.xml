@@ -10,71 +10,67 @@
             android:id="@+id/tvAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:fontFamily="@font/outfit_regular"
-            android:textSize="64sp"
             android:layout_margin="@dimen/dp_24"
+            android:fontFamily="@font/outfit_regular"
+            android:text="@string/app_name"
             android:textColor="?attr/colorOnBackground"
+            android:textSize="64sp"
 
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvSlogan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/onboarding_slogan"
+            android:layout_marginEnd="@dimen/dp_24"
 
             android:fontFamily="@font/titillium_regular"
-            android:textSize="48sp"
-            android:textColor="?attr/colorSecondary"
+            android:text="@string/onboarding_slogan"
             android:textAlignment="textEnd"
+            android:textColor="?attr/colorSecondary"
 
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvAppName"
+            android:textSize="48sp"
             app:layout_constraintBottom_toTopOf="@id/icOnboardingUser"
-            android:layout_marginEnd="@dimen/dp_24"
-            />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvAppName" />
 
         <ImageView
             android:id="@+id/icOnboardingUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/onboarding_user"
+            android:scaleType="centerCrop"
             android:src="@drawable/onboarding_user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/onboarding_user" />
+            app:layout_constraintRight_toRightOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSignIn"
-            android:layout_width="match_parent"
             style="@style/PrimaryMaterialButtonStyle"
+            android:layout_width="match_parent"
 
-            android:layout_marginBottom="@dimen/dp_16"
             android:layout_marginHorizontal="@dimen/dp_24"
+            android:layout_marginBottom="@dimen/dp_16"
             android:text="@string/sign_in"
 
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toTopOf="@id/btnCreateAccount"
-            />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCreateAccount"
-            android:layout_width="match_parent"
             style="@style/WhiteMaterialButtonStyle"
+            android:layout_width="match_parent"
 
-            android:text="@string/create_an_account"
-            android:layout_marginBottom="@dimen/dp_24"
             android:layout_marginHorizontal="@dimen/dp_24"
+            android:layout_marginBottom="@dimen/dp_24"
+            android:text="@string/create_an_account"
 
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

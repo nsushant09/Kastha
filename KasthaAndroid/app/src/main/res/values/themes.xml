@@ -7,7 +7,7 @@
         <item name="colorSecondary">@color/bluish_green</item>
         <item name="colorSecondaryVariant">@color/bluish_green_light</item>
         <item name="colorBackgroundFloating">@color/white</item>
-        <item name="colorSurface">@color/white</item>
+        <item name="colorSurface">@color/white_surface</item>
         <item name="colorError">@color/red</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSecondary">@color/black</item>
