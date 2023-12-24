@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Kastha</string>
+
+    <style name="project_title">Android Application for Furniture Shopping with Augmented Reality
+        Object Placement</style>
+
     <string name="onboarding_user">Onboarding User</string>
     <string name="onboarding_slogan">Visualize your\nLiving Space</string>
     <string name="create_an_account">Create An Account</string>

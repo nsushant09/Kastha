@@ -1,14 +1,15 @@
 package com.neupanesushant.kastha.ui.fragment
 
 import android.annotation.SuppressLint
+import android.os.Handler
+import android.os.Looper
 import android.view.GestureDetector
-import android.view.MotionEvent
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentOnboardingBinding
 import com.neupanesushant.kastha.extra.helper.DoubleTapListener
+import com.neupanesushant.kastha.ui.dialog.LoadingDialog
 
 class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     override val layoutId: Int
@@ -21,9 +22,13 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     @SuppressLint("ClickableViewAccessibility")
     override fun setupEventListener() {
         val gestureDetector = GestureDetector(requireContext(), DoubleTapListener {
-            Toast.makeText(requireContext(), "Double Clicked", Toast.LENGTH_SHORT).show()
+            val dialog = LoadingDialog()
+            dialog.show(childFragmentManager, dialog::class.java.name)
+            Handler(Looper.getMainLooper()).postDelayed({
+                dialog.dismiss()
+            }, 10000)
         })
-        binding.root.setOnTouchListener { view, motionEvent ->
+        binding.root.setOnTouchListener { _, motionEvent ->
             gestureDetector.onTouchEvent(motionEvent)
             true
         }
