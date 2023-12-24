@@ -18,5 +18,6 @@
 
     <style name="Theme.Kastha" parent="Base.Theme.Kastha">
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="fontFamily">@font/titillium_regular</item>
     </style>
 </resources>
