@@ -1,20 +1,22 @@
 package com.neupanesushant.kastha.core
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
 class Router {
-    private val context: Context
+    private val context: Activity
     private var data = Bundle()
 
-    constructor(context: Context) {
+    constructor(context: Activity) {
         this.context = context
     }
 
-    constructor(context: Context, data: Bundle) {
+    constructor(context: Activity, data: Bundle) {
         this.context = context
         this.data = data
     }
@@ -31,26 +33,49 @@ class Router {
         return intent
     }
 
-    private fun route(action: Class<out AppCompatActivity>?) {
+    fun route(action: Class<out AppCompatActivity>?) {
         val intent = getIntentOrNull(action) ?: return
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         context.startActivity(intent)
     }
 
-    private fun routeNoHistory(action: Class<out AppCompatActivity>?) {
+    fun routeNoHistory(action: Class<out AppCompatActivity>?) {
         val intent = getIntentOrNull(action) ?: return
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NO_HISTORY
         context.startActivity(intent)
     }
 
-    private fun routeForResult(action: Class<out AppCompatActivity>?, requestCode: Int) {
+    fun routeForResult(action: Class<out AppCompatActivity>?, requestCode: Int) {
         val intent = getIntentOrNull(action) ?: return
         context.startActivity(intent)
     }
 
-    private fun routeClearTask(action: Class<out AppCompatActivity>?) {
+    fun routeClearTask(action: Class<out AppCompatActivity>?) {
         val intent = getIntentOrNull(action) ?: return
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
+    }
+
+    fun route(container: Int, action: Class<out Fragment>?) {
+        if (action == null) {
+            Log.e("Router", "Null action provided, Routing Stopped !!!")
+            return;
+        }
+        (context as FragmentActivity).supportFragmentManager
+            .beginTransaction()
+            .replace(container, action, data)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    fun routeNoBackStack(container: Int, action: Class<out Fragment>?) {
+        if (action == null) {
+            Log.e("Router", "Null action provided, Routing Stopped !!!")
+            return;
+        }
+        (context as FragmentActivity).supportFragmentManager
+            .beginTransaction()
+            .replace(container, action, data)
+            .commit()
     }
 }

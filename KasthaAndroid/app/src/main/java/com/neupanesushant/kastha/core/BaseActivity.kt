@@ -39,5 +39,5 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
                 grantResults[0] == PackageManager.PERMISSION_GRANTED
     }
 
-    fun getBinding(): T = binding
+    fun getActivityBinding(): T = binding
 }

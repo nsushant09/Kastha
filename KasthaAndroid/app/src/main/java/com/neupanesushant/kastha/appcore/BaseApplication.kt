@@ -4,7 +4,9 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.neupanesushant.kastha.core.AppConfig
+import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
 import com.neupanesushant.kastha.ui.activity.MainActivity
+import com.neupanesushant.kastha.ui.fragment.OnboardingFragment
 
 class BaseApplication : Application() {
     private val activityMap = mutableMapOf<String, Class<out AppCompatActivity>>()
@@ -21,11 +23,13 @@ class BaseApplication : Application() {
     private fun setupActivities() {
         activityMap.apply {
             put(RouteConfig.MAIN_ACTIVITY, MainActivity::class.java)
+            put(RouteConfig.AUTHENTICATION_ACTIVITY, AuthenticationActivity::class.java)
         }
     }
 
     private fun setupFragments() {
         fragmentMap.apply {
+            put(RouteConfig.ONBOARDING_FRAGMENT, OnboardingFragment::class.java)
         }
     }
 
