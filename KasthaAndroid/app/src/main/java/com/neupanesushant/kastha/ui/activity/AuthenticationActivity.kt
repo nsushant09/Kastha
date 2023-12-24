@@ -12,7 +12,7 @@ class AuthenticationActivity : BaseActivity<ActivityAuthenticationBinding>() {
         get() = R.layout.activity_authentication
 
     override fun setupViews() {
-        Router(this).route(
+        Router(this).routeNoBackStack(
             R.id.authentication_fragment_container,
             AppConfig.getFragment(RouteConfig.ONBOARDING_FRAGMENT)
         )
