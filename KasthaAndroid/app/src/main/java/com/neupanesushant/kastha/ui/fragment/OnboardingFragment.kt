@@ -6,7 +6,10 @@ import android.os.Looper
 import android.view.GestureDetector
 import android.view.animation.AnimationUtils
 import com.neupanesushant.kastha.R
+import com.neupanesushant.kastha.appcore.RouteConfig
+import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.BaseFragment
+import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.FragmentOnboardingBinding
 import com.neupanesushant.kastha.extra.helper.DoubleTapListener
 import com.neupanesushant.kastha.ui.dialog.LoadingDialog
@@ -21,6 +24,14 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun setupEventListener() {
+
+        binding.btnSignIn.setOnClickListener {
+            Router(requireActivity()).route(
+                R.id.authentication_fragment_container,
+                AppConfig.getFragment(RouteConfig.LOGIN_FRAGMENT)
+            )
+        }
+
         val gestureDetector = GestureDetector(requireContext(), DoubleTapListener {
             val dialog = LoadingDialog()
             dialog.show(childFragmentManager, dialog::class.java.name)

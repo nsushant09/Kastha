@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
 import com.neupanesushant.kastha.ui.activity.MainActivity
+import com.neupanesushant.kastha.ui.fragment.LoginFragment
 import com.neupanesushant.kastha.ui.fragment.OnboardingFragment
 
 class BaseApplication : Application() {
@@ -30,6 +31,7 @@ class BaseApplication : Application() {
     private fun setupFragments() {
         fragmentMap.apply {
             put(RouteConfig.ONBOARDING_FRAGMENT, OnboardingFragment::class.java)
+            put(RouteConfig.LOGIN_FRAGMENT, LoginFragment::class.java)
         }
     }
 

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#0A0A0A</color>
+    <color name="black">#040404</color>
     <color name="white">#FAFAFA</color>
     <color name="black_surface">#1A1A1A</color>
     <color name="white_surface">#EAEAEA</color>
-    <color name="green">#102820</color>
-    <color name="green_light">#CC102820</color>
+    <color name="green_10">#1D483A</color>
+    <color name="green_20">#2A6954</color>
+    <color name="green_30">#37896E</color>
+    <color name="green_40">#44AA88</color>
     <color name="bluish_green">#69C9BA</color>
     <color name="bluish_green_light">#CC69C9BA</color>
     <color name="brown">#8A6240</color>

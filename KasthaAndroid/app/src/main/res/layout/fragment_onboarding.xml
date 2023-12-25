@@ -28,7 +28,7 @@
             android:fontFamily="@font/titillium_regular"
             android:text="@string/onboarding_slogan"
             android:textAlignment="textEnd"
-            android:textColor="?attr/colorSecondary"
+            android:textColor="?attr/colorPrimaryVariant"
 
             android:textSize="48sp"
             app:layout_constraintBottom_toTopOf="@id/icOnboardingUser"
