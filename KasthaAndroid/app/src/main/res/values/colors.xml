@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#040404</color>
+    <color name="black">#020202</color>
     <color name="white">#FAFAFA</color>
     <color name="black_surface">#1A1A1A</color>
     <color name="white_surface">#EAEAEA</color>
+
+    <color name="dark_grey">#454545</color>
+    <color name="light_grey">#b5b5b5</color>
+
     <color name="green_10">#1D483A</color>
     <color name="green_20">#2A6954</color>
     <color name="green_30">#37896E</color>
