@@ -24,7 +24,13 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("mysql:mysql-connector-java:8.0.28")
+	compileOnly("org.projectlombok:lombok:1.18.20")
+	annotationProcessor("org.projectlombok:lombok:1.18.20")
+	implementation("io.jsonwebtoken:jjwt:0.2")
+	implementation("javax.xml.bind:jaxb-api:2.3.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

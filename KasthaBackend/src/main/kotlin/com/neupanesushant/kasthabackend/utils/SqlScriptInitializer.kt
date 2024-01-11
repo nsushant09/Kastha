@@ -1,27 +1,29 @@
-package com.neupanesushant.kasthabackend.utils;
+package com.neupanesushant.kasthabackend.utils
 
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
-import org.springframework.stereotype.Component;
-
-import javax.sql.DataSource;
-import java.sql.SQLException;
+import jakarta.annotation.PostConstruct
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.io.ClassPathResource
+import org.springframework.jdbc.datasource.init.ScriptUtils
+import org.springframework.stereotype.Component
+import javax.sql.DataSource
 
 @Component
-public class SqlScriptInitializer {
+class SqlScriptInitializer {
+
     @Autowired
-    private DataSource dataSource;
+    private lateinit var dataSource: DataSource
 
     @PostConstruct
-    public void initData() throws Exception{
-        prePopulateData();
+    fun initData() {
+        prePopulateData()
     }
 
-    private void prePopulateData() throws SQLException {
-        Resource sqlResource = new ClassPathResource("data.sql");
-        ScriptUtils.executeSqlScript(dataSource.getConnection(), sqlResource);
+    private fun prePopulateData() {
+        try {
+            val sqlResource = ClassPathResource("data.sql")
+            ScriptUtils.executeSqlScript(dataSource.connection, sqlResource)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

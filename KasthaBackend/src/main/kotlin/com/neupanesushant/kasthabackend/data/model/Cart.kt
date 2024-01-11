@@ -1,4 +1,7 @@
 package com.neupanesushant.kasthabackend.data.model
 
-class Cart {
-}
+data class Cart(
+    val id : Int,
+    val user : User,
+    val products : Set<Product>
+)

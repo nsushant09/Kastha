@@ -1,4 +1,6 @@
 package com.neupanesushant.kasthabackend.data.model
 
 enum class Alignment {
+    HORIZONTAL,
+    VERTICAL
 }

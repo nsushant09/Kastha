@@ -1,3 +1,11 @@
 package com.neupanesushant.kasthabackend.data.dtomodel
 
-data class UserDTO()
+import javax.management.relation.Role
+
+data class UserDTO(
+    val id : Int,
+    val firstName : String,
+    val lastName : String,
+    val email : String,
+    val roles : List<Role>
+)

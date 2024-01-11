@@ -1,4 +1,4 @@
-package com.neupanesushant.kasthabackend.utils
+package com.neupanesushant.kasthabackend.utils.constants
 
 object Constants {
 }
