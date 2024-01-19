@@ -32,6 +32,13 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt:0.2")
 	implementation("javax.xml.bind:jaxb-api:2.3.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	//coroutines
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.8.0-RC")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.8.0-RC")
+	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 }
 
 tasks.withType<KotlinCompile> {

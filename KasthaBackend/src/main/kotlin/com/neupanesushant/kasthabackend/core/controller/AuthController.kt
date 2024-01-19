@@ -8,6 +8,8 @@ import com.neupanesushant.kasthabackend.data.dtomodel.RegisterDTO
 import com.neupanesushant.kasthabackend.data.dtomodel.UserDTO
 import com.neupanesushant.kasthabackend.data.model.User
 import com.neupanesushant.kasthabackend.security.JwtHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.Collections
+import javax.management.relation.RoleNotFoundException
 
 @RestController
 @RequestMapping("/api/auth")
@@ -34,34 +37,42 @@ class AuthController @Autowired constructor(
 ) {
 
     @PostMapping("/login")
-    private fun login(
+    private suspend fun login(
         @RequestBody loginDTO: LoginDTO
-    )
-            : ResponseEntity<Any> {
-        val authentication =
-            authenticationManager.authenticate(UsernamePasswordAuthenticationToken(loginDTO.email, loginDTO.password))
-        SecurityContextHolder.getContext().authentication = authentication
-        val token = jwtGenerator.generateToken(authentication)
-        return ResponseEntity.ok(AuthResponseDTO(accessToken = token))
+    ): ResponseEntity<Any> {
+        return withContext(Dispatchers.IO) {
+            val authentication =
+                authenticationManager.authenticate(
+                    UsernamePasswordAuthenticationToken(
+                        loginDTO.email,
+                        loginDTO.password
+                    )
+                )
+            SecurityContextHolder.getContext().authentication = authentication
+            val token = jwtGenerator.generateToken(authentication)
+            ResponseEntity.ok(AuthResponseDTO(accessToken = token))
+        }
     }
 
     @PostMapping("/register")
-    private fun register(@RequestBody registerDTO: RegisterDTO): ResponseEntity<Any> {
-        if (userRepo.existsByEmail(registerDTO.email)) {
-            return ResponseEntity("Email already exists", HttpStatus.BAD_REQUEST)
-        }
+    private suspend fun register(@RequestBody registerDTO: RegisterDTO): ResponseEntity<Any> {
+        return withContext(Dispatchers.IO) {
+            if (userRepo.existsByEmail(registerDTO.email)) {
+                ResponseEntity("Email already exists", HttpStatus.BAD_REQUEST)
+            }
 
-        val roles = roleRepo.findByName("USER").get()
-        val user = User(
-            -1,
-            registerDTO.firstName,
-            registerDTO.lastName,
-            registerDTO.email,
-            passwordEncoder.encode(registerDTO.password),
-            Collections.singletonList(roles)
-        )
-        userRepo.save(user)
-        return ResponseEntity("User registered", HttpStatus.OK)
+            val roles = roleRepo.findByName("USER") ?: throw RoleNotFoundException("Role user not found")
+            val user = User(
+                -1,
+                registerDTO.firstName,
+                registerDTO.lastName,
+                registerDTO.email,
+                passwordEncoder.encode(registerDTO.password),
+                Collections.singletonList(roles)
+            )
+            userRepo.save(user)
+            ResponseEntity("User registered", HttpStatus.OK)
+        }
     }
 
 }

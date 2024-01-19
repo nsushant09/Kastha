@@ -13,16 +13,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
-class CustomUserDetailsService (
+class CustomUserDetailsService(
     private val userRepo: UserRepo
 ) : UserDetailsService {
     override fun loadUserByUsername(username: String): UserDetails {
         val user =
-            userRepo.findByEmail(username).orElseThrow { UsernameNotFoundException("Username : $username not found") }
+            userRepo.findByEmail(username) ?: throw UsernameNotFoundException("Username : $username not found")
+
         return User(user.email, user.password, mapRolesToAuthorities(user.roles))
     }
 
-    private fun mapRolesToAuthorities(roles : List<Role>) : Collection<GrantedAuthority>{
+    private fun mapRolesToAuthorities(roles: List<Role>): Collection<GrantedAuthority> {
         return roles.map { SimpleGrantedAuthority(it.name) }
     }
 }
