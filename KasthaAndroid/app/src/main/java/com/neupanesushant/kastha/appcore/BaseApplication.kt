@@ -6,8 +6,12 @@ import androidx.fragment.app.Fragment
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
 import com.neupanesushant.kastha.ui.activity.MainActivity
+import com.neupanesushant.kastha.ui.fragment.FPEmailVerificationFragment
+import com.neupanesushant.kastha.ui.fragment.FPResetFragment
 import com.neupanesushant.kastha.ui.fragment.LoginFragment
+import com.neupanesushant.kastha.ui.fragment.OTPFragment
 import com.neupanesushant.kastha.ui.fragment.OnboardingFragment
+import com.neupanesushant.kastha.ui.fragment.SignUpFragment
 
 class BaseApplication : Application() {
     private val activityMap = mutableMapOf<String, Class<out AppCompatActivity>>()
@@ -32,6 +36,10 @@ class BaseApplication : Application() {
         fragmentMap.apply {
             put(RouteConfig.ONBOARDING_FRAGMENT, OnboardingFragment::class.java)
             put(RouteConfig.LOGIN_FRAGMENT, LoginFragment::class.java)
+            put(RouteConfig.SIGN_UP_FRAGMENT, SignUpFragment::class.java)
+            put(RouteConfig.OTP_FRAGMENT, OTPFragment::class.java)
+            put(RouteConfig.FP_RESET_FRAGMENT, FPResetFragment::class.java)
+            put(RouteConfig.FP_EMAIL_VERFICATION_FRAGMENT, FPEmailVerificationFragment::class.java)
         }
     }
 

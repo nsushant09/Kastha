@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.neupanesushant.kastha.extra.Constants
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
@@ -15,6 +17,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     @get:LayoutRes
     protected abstract val layoutId: Int
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,6 +38,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     }
 
     private fun setup() {
+        animate()
         initialize()
         setupViews()
         setupEventListener()
@@ -48,4 +52,12 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     protected open fun setupExtra() {}
     protected open fun initialize() {}
+    protected open fun animate() {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            Constants.ANIM_FADE_IN
+        ).also {
+            binding.root.animation = it
+        }
+    }
 }
