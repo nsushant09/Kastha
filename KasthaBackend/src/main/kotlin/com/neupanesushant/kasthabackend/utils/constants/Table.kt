@@ -12,4 +12,6 @@ object Table {
     const val USER_ROLE = "USER_ROLE"
     const val CART_PRODUCT = "CART_PRODUCT"
     const val FAVORITE_PRODUCT = "FAVORITE_PRODUCT"
+    const val IMAGE = "IMAGE"
+    const val OBJECT_MODEL = "OBJECT_MODEL"
 }

@@ -12,9 +12,14 @@ data class Product(
     val description: String,
     val price: Float,
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    val imagesUrl: List<String>,
+    @OneToMany(
+        cascade = [CascadeType.ALL],
+        fetch = FetchType.EAGER
+    )
+    @JoinColumn(name = "image_id")
+    val images: List<Image>,
 
-    val modelObjectUrl: String
+    @OneToOne
+    @JoinColumn(name = "model_id")
+    val model: ObjectModel
 )
