@@ -10,16 +10,15 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/dialog_bg"
+            android:elevation="@dimen/dp_2"
+            android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/dp_32"
-            android:elevation="@dimen/dp_4"
-            android:background="@drawable/dialog_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center"
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
                 android:layout_width="wrap_content"
@@ -34,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_4"
                 android:textColor="?attr/colorOnSurface"
+                android:fontFamily="@font/titillium_regular"
                 tools:text="Loading..." />
 
         </LinearLayout>

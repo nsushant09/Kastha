@@ -1,4 +1,34 @@
 package com.neupanesushant.kastha.ui.adapter
 
-class RVAdapter {
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
+
+class RVAdapter<T, VB : ViewDataBinding>(
+    private val layoutId: Int,
+    private val items: Collection<T>,
+    private val bindingCallback: AdapterBindingCallback<T, VB>
+) : RecyclerView.Adapter<RVAdapter<T, VB>.ViewHolder>() {
+
+    private val itemsList = items.toList()
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
+        val binding = DataBindingUtil.bind<VB>(view)!!
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(layoutId, parent, false))
+    }
+
+    override fun getItemCount(): Int =
+        items.count()
+
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val data = itemsList[position]
+        bindingCallback.onBind(holder.binding, data, itemsList)
+    }
+
 }
