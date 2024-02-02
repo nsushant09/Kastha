@@ -18,5 +18,7 @@
 
     <style name="Theme.Kastha" parent="Base.Theme.Kastha">
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="surface_grey">@color/dark_grey</item>
+        <item name="editTextStyle">@style/TextInputEditTextStyle</item>
     </style>
 </resources>

@@ -4,31 +4,40 @@
     <style name="WhiteMaterialButtonStyle" parent="Widget.Material3.Button">
         <item name="android:layout_height">@dimen/dp_56</item>
         <item name="backgroundTint">@color/white</item>
-        <item name="cornerRadius">@dimen/dp_16</item>
+        <item name="cornerRadius">@dimen/dp_12</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="fontFamily">@font/outfit_regular</item>
     </style>
 
     <style name="PrimaryMaterialButtonStyle" parent="Widget.Material3.Button">
         <item name="android:layout_height">@dimen/dp_56</item>
         <item name="backgroundTint">?attr/colorPrimary</item>
-        <item name="cornerRadius">@dimen/dp_16</item>
+        <item name="cornerRadius">@dimen/dp_12</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="fontFamily">@font/outfit_regular</item>
     </style>
 
     <style name="TextInputLayoutStyle" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="boxCornerRadiusTopStart">@dimen/dp_16</item>
-        <item name="boxCornerRadiusTopEnd">@dimen/dp_16</item>
-        <item name="boxCornerRadiusBottomStart">@dimen/dp_16</item>
-        <item name="boxCornerRadiusBottomEnd">@dimen/dp_16</item>
+        <item name="boxCornerRadiusTopStart">@dimen/dp_12</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/dp_12</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/dp_12</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/dp_12</item>
         <item name="android:layout_marginStart">@dimen/dp_24</item>
         <item name="android:layout_marginEnd">@dimen/dp_24</item>
-        <item name="boxStrokeWidth">@dimen/dp_2</item>
-        <item name="fontFamily">@font/outfit_regular</item>
+        <item name="android:layout_marginTop">@dimen/dp_8</item>
+        <item name="boxStrokeWidth">@dimen/dp_1</item>
+    </style>
+
+    <style name="ToggleOutlinedButtonStyle" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@drawable/toggle_group_text_color</item>
+        <item name="backgroundTint">@drawable/toggle_group_bg</item>
+    </style>
+
+    <style name="TextInputEditTextStyle" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="fontFamily">@font/titillium_regular</item>d
     </style>
 </resources>

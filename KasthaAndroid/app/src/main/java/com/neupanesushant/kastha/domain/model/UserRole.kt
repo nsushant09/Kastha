@@ -1,4 +1,6 @@
 package com.neupanesushant.kastha.domain.model
 
-class UserRole {
+enum class UserRole {
+    CUSTOMER,
+    TRADER
 }

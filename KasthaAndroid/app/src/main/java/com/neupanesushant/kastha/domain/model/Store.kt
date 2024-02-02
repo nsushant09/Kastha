@@ -1,4 +1,8 @@
 package com.neupanesushant.kastha.domain.model
 
-class Store {
-}
+data class Store(
+    val id: Int,
+    val name: String,
+    val description: String,
+    val location: String
+)
