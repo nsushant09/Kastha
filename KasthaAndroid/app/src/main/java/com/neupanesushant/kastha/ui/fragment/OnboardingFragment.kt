@@ -54,7 +54,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     override fun setupObserver() {
     }
 
-    override fun animate() {
+    fun animate() {
         binding.apply {
             AnimationUtils.loadAnimation(
                 requireContext(), com.google.android.material.R.anim.abc_slide_in_bottom
