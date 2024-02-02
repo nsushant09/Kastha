@@ -19,7 +19,6 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
         get() = R.layout.fragment_onboarding
 
     override fun setupViews() {
-        animate()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -29,6 +28,13 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
             Router(requireActivity()).route(
                 R.id.authentication_fragment_container,
                 AppConfig.getFragment(RouteConfig.LOGIN_FRAGMENT)
+            )
+        }
+
+        binding.btnCreateAccount.setOnClickListener {
+            Router(requireActivity()).route(
+                R.id.authentication_fragment_container,
+                AppConfig.getFragment(RouteConfig.SIGN_UP_FRAGMENT)
             )
         }
 
@@ -48,7 +54,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     override fun setupObserver() {
     }
 
-    private fun animate() {
+    override fun animate() {
         binding.apply {
             AnimationUtils.loadAnimation(
                 requireContext(), com.google.android.material.R.anim.abc_slide_in_bottom
