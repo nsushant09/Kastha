@@ -3,6 +3,9 @@ package com.neupanesushant.kastha.appcore
 import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.neupanesushant.kastha.appcore.koin_module.dataModule
+import com.neupanesushant.kastha.appcore.koin_module.domainModule
+import com.neupanesushant.kastha.appcore.koin_module.vmModule
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
 import com.neupanesushant.kastha.ui.activity.MainActivity
@@ -12,6 +15,8 @@ import com.neupanesushant.kastha.ui.fragment.LoginFragment
 import com.neupanesushant.kastha.ui.fragment.OTPFragment
 import com.neupanesushant.kastha.ui.fragment.OnboardingFragment
 import com.neupanesushant.kastha.ui.fragment.SignUpFragment
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class BaseApplication : Application() {
     private val activityMap = mutableMapOf<String, Class<out AppCompatActivity>>()
@@ -19,7 +24,10 @@ class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
+        startKoin {
+            androidContext(this@BaseApplication)
+            modules(dataModule, domainModule, vmModule)
+        }
         setupActivities()
         setupFragments()
         setOnAppConfig()
