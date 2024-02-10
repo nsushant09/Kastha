@@ -14,7 +14,7 @@
         <item name="colorOnBackground">@color/white</item>
         <item name="colorOnSurface">@color/white</item>
         <item name="colorOnError">@color/white</item>
-        <item name="colorBottomNavigationIndicator">#4D37896E</item>
+        <item name="colorBottomNavigationIndicator">#3337896E</item>
         <item name="material3Surface">#1E1E1E</item>
     </style>
 

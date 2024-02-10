@@ -1,20 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="@dimen/dp_16">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/carouselRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="196dp"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_16"
+            android:backgroundTint="@android:color/transparent"
+            >
 
-            android:text="Home Fragment"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                android:paddingTop="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_8"
+                >
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.search.SearchBar
+                    android:id="@+id/searchBar"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_weight="6"
+                    android:backgroundTint="?attr/material3Surface"
+                    android:hint="@string/search"
+                    android:textAppearance="@style/TextInputEditTextStyle"
+                    app:defaultMarginsEnabled="false" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFavourites"
+                    style="@style/Widget.Material3.Button.IconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="@string/favourites"
+                    android:padding="0dp"
+                    app:icon="@drawable/ic_heart"
+                    app:iconSize="@dimen/dp_28"
+                    app:iconTint="?attr/colorOnSurface"
+                    app:rippleColor="?attr/colorSurface" />
+
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.search.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/search"
+            app:backgroundTint="?attr/material3Surface"
+            app:layout_anchor="@id/searchBar">
+            <!--            TODO : Search Results Recyclerview-->
+        </com.google.android.material.search.SearchView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

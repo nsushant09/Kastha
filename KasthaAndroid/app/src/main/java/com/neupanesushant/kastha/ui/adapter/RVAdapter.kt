@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 class RVAdapter<T, VB : ViewDataBinding>(
     private val layoutId: Int,
     private val items: Collection<T>,
-    private val bindingCallback: AdapterBindingCallback<T, VB>
+    private val bindingCallback: (mBinding: VB, data: T, datas: List<T>) -> Unit
 ) : RecyclerView.Adapter<RVAdapter<T, VB>.ViewHolder>() {
 
     private val itemsList = items.toList()
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
+
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = DataBindingUtil.bind<VB>(view)!!
     }
 
@@ -28,7 +29,7 @@ class RVAdapter<T, VB : ViewDataBinding>(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = itemsList[position]
-        bindingCallback.onBind(holder.binding, data, itemsList)
+        bindingCallback(holder.binding, data, itemsList)
     }
 
 }

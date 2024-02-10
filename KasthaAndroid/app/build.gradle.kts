@@ -56,8 +56,12 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // Dependencies
-    implementation("com.github.appsfeature:otp-view:1.0")
+    val otpViewVersion = "1.0"
+    implementation("com.github.appsfeature:otp-view:$otpViewVersion")
 
     val koinVersion = "3.2.0"
     implementation("io.insert-koin:koin-android:$koinVersion")
+
+    val glideVersion = "4.16.0"
+    implementation("com.github.bumptech.glide:glide:$glideVersion")
 }
