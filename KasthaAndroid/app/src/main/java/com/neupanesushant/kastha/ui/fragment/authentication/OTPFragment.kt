@@ -1,4 +1,4 @@
-package com.neupanesushant.kastha.ui.fragment
+package com.neupanesushant.kastha.ui.fragment.authentication
 
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment

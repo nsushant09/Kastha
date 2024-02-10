@@ -1,4 +1,4 @@
-package com.neupanesushant.kastha.ui.fragment
+package com.neupanesushant.kastha.ui.fragment.authentication
 
 import android.annotation.SuppressLint
 import android.os.Handler

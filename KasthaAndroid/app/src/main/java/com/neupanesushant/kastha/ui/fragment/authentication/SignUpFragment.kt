@@ -1,4 +1,4 @@
-package com.neupanesushant.kastha.ui.fragment
+package com.neupanesushant.kastha.ui.fragment.authentication
 
 import androidx.core.view.isVisible
 import com.neupanesushant.kastha.R

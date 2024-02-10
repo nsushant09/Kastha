@@ -9,12 +9,12 @@ import com.neupanesushant.kastha.appcore.koin_module.vmModule
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
 import com.neupanesushant.kastha.ui.activity.MainActivity
-import com.neupanesushant.kastha.ui.fragment.FPEmailVerificationFragment
-import com.neupanesushant.kastha.ui.fragment.FPResetFragment
-import com.neupanesushant.kastha.ui.fragment.LoginFragment
-import com.neupanesushant.kastha.ui.fragment.OTPFragment
-import com.neupanesushant.kastha.ui.fragment.OnboardingFragment
-import com.neupanesushant.kastha.ui.fragment.SignUpFragment
+import com.neupanesushant.kastha.ui.fragment.authentication.FPEmailVerificationFragment
+import com.neupanesushant.kastha.ui.fragment.authentication.FPResetFragment
+import com.neupanesushant.kastha.ui.fragment.authentication.LoginFragment
+import com.neupanesushant.kastha.ui.fragment.authentication.OTPFragment
+import com.neupanesushant.kastha.ui.fragment.authentication.OnboardingFragment
+import com.neupanesushant.kastha.ui.fragment.authentication.SignUpFragment
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
