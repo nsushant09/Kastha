@@ -31,4 +31,7 @@
     <string name="create_a_new_password_for_your_account">Create a new password for your account</string>
     <string name="didn_t_receive_a_code">Didn\'t receive a code?</string>
     <string name="resend">Resend</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="cart">Cart</string>
 </resources>

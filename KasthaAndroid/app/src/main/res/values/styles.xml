@@ -40,4 +40,21 @@
     <style name="TextInputEditTextStyle" parent="Widget.Material3.TextInputEditText.OutlinedBox">
         <item name="fontFamily">@font/titillium_regular</item>d
     </style>
+
+    <style name="BottomNavigationStyle" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemIconTint">?attr/colorOnSurface</item>
+        <item name="android:background">?attr/material3Surface</item>
+        <item name="itemActiveIndicatorStyle">@style/BottomNavigationActiveIndicator</item>
+        <item name="itemTextAppearanceInactive">@style/BottomNavigationTextAppearance</item>
+        <item name="itemTextAppearanceActive">@style/BottomNavigationTextAppearance</item>
+        <item name="labelVisibilityMode">labeled</item>
+    </style>
+
+    <style name="BottomNavigationTextAppearance">
+        <item name="fontFamily">@font/titillium_medium</item>
+    </style>
+
+    <style name="BottomNavigationActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">?attr/colorBottomNavigationIndicator</item>
+    </style>
 </resources>

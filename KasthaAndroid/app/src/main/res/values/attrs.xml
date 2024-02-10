@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="surface_grey" format="color" />
+    <attr name="colorBottomNavigationIndicator" format="color" />
+    <attr name="material3Surface" format="color"/>
 </resources>

@@ -1,5 +1,3 @@
-import java.net.URI
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -59,4 +57,7 @@ dependencies {
 
     // Dependencies
     implementation("com.github.appsfeature:otp-view:1.0")
+
+    val koinVersion = "3.2.0"
+    implementation("io.insert-koin:koin-android:$koinVersion")
 }

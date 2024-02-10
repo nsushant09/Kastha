@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-  
+    <item
+        android:id="@+id/menuBnvHome"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_selector"
+        android:title="@string/home"/>
+
+    <item
+        android:id="@+id/menuBnvCart"
+        android:enabled="true"
+        android:icon="@drawable/ic_cart_selector"
+        android:title="@string/cart"/>
+
+    <item
+        android:id="@+id/menuBnvProfile"
+        android:enabled="true"
+        android:icon="@drawable/ic_user_selector"
+        android:title="@string/profile"/>
 </menu>

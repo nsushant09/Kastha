@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@color/green_40</item>
         <item name="colorSecondary">@color/green_10</item>
         <item name="colorSecondaryVariant">@color/green_20</item>
-        <item name="colorBackgroundFloating">@color/black</item>
+        <item name="android:colorBackground">@color/black</item>
         <item name="colorSurface">@color/black_surface</item>
         <item name="colorError">@color/red</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -14,7 +14,8 @@
         <item name="colorOnBackground">@color/white</item>
         <item name="colorOnSurface">@color/white</item>
         <item name="colorOnError">@color/white</item>
-
+        <item name="colorBottomNavigationIndicator">#4D37896E</item>
+        <item name="material3Surface">#1E1E1E</item>
     </style>
 
     <style name="Theme.Kastha" parent="Base.Theme.Kastha">
