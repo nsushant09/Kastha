@@ -15,6 +15,9 @@ import com.neupanesushant.kastha.ui.fragment.authentication.LoginFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.OTPFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.OnboardingFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.SignUpFragment
+import com.neupanesushant.kastha.ui.fragment.main.CartFragment
+import com.neupanesushant.kastha.ui.fragment.main.HomeFragment
+import com.neupanesushant.kastha.ui.fragment.main.ProfileFragment
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -42,12 +45,18 @@ class BaseApplication : Application() {
 
     private fun setupFragments() {
         fragmentMap.apply {
+            // Authentication
             put(RouteConfig.ONBOARDING_FRAGMENT, OnboardingFragment::class.java)
             put(RouteConfig.LOGIN_FRAGMENT, LoginFragment::class.java)
             put(RouteConfig.SIGN_UP_FRAGMENT, SignUpFragment::class.java)
             put(RouteConfig.OTP_FRAGMENT, OTPFragment::class.java)
             put(RouteConfig.FP_RESET_FRAGMENT, FPResetFragment::class.java)
             put(RouteConfig.FP_EMAIL_VERFICATION_FRAGMENT, FPEmailVerificationFragment::class.java)
+
+            // Main
+            put(RouteConfig.HOME_FRAGMENT, HomeFragment::class.java)
+            put(RouteConfig.PROFILE_FRAGMENT, ProfileFragment::class.java)
+            put(RouteConfig.CART_FRAGMENT, CartFragment::class.java)
         }
     }
 

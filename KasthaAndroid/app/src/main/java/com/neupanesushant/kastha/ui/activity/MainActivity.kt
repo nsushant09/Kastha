@@ -1,9 +1,6 @@
 package com.neupanesushant.kastha.ui.activity
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.appcore.RouteConfig
 import com.neupanesushant.kastha.core.AppConfig
@@ -19,6 +16,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         binding.bnvMain.selectedItemId = R.id.menuBnvHome
     }
+
     override fun setupViews() {
     }
 
@@ -28,7 +26,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 R.id.menuBnvHome -> {
                     Router(this).routeNoBackStack(
                         R.id.main_fragment_container,
-                        AppConfig.getFragment(RouteConfig.ONBOARDING_FRAGMENT)
+                        AppConfig.getFragment(RouteConfig.HOME_FRAGMENT)
                     )
                     true
                 }
@@ -36,7 +34,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 R.id.menuBnvCart -> {
                     Router(this).routeNoBackStack(
                         R.id.main_fragment_container,
-                        AppConfig.getFragment(RouteConfig.ONBOARDING_FRAGMENT)
+                        AppConfig.getFragment(RouteConfig.CART_FRAGMENT)
                     )
                     true
                 }
@@ -44,7 +42,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 R.id.menuBnvProfile -> {
                     Router(this).routeNoBackStack(
                         R.id.main_fragment_container,
-                        AppConfig.getFragment(RouteConfig.ONBOARDING_FRAGMENT)
+                        AppConfig.getFragment(RouteConfig.PROFILE_FRAGMENT)
                     )
                     true
                 }
