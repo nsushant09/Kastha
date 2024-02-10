@@ -1,12 +1,59 @@
 package com.neupanesushant.kastha.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.View
 import com.neupanesushant.kastha.R
+import com.neupanesushant.kastha.appcore.RouteConfig
+import com.neupanesushant.kastha.core.AppConfig
+import com.neupanesushant.kastha.core.BaseActivity
+import com.neupanesushant.kastha.core.Router
+import com.neupanesushant.kastha.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
+    override val layoutId: Int
+        get() = R.layout.activity_main
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding.bnvMain.selectedItemId = R.id.menuBnvHome
+    }
+    override fun setupViews() {
+    }
+
+    override fun setupEventListener() {
+        binding.bnvMain.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.menuBnvHome -> {
+                    Router(this).routeNoBackStack(
+                        R.id.main_fragment_container,
+                        AppConfig.getFragment(RouteConfig.ONBOARDING_FRAGMENT)
+                    )
+                    true
+                }
+
+                R.id.menuBnvCart -> {
+                    Router(this).routeNoBackStack(
+                        R.id.main_fragment_container,
+                        AppConfig.getFragment(RouteConfig.ONBOARDING_FRAGMENT)
+                    )
+                    true
+                }
+
+                R.id.menuBnvProfile -> {
+                    Router(this).routeNoBackStack(
+                        R.id.main_fragment_container,
+                        AppConfig.getFragment(RouteConfig.ONBOARDING_FRAGMENT)
+                    )
+                    true
+                }
+
+                else -> false
+            }
+        }
+    }
+
+    override fun setupObserver() {
     }
 }

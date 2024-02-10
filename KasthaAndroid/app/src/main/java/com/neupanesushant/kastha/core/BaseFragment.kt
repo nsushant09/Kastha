@@ -9,6 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.extra.Constants
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
@@ -55,7 +56,7 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     protected open fun animate() {
         AnimationUtils.loadAnimation(
             requireContext(),
-            Constants.ANIM_FADE_IN
+             androidx.appcompat.R.anim.abc_fade_in
         ).also {
             binding.root.animation = it
         }

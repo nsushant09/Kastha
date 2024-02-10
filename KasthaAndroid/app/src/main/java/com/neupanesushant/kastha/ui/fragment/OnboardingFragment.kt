@@ -12,7 +12,7 @@ import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.FragmentOnboardingBinding
 import com.neupanesushant.kastha.extra.helper.DoubleTapListener
-import com.neupanesushant.kastha.ui.dialog.LoadingDialog
+import com.neupanesushant.kastha.ui.activity.MainActivity
 
 class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     override val layoutId: Int
@@ -39,10 +39,11 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
         }
 
         val gestureDetector = GestureDetector(requireContext(), DoubleTapListener {
-            val dialog = LoadingDialog()
-            dialog.show(childFragmentManager, dialog::class.java.name)
+//            val dialog = LoadingDialog()
+//            dialog.show(childFragmentManager, dialog::class.java.name)
+            Router(requireActivity()).routeClearTask(MainActivity::class.java)
             Handler(Looper.getMainLooper()).postDelayed({
-                dialog.dismiss()
+//                dialog.dismiss()
             }, 10000)
         })
         binding.root.setOnTouchListener { _, motionEvent ->
@@ -57,7 +58,7 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
     override fun animate() {
         binding.apply {
             AnimationUtils.loadAnimation(
-                requireContext(), com.google.android.material.R.anim.abc_slide_in_bottom
+                requireContext(), androidx.appcompat.R.anim.abc_slide_in_bottom
             ).also {
                 icOnboardingUser.animation = it
                 btnCreateAccount.animation = it
