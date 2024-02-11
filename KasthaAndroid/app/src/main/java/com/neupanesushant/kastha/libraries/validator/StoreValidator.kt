@@ -1,7 +1,7 @@
 package com.neupanesushant.kastha.libraries.validator
 
 import com.neupanesushant.kastha.domain.model.Store
-import com.neupanesushant.kastha.extra.isLongerThan255Char
+import com.neupanesushant.kastha.extra.extensions.isLongerThan255Char
 
 
 class StoreValidator : Validator {

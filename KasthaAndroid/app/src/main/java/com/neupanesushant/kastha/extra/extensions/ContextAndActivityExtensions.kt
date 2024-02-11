@@ -1,4 +1,4 @@
-package com.neupanesushant.kastha.extra
+package com.neupanesushant.kastha.extra.extensions
 
 import android.app.Activity
 import android.content.Context
@@ -8,7 +8,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
-
 
 fun Context.show(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -52,7 +51,3 @@ val Activity.isKeyboardOpen: Boolean
         }
         return false
     }
-
-fun String.isLongerThan255Char(): Boolean {
-    return this.length > 255
-}

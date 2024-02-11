@@ -48,6 +48,8 @@
         <item name="itemTextAppearanceInactive">@style/BottomNavigationTextAppearance</item>
         <item name="itemTextAppearanceActive">@style/BottomNavigationTextAppearance</item>
         <item name="labelVisibilityMode">labeled</item>
+        <item name="defaultMarginsEnabled">false</item>
+        <item name="android:layout_height">72dp</item>
     </style>
 
     <style name="BottomNavigationTextAppearance">
