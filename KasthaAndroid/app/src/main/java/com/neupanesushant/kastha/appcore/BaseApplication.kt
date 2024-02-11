@@ -16,6 +16,7 @@ import com.neupanesushant.kastha.ui.fragment.authentication.OTPFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.OnboardingFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.SignUpFragment
 import com.neupanesushant.kastha.ui.fragment.main.CartFragment
+import com.neupanesushant.kastha.ui.fragment.main.CategoriesFragment
 import com.neupanesushant.kastha.ui.fragment.main.HomeFragment
 import com.neupanesushant.kastha.ui.fragment.main.ProfileFragment
 import org.koin.android.ext.koin.androidContext
@@ -57,6 +58,7 @@ class BaseApplication : Application() {
             put(RouteConfig.HOME_FRAGMENT, HomeFragment::class.java)
             put(RouteConfig.PROFILE_FRAGMENT, ProfileFragment::class.java)
             put(RouteConfig.CART_FRAGMENT, CartFragment::class.java)
+            put(RouteConfig.CATEGORIES_FRAGMENT, CategoriesFragment::class.java)
         }
     }
 

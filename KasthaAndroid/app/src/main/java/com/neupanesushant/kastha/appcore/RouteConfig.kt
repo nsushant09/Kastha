@@ -16,4 +16,5 @@ object RouteConfig {
     const val HOME_FRAGMENT = "HOME_FRAGMENT"
     const val PROFILE_FRAGMENT = "PROFILE_FRAGMENT"
     const val CART_FRAGMENT = "CART_FRAGMENT"
+    const val CATEGORIES_FRAGMENT = "CATEGORIES_FRAGMENT"
 }

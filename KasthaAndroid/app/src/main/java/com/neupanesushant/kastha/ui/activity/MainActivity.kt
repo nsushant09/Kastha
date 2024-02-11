@@ -21,12 +21,27 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun setupEventListener() {
+        setupBottomNavigationItemSelectionListener()
+    }
+
+    override fun setupObserver() {
+    }
+
+    private fun setupBottomNavigationItemSelectionListener() {
         binding.bnvMain.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menuBnvHome -> {
                     Router(this).routeNoBackStack(
                         R.id.main_fragment_container,
                         AppConfig.getFragment(RouteConfig.HOME_FRAGMENT)
+                    )
+                    true
+                }
+
+                R.id.menuBnvCategories -> {
+                    Router(this).routeNoBackStack(
+                        R.id.main_fragment_container,
+                        AppConfig.getFragment(RouteConfig.CATEGORIES_FRAGMENT)
                     )
                     true
                 }
@@ -50,8 +65,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 else -> false
             }
         }
-    }
-
-    override fun setupObserver() {
     }
 }
