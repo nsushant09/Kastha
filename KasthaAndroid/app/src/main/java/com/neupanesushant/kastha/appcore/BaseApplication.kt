@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.neupanesushant.kastha.appcore.koin_module.dataModule
 import com.neupanesushant.kastha.appcore.koin_module.domainModule
+import com.neupanesushant.kastha.appcore.koin_module.testModule
 import com.neupanesushant.kastha.appcore.koin_module.vmModule
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
@@ -30,7 +31,7 @@ class BaseApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@BaseApplication)
-            modules(dataModule, domainModule, vmModule)
+            modules(dataModule, domainModule, vmModule, testModule)
         }
         setupActivities()
         setupFragments()

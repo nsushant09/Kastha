@@ -13,9 +13,11 @@
             android:layout_height="match_parent"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/carouselRecyclerView"
@@ -23,18 +25,24 @@
                     android:layout_height="196dp"
                     android:clipChildren="false"
                     android:clipToPadding="false"
-                    android:layout_marginStart="@dimen/dp_8"
-                    android:layout_marginEnd="@dimen/dp_8"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="@dimen/dp_16"
 
                     tools:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
                     tools:itemCount="10"
                     tools:listitem="@layout/item_home_carousel"
                     />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <include
+                    android:id="@+id/recommendedRvLayout"
+                    layout="@layout/layout_titled_recycler_view"
+                    />
+
+                <include
+                    android:id="@+id/latestRvLayout"
+                    layout="@layout/layout_titled_recycler_view"
+                    />
+
+            </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 
@@ -50,9 +58,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
-
                 >
-
                 <com.google.android.material.search.SearchBar
                     android:id="@+id/searchBar"
                     android:layout_width="0dp"
@@ -61,19 +67,23 @@
                     android:backgroundTint="?attr/material3Surface"
                     android:hint="@string/search"
                     android:textAppearance="@style/TextInputEditTextStyle"
-                    app:defaultMarginsEnabled="true" />
+                    app:defaultMarginsEnabled="false"
+                    android:layout_marginVertical="@dimen/dp_16"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_4"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnFavourites"
-                    style="@style/Widget.Material3.Button.IconButton"
+                    style="@style/Widget.App.Button.IconOnly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dp_16"
-                    android:contentDescription="@string/favourites"
-                    android:padding="0dp"
-                    app:icon="@drawable/ic_heart"
+                    android:layout_marginEnd="@dimen/dp_4"
                     app:iconSize="@dimen/dp_28"
-                    app:iconTint="?attr/colorOnSurface"
+                    android:clickable="true"
+                    app:icon="@drawable/ic_heart"
+                    app:iconTint="?attr/surface_grey"
+                    android:contentDescription="@string/favourites"
                     app:rippleColor="?attr/colorSurface" />
 
             </LinearLayout>

@@ -39,4 +39,5 @@
     <string name="image_view">Image View</string>
     <string name="search">Search</string>
     <string name="categories">Categories</string>
+    <string name="ar">AR</string>
 </resources>

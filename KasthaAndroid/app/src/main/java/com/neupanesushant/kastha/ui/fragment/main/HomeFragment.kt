@@ -1,5 +1,9 @@
 package com.neupanesushant.kastha.ui.fragment.main
 
+import android.annotation.SuppressLint
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.bumptech.glide.Glide
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
@@ -7,16 +11,23 @@ import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentHomeBinding
 import com.neupanesushant.kastha.databinding.ItemHomeCarouselBinding
+import com.neupanesushant.kastha.databinding.ItemMiniProductCardBinding
+import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_home
 
+    private val products: List<Product> by inject(named("test_products"))
+    private val carouselImages: List<String> by inject(named("test_carousel_images"))
     override fun setupViews() {
         setupCarouselView()
-        setupSearchView()
-        setCarouselData(getImages())
+        setCarouselData(carouselImages)
+        setupRecommendedProducts()
+        setupLatestProducts()
     }
 
     override fun setupEventListener() {
@@ -48,15 +59,46 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.carouselRecyclerView.adapter = adapter
     }
 
-    private fun setupSearchView() {
+    @SuppressLint("SetTextI18n")
+    private fun setupRecommendedProducts() {
+        val snapHelper = LinearSnapHelper()
+        binding.recommendedRvLayout.apply {
+            tvRecyclerViewTitle.text = "Recommended For You"
+            btnFullContent.isVisible = true
+            titledRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            snapHelper.attachToRecyclerView(titledRecyclerView)
+            titledRecyclerView.adapter = miniProductCardAdapter
+        }
     }
 
-    private fun getImages() = listOf<String>(
-        "https://images.pexels.com/photos/15927820/pexels-photo-15927820/free-photo-of-cards-and-decorations-for-the-lunar-new-year.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-        "https://images.pexels.com/photos/19040174/pexels-photo-19040174/free-photo-of-a-cup-of-tea-and-flowers-on-the-table.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-        "https://images.pexels.com/photos/6747320/pexels-photo-6747320.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-        "https://images.pexels.com/photos/6908252/pexels-photo-6908252.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-        "https://images.pexels.com/photos/20035207/pexels-photo-20035207/free-photo-of-red-house-by-the-sea.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-        "https://images.pexels.com/photos/3687633/pexels-photo-3687633.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load"
-    )
+    @SuppressLint("SetTextI18n")
+    private fun setupLatestProducts() {
+        val snapHelper = LinearSnapHelper()
+        binding.latestRvLayout.apply {
+            tvRecyclerViewTitle.text = "Latest Products"
+            btnFullContent.isVisible = true
+            titledRecyclerView.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            snapHelper.attachToRecyclerView(titledRecyclerView)
+            titledRecyclerView.adapter = miniProductCardAdapter
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private val miniProductCardAdapter = RVAdapter<Product, ItemMiniProductCardBinding>(
+        R.layout.item_mini_product_card,
+        products
+    ) { mBinding, data, datas ->
+        mBinding.tvProductTitle.text = data.name
+        mBinding.tvProductPrice.text = "$" + data.price.toString()
+        mBinding.cvArFeatured.isVisible = data.model != null
+
+        if (data.images.isNotEmpty()) {
+            Glide.with(requireContext())
+                .load(data.images[0])
+                .into(mBinding.ivProductImage)
+        }
+    }
+
 }

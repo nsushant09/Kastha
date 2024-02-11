@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16">
+
+        <TextView
+            android:id="@+id/tvRecyclerViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_16"
+
+            android:fontFamily="@font/outfit_medium"
+            android:textColor="?attr/surface_grey"
+            android:textSize="20sp"
+
+            app:layout_constraintBottom_toBottomOf="@id/btnFullContent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btnFullContent"
+            tools:text="Recommened For You" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFullContent"
+            style="@style/Widget.App.Button.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:contentDescription="@string/image_view"
+            android:visibility="invisible"
+
+            app:icon="@drawable/ic_arrow_right"
+            app:iconSize="@dimen/dp_24"
+            app:iconTint="?attr/surface_grey"
+
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            tools:visibility="visible"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/titledRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnFullContent"
+
+            tools:listitem="@layout/item_mini_product_card"
+            tools:itemCount="10"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
