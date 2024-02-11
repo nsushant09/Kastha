@@ -15,12 +15,13 @@
         <item name="colorOnSurface">@color/white</item>
         <item name="colorOnError">@color/white</item>
         <item name="colorBottomNavigationIndicator">#3337896E</item>
-        <item name="material3Surface">#1E1E1E</item>
     </style>
 
     <style name="Theme.Kastha" parent="Base.Theme.Kastha">
         <item name="android:textColor">?attr/colorOnBackground</item>
         <item name="surface_grey">@color/light_grey</item>
         <item name="editTextStyle">@style/TextInputEditTextStyle</item>
+        <item name="material3Surface">#1E1E1E</item>
+        <item name="themeColor">@color/black</item>
     </style>
 </resources>

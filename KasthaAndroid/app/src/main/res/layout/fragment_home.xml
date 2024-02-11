@@ -26,6 +26,7 @@
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
 
                     tools:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
                     tools:itemCount="10"
@@ -39,6 +40,11 @@
 
                 <include
                     android:id="@+id/latestRvLayout"
+                    layout="@layout/layout_titled_recycler_view"
+                    />
+
+                <include
+                    android:id="@+id/allRvLayout"
                     layout="@layout/layout_titled_recycler_view"
                     />
 
@@ -56,8 +62,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_8"
                 >
                 <com.google.android.material.search.SearchBar
                     android:id="@+id/searchBar"
@@ -68,7 +76,6 @@
                     android:hint="@string/search"
                     android:textAppearance="@style/TextInputEditTextStyle"
                     app:defaultMarginsEnabled="false"
-                    android:layout_marginVertical="@dimen/dp_16"
                     android:layout_marginStart="@dimen/dp_16"
                     android:layout_marginEnd="@dimen/dp_4"
                     />
@@ -84,10 +91,14 @@
                     app:icon="@drawable/ic_heart"
                     app:iconTint="?attr/surface_grey"
                     android:contentDescription="@string/favourites"
-                    app:rippleColor="?attr/colorSurface" />
-
+                    />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:foreground="?attr/colorSurface"
+                />
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.search.SearchView

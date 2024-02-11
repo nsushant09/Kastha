@@ -6,7 +6,6 @@
         android:layout_width="@dimen/dp_108"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_16"
-        android:background="@color/transparent"
         android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
@@ -60,13 +59,13 @@
                     android:id="@+id/tvArFeatured"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/titillium_regular"
-                    android:maxLines="1"
-                    android:textSize="12sp"
                     android:paddingHorizontal="@dimen/dp_8"
+                    android:ellipsize="end"
+                    android:textSize="12sp"
                     android:text="@string/ar"
-                    android:textColor="?attr/colorPrimary" />
+                    android:fontFamily="@font/titillium_regular"
+                    android:textColor="?attr/colorPrimary"
+                    />
 
             </com.google.android.material.card.MaterialCardView>
 

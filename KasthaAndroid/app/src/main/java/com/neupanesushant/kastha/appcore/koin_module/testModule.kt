@@ -11,12 +11,12 @@ val testModule = module {
         ObjectModel(1, "")
     }
     single(named("test_image")) {
-        Image(1, "")
+        Image(1, "https://img.freepik.com/free-photo/green-lifestyle-chair-white-background-furniture_1122-1833.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=sph")
     }
     single(named("test_product")) {
         Product(
             1,
-            "Wodden Sofa",
+            "Wodden Chair",
             "Introducing our exquisite Wooden Elegance Sofa – a perfect blend of timeless design and unmatched comfort. Crafted with precision from high-quality solid wood, this sofa is not just a piece of furniture; it's a statement of style and sophistication.\n" +
                     "\n" +
                     "The frame of the sofa is constructed from sturdy and durable hardwood, ensuring longevity and resilience. The rich, warm tones of the natural wood create an inviting ambiance in any living space, seamlessly integrating with various interior styles.\n" +
@@ -40,12 +40,9 @@ val testModule = module {
 
     single<List<String>>(named("test_carousel_images")) {
         listOf<String>(
-            "https://images.pexels.com/photos/15927820/pexels-photo-15927820/free-photo-of-cards-and-decorations-for-the-lunar-new-year.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-            "https://images.pexels.com/photos/19040174/pexels-photo-19040174/free-photo-of-a-cup-of-tea-and-flowers-on-the-table.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-            "https://images.pexels.com/photos/6747320/pexels-photo-6747320.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-            "https://images.pexels.com/photos/6908252/pexels-photo-6908252.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-            "https://images.pexels.com/photos/20035207/pexels-photo-20035207/free-photo-of-red-house-by-the-sea.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-            "https://images.pexels.com/photos/3687633/pexels-photo-3687633.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load"
+            "https://img.freepik.com/free-photo/3d-rendering-modern-luxury-pastel-bedroom-with-marble-carpet-decor-deluxe-hotel_105762-2290.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=sph",
+            "https://img.freepik.com/free-photo/dining-room-arrangement_23-2148893942.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=ais",
+            "https://img.freepik.com/free-photo/shot-empty-armchair-with-flower-pot_329181-17598.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=sph"
         )
     }
 

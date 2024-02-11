@@ -1,7 +1,10 @@
 package com.neupanesushant.kastha.ui.fragment.main
 
 import android.annotation.SuppressLint
+import android.content.res.Resources
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.bumptech.glide.Glide
@@ -11,8 +14,10 @@ import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentHomeBinding
 import com.neupanesushant.kastha.databinding.ItemHomeCarouselBinding
+import com.neupanesushant.kastha.databinding.ItemLargeProductCardBinding
 import com.neupanesushant.kastha.databinding.ItemMiniProductCardBinding
 import com.neupanesushant.kastha.domain.model.Product
+import com.neupanesushant.kastha.extra.extensions.dpToPx
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
@@ -28,6 +33,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         setCarouselData(carouselImages)
         setupRecommendedProducts()
         setupLatestProducts()
+        setupAllProducts()
     }
 
     override fun setupEventListener() {
@@ -59,12 +65,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.carouselRecyclerView.adapter = adapter
     }
 
-    @SuppressLint("SetTextI18n")
     private fun setupRecommendedProducts() {
         val snapHelper = LinearSnapHelper()
         binding.recommendedRvLayout.apply {
-            tvRecyclerViewTitle.text = "Recommended For You"
-            btnFullContent.isVisible = true
+            val title = "Recommended For You"
+            tvRecyclerViewTitle.text = title
             titledRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             snapHelper.attachToRecyclerView(titledRecyclerView)
@@ -72,16 +77,29 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private fun setupLatestProducts() {
         val snapHelper = LinearSnapHelper()
         binding.latestRvLayout.apply {
-            tvRecyclerViewTitle.text = "Latest Products"
-            btnFullContent.isVisible = true
+            val title = "Latest Products"
+            tvRecyclerViewTitle.text = title
             titledRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             snapHelper.attachToRecyclerView(titledRecyclerView)
             titledRecyclerView.adapter = miniProductCardAdapter
+        }
+    }
+
+    private fun setupAllProducts() {
+        binding.allRvLayout.apply {
+            val params = titledRecyclerView.layoutParams as ConstraintLayout.LayoutParams
+            params.setMargins(dpToPx(requireContext(), 16f).toInt(), 0, 0, 0)
+            titledRecyclerView.layoutParams = params
+
+            val title = "All Products"
+            tvRecyclerViewTitle.text = title
+            titledRecyclerView.layoutManager =
+                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+            titledRecyclerView.adapter = largeProductCardAdapter
         }
     }
 
@@ -91,14 +109,38 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         products
     ) { mBinding, data, datas ->
         mBinding.tvProductTitle.text = data.name
-        mBinding.tvProductPrice.text = "$" + data.price.toString()
+        mBinding.tvProductPrice.text = "$" + data.price
         mBinding.cvArFeatured.isVisible = data.model != null
 
         if (data.images.isNotEmpty()) {
             Glide.with(requireContext())
-                .load(data.images[0])
+                .load(data.images[0].url)
                 .into(mBinding.ivProductImage)
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    private val largeProductCardAdapter = RVAdapter<Product, ItemLargeProductCardBinding>(
+        R.layout.item_large_product_card,
+        products
+    ) { mBinding, data, datas ->
+
+        mBinding.root.layoutParams.width =
+            ((Resources.getSystem().displayMetrics.widthPixels / 2) - dpToPx(
+                requireContext(),
+                24f
+            )).toInt()
+
+        mBinding.cvProductImage.layoutParams.height = (mBinding.root.layoutParams.width * 4) / 3
+
+        mBinding.tvProductTitle.text = data.name
+        mBinding.tvProductPrice.text = "$" + data.price
+        mBinding.cvArFeatured.isVisible = data.model != null
+
+        if (data.images.isNotEmpty()) {
+            Glide.with(requireContext())
+                .load(data.images[0].url)
+                .into(mBinding.ivProductImage)
+        }
+    }
 }
