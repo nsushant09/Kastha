@@ -16,7 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/image_view"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/living_room_pana"
+            />
 
     </com.google.android.material.carousel.MaskableFrameLayout>
 

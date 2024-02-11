@@ -1,16 +1,12 @@
 package com.neupanesushant.kastha.ui.fragment.main
 
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
-import com.google.android.material.carousel.HeroCarouselStrategy
-import com.google.android.material.carousel.UncontainedCarouselStrategy
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentHomeBinding
 import com.neupanesushant.kastha.databinding.ItemHomeCarouselBinding
-import com.neupanesushant.kastha.databinding.ItemTestBinding
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -33,10 +29,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.carouselRecyclerView.apply {
             val snapHelper = CarouselSnapHelper()
             snapHelper.attachToRecyclerView(this)
-            val carouselLayoutManager = CarouselLayoutManager(
-                HeroCarouselStrategy()
-            )
-            carouselLayoutManager.carouselAlignment = CarouselLayoutManager.ALIGNMENT_CENTER
+            val carouselLayoutManager = CarouselLayoutManager()
+            carouselLayoutManager.carouselAlignment = CarouselLayoutManager.ALIGNMENT_START
             layoutManager = carouselLayoutManager
         }
     }
