@@ -7,7 +7,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
-import com.bumptech.glide.Glide
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
 import com.neupanesushant.kastha.R
@@ -17,6 +16,8 @@ import com.neupanesushant.kastha.databinding.ItemHomeCarouselBinding
 import com.neupanesushant.kastha.databinding.ItemLargeProductCardBinding
 import com.neupanesushant.kastha.databinding.ItemMiniProductCardBinding
 import com.neupanesushant.kastha.domain.model.Product
+import com.neupanesushant.kastha.domain.usecase.managers.GlideManager
+import com.neupanesushant.kastha.domain.usecase.managers.PaletteManager
 import com.neupanesushant.kastha.extra.extensions.dpToPx
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import org.koin.android.ext.android.inject
@@ -57,11 +58,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             R.layout.item_home_carousel,
             imageUrls
         ) { mBinding, data, _ ->
-            Glide.with(requireContext())
-                .load(data)
-                .into(mBinding.carouselImageView)
+            GlideManager.load(requireContext(), data, mBinding.carouselImageView)
         }
-
         binding.carouselRecyclerView.adapter = adapter
     }
 
@@ -107,15 +105,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val miniProductCardAdapter = RVAdapter<Product, ItemMiniProductCardBinding>(
         R.layout.item_mini_product_card,
         products
-    ) { mBinding, data, datas ->
+    ) { mBinding, data, _ ->
         mBinding.tvProductTitle.text = data.name
         mBinding.tvProductPrice.text = "$" + data.price
         mBinding.cvArFeatured.isVisible = data.model != null
 
         if (data.images.isNotEmpty()) {
-            Glide.with(requireContext())
-                .load(data.images[0].url)
-                .into(mBinding.ivProductImage)
+            GlideManager.load(requireContext(), data.images[0].url, mBinding.ivProductImage)
         }
     }
 
@@ -123,7 +119,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val largeProductCardAdapter = RVAdapter<Product, ItemLargeProductCardBinding>(
         R.layout.item_large_product_card,
         products
-    ) { mBinding, data, datas ->
+    ) { mBinding, data, _ ->
 
         mBinding.root.layoutParams.width =
             ((Resources.getSystem().displayMetrics.widthPixels / 2) - dpToPx(
@@ -138,9 +134,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         mBinding.cvArFeatured.isVisible = data.model != null
 
         if (data.images.isNotEmpty()) {
-            Glide.with(requireContext())
-                .load(data.images[0].url)
-                .into(mBinding.ivProductImage)
+            GlideManager.loadWithBitmap(requireContext(), data.images[0].url) { bitmap, _ ->
+                PaletteManager.setBackgroundDynamically(
+                    requireContext(),
+                    mBinding.cvProductImage,
+                    bitmap
+                )
+                mBinding.ivProductImage.setImageBitmap(bitmap)
+            }
         }
     }
+
 }

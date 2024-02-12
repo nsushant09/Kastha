@@ -35,7 +35,6 @@ class Router {
 
     fun route(action: Class<out AppCompatActivity>?) {
         val intent = getIntentOrNull(action) ?: return
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         context.startActivity(intent)
     }
 
@@ -76,6 +75,7 @@ class Router {
         (context as FragmentActivity).supportFragmentManager
             .beginTransaction()
             .replace(container, action, data)
+            .disallowAddToBackStack()
             .commit()
     }
 }
