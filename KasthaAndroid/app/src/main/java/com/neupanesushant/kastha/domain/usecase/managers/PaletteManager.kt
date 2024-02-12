@@ -12,10 +12,20 @@ object PaletteManager {
         Palette.from(bitmap).generate {
             if (it == null) return@generate
             val vibrant =
-                (if (context.isDarkModeOn) it.mutedSwatch else it.lightMutedSwatch)
+                (if (context.isDarkModeOn) it.mutedSwatch else it.vibrantSwatch)
                     ?: return@generate
             view.backgroundTintList = ColorStateList.valueOf(vibrant.rgb)
-            view.background.alpha = 75
+            view.background.alpha = 50
+        }
+    }
+
+    fun getSwatch(context: Context, bitmap: Bitmap, onSwatchGenerated: (Palette.Swatch) -> Unit) {
+        Palette.from(bitmap).generate {
+            if (it == null) return@generate
+            val vibrant =
+                (if (context.isDarkModeOn) it.mutedSwatch else it.lightMutedSwatch)
+                    ?: return@generate
+            onSwatchGenerated(vibrant)
         }
     }
 }

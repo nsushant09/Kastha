@@ -13,6 +13,23 @@ val testModule = module {
     single(named("test_image")) {
         Image(1, "https://img.freepik.com/free-photo/green-lifestyle-chair-white-background-furniture_1122-1833.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=sph")
     }
+
+    single(named("test_image_2")) {
+        Image(2, "https://img.freepik.com/free-photo/room-interior-hotel-bedroom_23-2150683419.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=sph")
+    }
+
+    single(named("test_image_3")) {
+        Image(3, "https://img.freepik.com/free-photo/table-set-dinning-table_1339-3408.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=ais")
+    }
+
+    single(named("test_image_4")) {
+        Image(4, "https://img.freepik.com/free-psd/wall-mockup-psd-modern-living-room_53876-129061.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=ais")
+    }
+
+    single(named("test_image_5")) {
+        Image(5, "https://img.freepik.com/free-photo/desk-arrangement-with-book-lamp_23-2148745771.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=ais")
+    }
+
     single(named("test_product")) {
         Product(
             1,
@@ -27,12 +44,12 @@ val testModule = module {
                     "\n" +
                     "Whether you're looking to enhance your living room, create a cozy reading nook, or elevate your office waiting area, the Wooden Elegance Sofa effortlessly combines form and function. Invest in quality, style, and comfort with this timeless wooden sofa that transcends trends and adds a touch of sophistication to your living space. Upgrade your home with the enduring appeal of our Wooden Elegance Sofa – where luxury meets longevity.",
             124.1f,
-            listOf(
+            listOf<Image>(
                 get(named("test_image")),
-                get(named("test_image")),
-                get(named("test_image")),
-                get(named("test_image")),
-                get(named("test_image"))
+                get(named("test_image_2")),
+                get(named("test_image_3")),
+                get(named("test_image_4")),
+                get(named("test_image_5"))
             ),
             get(named("test_object_model"))
         )

@@ -111,7 +111,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         mBinding.cvArFeatured.isVisible = data.model != null
 
         if (data.images.isNotEmpty()) {
-            GlideManager.load(requireContext(), data.images[0].url, mBinding.ivProductImage)
+            GlideManager.load(requireContext(), data.images.shuffled()[0].url, mBinding.ivProductImage)
         }
     }
 
@@ -134,7 +134,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         mBinding.cvArFeatured.isVisible = data.model != null
 
         if (data.images.isNotEmpty()) {
-            GlideManager.loadWithBitmap(requireContext(), data.images[0].url) { bitmap, _ ->
+            GlideManager.loadWithBitmap(requireContext(), data.images.shuffled()[0].url) { bitmap, _ ->
                 PaletteManager.setBackgroundDynamically(
                     requireContext(),
                     mBinding.cvProductImage,
