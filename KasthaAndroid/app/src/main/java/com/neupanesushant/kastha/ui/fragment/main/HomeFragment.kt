@@ -2,6 +2,7 @@ package com.neupanesushant.kastha.ui.fragment.main
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
+import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
