@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 app:strokeColor="?attr/colorPrimary"
                 android:layout_marginTop="@dimen/dp_1"
-                android:layout_marginEnd="@dimen/dp_6"
+                android:layout_marginEnd="@dimen/dp_2"
                 android:layout_gravity="center_vertical"
                 >
 
@@ -78,6 +78,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/titillium_regular"
                 android:maxLines="1"
+                android:textColor="?attr/surface_grey"
                 tools:text="$124.8" />
 
         </LinearLayout>

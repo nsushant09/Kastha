@@ -74,7 +74,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             titledRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             snapHelper.attachToRecyclerView(titledRecyclerView)
-            titledRecyclerView.adapter = miniProductCardAdapter
+            titledRecyclerView.adapter = getMiniProductCardAdapter(products)
         }
     }
 
@@ -86,7 +86,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             titledRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             snapHelper.attachToRecyclerView(titledRecyclerView)
-            titledRecyclerView.adapter = miniProductCardAdapter
+            titledRecyclerView.adapter = getMiniProductCardAdapter(products)
         }
     }
 
@@ -100,59 +100,61 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             tvRecyclerViewTitle.text = title
             titledRecyclerView.layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-            titledRecyclerView.adapter = largeProductCardAdapter
+            titledRecyclerView.adapter = getLargeProductCardAdapter(products)
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private val miniProductCardAdapter = RVAdapter<Product, ItemMiniProductCardBinding>(
-        R.layout.item_mini_product_card,
-        products
-    ) { mBinding, data, _ ->
-        mBinding.tvProductTitle.text = data.name
-        mBinding.tvProductPrice.text = "$" + data.price
-        mBinding.cvArFeatured.isVisible = data.model != null
+    private fun getMiniProductCardAdapter(products: List<Product>) =
+        RVAdapter<Product, ItemMiniProductCardBinding>(
+            R.layout.item_mini_product_card,
+            products
+        ) { mBinding, data, _ ->
+            mBinding.tvProductTitle.text = data.name
+            mBinding.tvProductPrice.text = "Rs." + data.price
+            mBinding.cvArFeatured.isVisible = data.model != null
 
-        if (data.images.isNotEmpty()) {
-            GlideManager.load(
-                requireContext(),
-                data.images.shuffled()[0].url,
-                mBinding.ivProductImage
-            )
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    private val largeProductCardAdapter = RVAdapter<Product, ItemLargeProductCardBinding>(
-        R.layout.item_large_product_card,
-        products
-    ) { mBinding, data, _ ->
-
-        mBinding.root.layoutParams.width =
-            ((Resources.getSystem().displayMetrics.widthPixels / 2) - dpToPx(
-                requireContext(),
-                24f
-            )).toInt()
-
-        mBinding.cvProductImage.layoutParams.height = (mBinding.root.layoutParams.width * 4) / 3
-
-        mBinding.tvProductTitle.text = data.name
-        mBinding.tvProductPrice.text = "$" + data.price
-        mBinding.cvArFeatured.isVisible = data.model != null
-
-        if (data.images.isNotEmpty()) {
-            GlideManager.loadWithBitmap(
-                requireContext(),
-                data.images.shuffled()[0].url
-            ) { bitmap, _ ->
-                PaletteManager.setBackgroundDynamically(
+            if (data.images.isNotEmpty()) {
+                GlideManager.load(
                     requireContext(),
-                    mBinding.cvProductImage,
-                    bitmap
+                    data.images.shuffled()[0].url,
+                    mBinding.ivProductImage
                 )
-                mBinding.ivProductImage.setImageBitmap(bitmap)
             }
         }
-    }
+
+    @SuppressLint("SetTextI18n")
+    private fun getLargeProductCardAdapter(products: List<Product>) =
+        RVAdapter<Product, ItemLargeProductCardBinding>(
+            R.layout.item_large_product_card,
+            products
+        ) { mBinding, data, _ ->
+
+            mBinding.root.layoutParams.width =
+                ((Resources.getSystem().displayMetrics.widthPixels / 2) - dpToPx(
+                    requireContext(),
+                    24f
+                )).toInt()
+
+            mBinding.cvProductImage.layoutParams.height = (mBinding.root.layoutParams.width * 4) / 3
+
+            mBinding.tvProductTitle.text = data.name
+            mBinding.tvProductPrice.text = "Rs." + data.price
+            mBinding.layoutArFeatured.cvArFeatured.isVisible = data.model != null
+
+            if (data.images.isNotEmpty()) {
+                GlideManager.loadWithBitmap(
+                    requireContext(),
+                    data.images.shuffled()[0].url
+                ) { bitmap, _ ->
+                    PaletteManager.setBackgroundDynamically(
+                        requireContext(),
+                        mBinding.cvProductImage,
+                        bitmap
+                    )
+                    mBinding.ivProductImage.setImageBitmap(bitmap)
+                }
+            }
+        }
 
 }

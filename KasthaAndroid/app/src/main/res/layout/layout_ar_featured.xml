@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvArFeatured"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="wrap_content"
+        app:strokeColor="?attr/colorPrimary"
+        >
+
+        <TextView
+            android:id="@+id/tvArFeatured"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/titillium_regular"
+            android:paddingHorizontal="@dimen/dp_8"
+            android:text="@string/ar"
+            android:textAlignment="center"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="12sp" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

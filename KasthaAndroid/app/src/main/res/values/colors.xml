@@ -17,5 +17,5 @@
     <color name="brown">#8A6240</color>
     <color name="brown_light">#CABA9C</color>
     <color name="red">#B00020</color>
-    <color name = "transparent_primary_65">#a6121212</color>
+    <color name = "dark_overlay">#66121212</color>
 </resources>

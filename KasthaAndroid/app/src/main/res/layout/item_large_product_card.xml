@@ -5,9 +5,8 @@
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginBottom="@dimen/dp_16"
-        >
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -38,25 +37,25 @@
             <ImageView
                 android:layout_width="@dimen/dp_28"
                 android:layout_height="@dimen/dp_28"
-                android:src="@drawable/ic_heart"
                 android:layout_margin="@dimen/dp_6"
-                android:padding="@dimen/dp_4"
                 android:background="@drawable/bg_rounded"
-                app:tint="?attr/colorOnSurface"
+                android:contentDescription="@string/image_view"
+                android:padding="@dimen/dp_4"
+                android:src="@drawable/ic_heart"
                 app:layout_constraintLeft_toLeftOf="@id/cvProductImage"
                 app:layout_constraintTop_toTopOf="@id/cvProductImage"
-                android:contentDescription="@string/image_view" />
+                app:tint="?attr/colorOnSurface" />
 
             <ImageView
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="@dimen/dp_36"
-                android:src="@drawable/ic_cart_plus"
-                android:padding="@dimen/dp_8"
-                app:tint="?attr/colorOnSurface"
                 android:background="@drawable/bg_diagonal_rounded"
-                app:layout_constraintRight_toRightOf="@id/cvProductImage"
+                android:contentDescription="@string/image_view"
+                android:padding="@dimen/dp_8"
+                android:src="@drawable/ic_cart_plus"
                 app:layout_constraintBottom_toBottomOf="@id/cvProductImage"
-                android:contentDescription="@string/image_view" />
+                app:layout_constraintRight_toRightOf="@id/cvProductImage"
+                app:tint="?attr/colorOnSurface" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -83,34 +82,19 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/titillium_regular"
                 android:maxLines="1"
+                android:textColor="?attr/surface_grey"
                 android:textSize="14sp"
                 tools:ignore="RelativeOverlap"
                 tools:text="$124.8" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cvArFeatured"
-                android:layout_width="@dimen/dp_48"
+            <include
+                android:id="@+id/layoutArFeatured"
+                layout="@layout/layout_ar_featured"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                app:strokeColor="?attr/colorPrimary"
-                tools:ignore="RelativeOverlap">
-
-                <TextView
-                    android:id="@+id/tvArFeatured"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/titillium_regular"
-
-                    android:paddingHorizontal="@dimen/dp_8"
-                    android:text="@string/ar"
-                    android:textAlignment="center"
-                    android:textColor="?attr/colorPrimary"
-                    android:textSize="12sp" />
-
-            </com.google.android.material.card.MaterialCardView>
+                />
 
         </RelativeLayout>
 
