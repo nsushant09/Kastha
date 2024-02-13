@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:background="@drawable/dialog_bg"
+        android:padding="@dimen/dp_16">
+
+        <TextView
+            android:id="@+id/tvReviewUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:ellipsize="end"
+            android:fontFamily="@font/outfit_medium"
+            android:maxLines="1"
+            android:textSize="18sp"
+
+            app:layout_constraintEnd_toStartOf="@id/tvReviewDate"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Sushant Neupane" />
+
+        <TextView
+            android:id="@+id/tvReviewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/titillium_regular"
+            android:textColor="?attr/surface_grey"
+            android:textSize="12sp"
+
+            app:layout_constraintBottom_toBottomOf="@id/tvReviewUsername"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvReviewUsername"
+            tools:text="02-12-2003" />
+
+        <LinearLayout
+            android:id="@+id/llStartContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvReviewUsername">
+
+            <ImageView
+                android:layout_width="@dimen/dp_14"
+                android:layout_height="@dimen/dp_14"
+                android:layout_marginEnd="@dimen/dp_2"
+                android:contentDescription="@string/image_view"
+                android:src="@drawable/ic_star_filled"
+                app:tint="?attr/colorPrimary" />
+            <ImageView
+                android:layout_width="@dimen/dp_14"
+                android:layout_height="@dimen/dp_14"
+                android:layout_marginEnd="@dimen/dp_2"
+                android:contentDescription="@string/image_view"
+                android:src="@drawable/ic_star_filled"
+                app:tint="?attr/colorPrimary" />
+            <ImageView
+                android:layout_width="@dimen/dp_14"
+                android:layout_height="@dimen/dp_14"
+                android:layout_marginEnd="@dimen/dp_2"
+                android:contentDescription="@string/image_view"
+                android:src="@drawable/ic_star_filled"
+                app:tint="?attr/colorPrimary" />
+            <ImageView
+                android:layout_width="@dimen/dp_14"
+                android:layout_height="@dimen/dp_14"
+                android:layout_marginEnd="@dimen/dp_2"
+                android:contentDescription="@string/image_view"
+                android:src="@drawable/ic_star_filled"
+                app:tint="?attr/colorPrimary" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_14"
+                android:layout_height="@dimen/dp_14"
+                android:layout_marginEnd="@dimen/dp_2"
+                android:contentDescription="@string/image_view"
+                android:src="@drawable/ic_star_filled"
+                app:tint="?attr/colorPrimary" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvReviewDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_2"
+
+            android:fontFamily="@font/titillium_light"
+            android:justificationMode="inter_word"
+            android:lineSpacingMultiplier="0.8"
+            android:textColor="?attr/surface_grey"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llStartContainer"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

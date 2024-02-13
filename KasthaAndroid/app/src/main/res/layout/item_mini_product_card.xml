@@ -6,7 +6,9 @@
         android:layout_width="@dimen/dp_108"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_16"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:clickable="true"
+        >
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="@dimen/dp_108"

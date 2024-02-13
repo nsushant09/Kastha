@@ -23,7 +23,7 @@ object PaletteManager {
         Palette.from(bitmap).generate {
             if (it == null) return@generate
             val vibrant =
-                (if (context.isDarkModeOn) it.mutedSwatch else it.lightMutedSwatch)
+                (if (context.isDarkModeOn) it.mutedSwatch else it.vibrantSwatch)
                     ?: return@generate
             onSwatchGenerated(vibrant)
         }

@@ -1,8 +1,8 @@
 package com.neupanesushant.kastha.domain.model
 
-data class Store(
+data class Category(
     val id: Int,
     val name: String,
-    val description: String,
-    val location: String
+    val imageUrl: String,
+    val alignment: Alignment
 )
