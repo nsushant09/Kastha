@@ -1,6 +1,7 @@
 package com.neupanesushant.kasthabackend.data.model
 
 import jakarta.persistence.CascadeType
+import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
@@ -17,6 +18,8 @@ data class Category(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int,
+
+    @Column(unique = true)
     val name: String,
     val imageUrl: String,
 
