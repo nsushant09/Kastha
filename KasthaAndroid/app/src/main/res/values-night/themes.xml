@@ -23,5 +23,6 @@
         <item name="editTextStyle">@style/TextInputEditTextStyle</item>
         <item name="material3Surface">#1E1E1E</item>
         <item name="themeColor">@color/black</item>
+        <item name="textAppearanceTitleSmall">@style/CustomTextAppearanceTitleSmall</item>
     </style>
 </resources>

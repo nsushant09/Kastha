@@ -27,8 +27,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_home
 
-    private val products: List<Product> by inject(named("test_products"))
-    private val carouselImages: List<String> by inject(named("test_carousel_images"))
+    private val products: List<Product>
+            by inject(named("test_products"))
+    private val carouselImages: List<String>
+            by inject(named("test_carousel_images"))
+
     override fun setupViews() {
         setupCarouselView()
         setCarouselData(carouselImages)
@@ -111,7 +114,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         mBinding.cvArFeatured.isVisible = data.model != null
 
         if (data.images.isNotEmpty()) {
-            GlideManager.load(requireContext(), data.images.shuffled()[0].url, mBinding.ivProductImage)
+            GlideManager.load(
+                requireContext(),
+                data.images.shuffled()[0].url,
+                mBinding.ivProductImage
+            )
         }
     }
 
@@ -134,7 +141,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         mBinding.cvArFeatured.isVisible = data.model != null
 
         if (data.images.isNotEmpty()) {
-            GlideManager.loadWithBitmap(requireContext(), data.images.shuffled()[0].url) { bitmap, _ ->
+            GlideManager.loadWithBitmap(
+                requireContext(),
+                data.images.shuffled()[0].url
+            ) { bitmap, _ ->
                 PaletteManager.setBackgroundDynamically(
                     requireContext(),
                     mBinding.cvProductImage,

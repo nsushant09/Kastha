@@ -1,5 +1,7 @@
 package com.neupanesushant.kastha.appcore.koin_module
 
+import com.neupanesushant.kastha.domain.model.Alignment
+import com.neupanesushant.kastha.domain.model.Category
 import com.neupanesushant.kastha.domain.model.Image
 import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.domain.model.Product
@@ -11,24 +13,65 @@ val testModule = module {
         ObjectModel(1, "")
     }
     single(named("test_image")) {
-        Image(1, "https://img.freepik.com/free-photo/green-lifestyle-chair-white-background-furniture_1122-1833.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=sph")
+        Image(
+            1,
+            "https://img.freepik.com/free-photo/green-lifestyle-chair-white-background-furniture_1122-1833.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=sph"
+        )
     }
 
     single(named("test_image_2")) {
-        Image(2, "https://img.freepik.com/free-photo/room-interior-hotel-bedroom_23-2150683419.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=sph")
+        Image(
+            2,
+            "https://img.freepik.com/free-photo/room-interior-hotel-bedroom_23-2150683419.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=sph"
+        )
     }
 
     single(named("test_image_3")) {
-        Image(3, "https://img.freepik.com/free-photo/table-set-dinning-table_1339-3408.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=ais")
+        Image(
+            3,
+            "https://img.freepik.com/free-photo/table-set-dinning-table_1339-3408.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=ais"
+        )
     }
 
     single(named("test_image_4")) {
-        Image(4, "https://img.freepik.com/free-psd/wall-mockup-psd-modern-living-room_53876-129061.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=ais")
+        Image(
+            4,
+            "https://img.freepik.com/free-psd/wall-mockup-psd-modern-living-room_53876-129061.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=ais"
+        )
     }
 
     single(named("test_image_5")) {
-        Image(5, "https://img.freepik.com/free-photo/desk-arrangement-with-book-lamp_23-2148745771.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=ais")
+        Image(
+            5,
+            "https://img.freepik.com/free-photo/desk-arrangement-with-book-lamp_23-2148745771.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=ais"
+        )
     }
+
+    single {
+        Alignment(1, "Horizontal")
+    }
+
+    single(named("category_bed")) {
+        Category(1, "Bed", "https://www.svgrepo.com/show/521084/bed-2.svg", get())
+    }
+    single(named("category_chair")) {
+        Category(2, "Chair", "https://www.svgrepo.com/show/521084/bed-2.svg", get())
+    }
+    single(named("category_table")) {
+        Category(3, "Table", "https://www.svgrepo.com/show/521084/bed-2.svg", get())
+    }
+    single(named("category_sofa")) {
+        Category(4, "Sofa", "https://www.svgrepo.com/show/521084/bed-2.svg", get())
+    }
+    single(named("test_categories")) {
+        listOf<Category>(
+            get(named("category_bed")),
+            get(named("category_chair")),
+            get(named("category_table")),
+            get(named("category_sofa"))
+        )
+    }
+
 
     single(named("test_product")) {
         Product(
