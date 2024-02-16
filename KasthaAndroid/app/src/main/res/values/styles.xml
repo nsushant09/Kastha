@@ -45,11 +45,15 @@
         <item name="itemIconTint">?attr/colorOnSurface</item>
         <item name="android:background">?attr/material3Surface</item>
         <item name="itemActiveIndicatorStyle">@style/BottomNavigationActiveIndicator</item>
-        <item name="itemTextAppearanceInactive">@style/CustomTextAppearanceTitleSmall</item>
-        <item name="itemTextAppearanceActive">@style/CustomTextAppearanceTitleSmall</item>
+        <item name="itemTextAppearanceInactive">@style/BottomNavigationTextAppearanceStyle</item>
+        <item name="itemTextAppearanceActive">@style/BottomNavigationTextAppearanceStyle</item>
         <item name="labelVisibilityMode">labeled</item>
         <item name="defaultMarginsEnabled">false</item>
         <item name="android:layout_height">72dp</item>
+    </style>
+
+    <style name="BottomNavigationTextAppearanceStyle">
+        <item name="fontFamily">@font/titillium_regular</item>
     </style>
 
     <style name="CustomTextAppearanceTitleSmall" parent="TextAppearance.Material3.TitleSmall">

@@ -21,5 +21,5 @@ data class Product(
 
     @OneToOne
     @JoinColumn(name = "model_id")
-    val model: ObjectModel
+    val model: ObjectModel? = null
 )

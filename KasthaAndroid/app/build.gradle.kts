@@ -20,15 +20,26 @@ android {
 
     buildTypes {
         release {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            buildConfigField("STRING", "BASE_URL", "\"http://10.0.0.2/api/\"")
+        }
+
+        debug{
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"http://10.0.0.2/api/\"",)
         }
     }
 
     buildFeatures {
+        buildConfig = true
         viewBinding = true
         dataBinding = true
     }
@@ -59,6 +70,7 @@ dependencies {
     // Dependencies
     val otpViewVersion = "1.0"
     implementation("com.github.appsfeature:otp-view:$otpViewVersion")
+    implementation("androidx.palette:palette:1.0.0")
 
     val koinVersion = "3.2.0"
     implementation("io.insert-koin:koin-android:$koinVersion")
@@ -66,5 +78,7 @@ dependencies {
     val glideVersion = "4.16.0"
     implementation("com.github.bumptech.glide:glide:$glideVersion")
 
-    implementation("androidx.palette:palette:1.0.0")
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 }

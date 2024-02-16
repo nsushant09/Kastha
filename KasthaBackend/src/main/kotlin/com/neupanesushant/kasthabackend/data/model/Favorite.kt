@@ -5,7 +5,7 @@ import jakarta.persistence.*
 
 @Entity
 @jakarta.persistence.Table(name = Table.FAVORITE)
-data class Favourite(
+data class Favorite(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id : Int,

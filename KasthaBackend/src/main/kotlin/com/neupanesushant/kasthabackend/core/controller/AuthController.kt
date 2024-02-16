@@ -1,5 +1,6 @@
 package com.neupanesushant.kasthabackend.core.controller
 
+import com.neupanesushant.kasthabackend.core.appcore.NetworkResponse
 import com.neupanesushant.kasthabackend.core.repo.RoleRepo
 import com.neupanesushant.kasthabackend.core.repo.UserRepo
 import com.neupanesushant.kasthabackend.data.dtomodel.AuthResponseDTO
@@ -37,7 +38,7 @@ class AuthController @Autowired constructor(
     @PostMapping("/login")
     private fun login(
         @RequestBody loginDTO: LoginDTO
-    ): ResponseEntity<Any> {
+    ): ResponseEntity<AuthResponseDTO> {
         val authentication =
             authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(
@@ -51,9 +52,9 @@ class AuthController @Autowired constructor(
     }
 
     @PostMapping("/register")
-    private fun register(@RequestBody registerDTO: RegisterDTO): ResponseEntity<Any> {
+    private fun register(@RequestBody registerDTO: RegisterDTO): ResponseEntity<AuthResponseDTO> {
         if (userRepo.existsByEmail(registerDTO.email)) {
-            ResponseEntity("Email already exists", HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
         }
 
         val roles = roleRepo.findByName("USER") ?: throw RoleNotFoundException("Role user not found")
@@ -66,7 +67,12 @@ class AuthController @Autowired constructor(
             Collections.singletonList(roles)
         )
         userRepo.save(user)
-        return ResponseEntity("User registered", HttpStatus.OK)
+        return login(LoginDTO(user.email, user.password))
+    }
+
+    @PostMapping("/otp")
+    private fun register(@RequestParam("email") email: String) {
+
     }
 
 }

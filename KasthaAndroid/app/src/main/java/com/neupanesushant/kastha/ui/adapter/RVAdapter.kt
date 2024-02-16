@@ -13,7 +13,11 @@ class RVAdapter<T, VB : ViewDataBinding>(
     private val bindingCallback: (mBinding: VB, data: T, datas: List<T>) -> Unit
 ) : RecyclerView.Adapter<RVAdapter<T, VB>.ViewHolder>() {
 
-    private val itemsList = items.toList()
+    private var itemsList: List<T> = if (items is List<T>) {
+        items
+    } else {
+        items.toList()
+    }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = DataBindingUtil.bind<VB>(view)!!
