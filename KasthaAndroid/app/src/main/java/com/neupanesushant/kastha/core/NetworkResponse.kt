@@ -10,14 +10,12 @@ class NetworkResponseResolver<T>(
     private val onFailure: (String) -> Unit = {},
     private val onSuccess: (T) -> Unit
 ) {
-    operator fun invoke() {
+    init {
         if (response is NetworkResponse.Success) {
             onSuccess(response.responseData)
-            return
         }
         if (response is NetworkResponse.Failure) {
             onFailure(response.errorMessage)
-            return
         }
     }
 }

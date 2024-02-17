@@ -8,7 +8,7 @@ import org.koin.dsl.module
 
 val dataModule = module {
 
-    single(named("Authentication")) {
+    single {
         RetrofitClient.instance
             .create(AuthenticationEndpoint::class.java)
     }

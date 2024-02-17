@@ -18,7 +18,7 @@ class AuthenticationViewModel(
     private var _isAuthenticationTokenReceived: MutableLiveData<State<AuthResponse>> =
         MutableLiveData(State.Default)
     val isAuthenticationTokenReceived: LiveData<State<AuthResponse>> get() = _isAuthenticationTokenReceived
-    private fun login(email: String, password: String) {
+    fun login(email: String, password: String) {
         _isAuthenticationTokenReceived.value = State.Loading
         viewModelScope.launch {
             val response = authenticationUseCase.login(email, password)
@@ -30,7 +30,7 @@ class AuthenticationViewModel(
         }
     }
 
-    private fun register(firstName: String, lastName: String, email: String, password: String) {
+    fun register(firstName: String, lastName: String, email: String, password: String) {
         viewModelScope.launch {
             val response = authenticationUseCase.register(firstName, lastName, email, password)
             NetworkResponseResolver(response, onFailure = {

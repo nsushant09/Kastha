@@ -6,8 +6,12 @@ import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.FragmentLoginBinding
+import com.neupanesushant.kastha.viewmodel.AuthenticationViewModel
+import org.koin.android.ext.android.inject
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
+
+    private val authenticationViewModel: AuthenticationViewModel by inject()
     override val layoutId: Int
         get() = R.layout.fragment_login
 
@@ -18,10 +22,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
 
         binding.btnSignUp.setOnClickListener {
-            Router(requireActivity()).route(
-                R.id.authentication_fragment_container,
-                AppConfig.getFragment(RouteConfig.SIGN_UP_FRAGMENT)
+            authenticationViewModel.login(
+                binding.etEmail.text.toString(),
+                binding.etPassword.text.toString()
             )
+//            Router(requireActivity()).route(
+//                R.id.authentication_fragment_container,
+//                AppConfig.getFragment(RouteConfig.SIGN_UP_FRAGMENT)
+//            )
         }
 
         binding.btnSignIn.setOnClickListener {
