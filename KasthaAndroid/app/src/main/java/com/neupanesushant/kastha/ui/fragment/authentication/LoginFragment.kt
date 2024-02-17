@@ -22,17 +22,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
 
         binding.btnSignUp.setOnClickListener {
+            Router(requireActivity()).route(
+                R.id.authentication_fragment_container,
+                AppConfig.getFragment(RouteConfig.SIGN_UP_FRAGMENT)
+            )
+        }
+
+        binding.btnSignIn.setOnClickListener {
             authenticationViewModel.login(
                 binding.etEmail.text.toString(),
                 binding.etPassword.text.toString()
             )
-//            Router(requireActivity()).route(
-//                R.id.authentication_fragment_container,
-//                AppConfig.getFragment(RouteConfig.SIGN_UP_FRAGMENT)
-//            )
-        }
-
-        binding.btnSignIn.setOnClickListener {
             Router(requireActivity()).route(
                 R.id.authentication_fragment_container,
                 AppConfig.getFragment(RouteConfig.OTP_FRAGMENT)
