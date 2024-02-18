@@ -19,6 +19,11 @@
         <item name="fontFamily">@font/outfit_regular</item>
     </style>
 
+    <style name="TitilliumButtonTextAppearance">
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/titillium_regular</item>
+    </style>
+
     <style name="TextInputLayoutStyle" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

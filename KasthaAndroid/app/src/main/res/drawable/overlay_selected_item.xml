@@ -1,0 +1,13 @@
+<!-- custom_drawable.xml -->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Dark overlay background -->
+    <item android:drawable="@color/dark_overlay" />
+
+    <!-- White tick icon on top -->
+    <item
+        android:drawable="@drawable/ic_check_filled"
+        android:gravity="center" />
+
+</layer-list>

@@ -40,4 +40,9 @@
     <string name="search">Search</string>
     <string name="categories">Categories</string>
     <string name="ar">AR</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="favourite">Favourite</string>
+    <string name="checkout">Checkout</string>
+    <string name="total_rs">Total: Rs.</string>
 </resources>

@@ -2,7 +2,6 @@ package com.neupanesushant.kastha.ui.fragment.main
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
-import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,7 +10,10 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
 import com.neupanesushant.kastha.R
+import com.neupanesushant.kastha.appcore.RouteConfig
+import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.BaseFragment
+import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.FragmentHomeBinding
 import com.neupanesushant.kastha.databinding.ItemHomeCarouselBinding
 import com.neupanesushant.kastha.databinding.ItemLargeProductCardBinding
@@ -36,12 +38,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun setupViews() {
         setupCarouselView()
         setCarouselData(carouselImages)
-        setupRecommendedProducts()
-        setupLatestProducts()
-        setupAllProducts()
+        setupRecommendedProducts(products)
+        setupLatestProducts(products)
+        setupAllProducts(products)
     }
 
     override fun setupEventListener() {
+        binding.btnFavourites.setOnClickListener {
+            Router(requireActivity()).route(
+                R.id.main_fragment_container,
+                AppConfig.getFragment(RouteConfig.FAVOURITES_FRAGMENT)
+            )
+        }
     }
 
     override fun setupObserver() {
@@ -67,7 +75,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.carouselRecyclerView.adapter = adapter
     }
 
-    private fun setupRecommendedProducts() {
+    private fun setupRecommendedProducts(products: List<Product>) {
         val snapHelper = LinearSnapHelper()
         binding.recommendedRvLayout.apply {
             val title = "Recommended For You"
@@ -79,7 +87,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun setupLatestProducts() {
+    private fun setupLatestProducts(products: List<Product>) {
         val snapHelper = LinearSnapHelper()
         binding.latestRvLayout.apply {
             val title = "Latest Products"
@@ -91,7 +99,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun setupAllProducts() {
+    private fun setupAllProducts(products: List<Product>) {
         binding.allRvLayout.apply {
             val params = titledRecyclerView.layoutParams as ConstraintLayout.LayoutParams
             params.setMargins(dpToPx(requireContext(), 16f).toInt(), 0, 0, 0)

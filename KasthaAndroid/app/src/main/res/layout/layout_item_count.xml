@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDecrement"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:iconSize="@dimen/dp_14"
+        app:icon="@drawable/ic_minus" />
+
+    <TextView
+        android:id="@+id/tvItemCount"
+        android:enabled="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="1"
+        android:fontFamily="@font/titillium_medium"
+        android:textSize="18sp"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnIncrement"
+        style="@style/Widget.Material3.Button.IconButton"
+        app:iconSize="@dimen/dp_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_plus" />
+
+</LinearLayout>
