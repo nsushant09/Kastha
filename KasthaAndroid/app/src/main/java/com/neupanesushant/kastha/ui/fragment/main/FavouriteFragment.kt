@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.neupanesushant.kastha.R
+import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentFavouriteBinding
 import com.neupanesushant.kastha.databinding.ItemProductHorizontalBinding
@@ -47,11 +48,11 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
 
     private fun setupFavouriteProducts(products: List<Product>) {
         binding.rvFavouriteProducts.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvFavouriteProducts.adapter = getCartProductsAdapter(products)
+        binding.rvFavouriteProducts.adapter = getFavouriteProductsAdapter(products)
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getCartProductsAdapter(products: List<Product>) =
+    private fun getFavouriteProductsAdapter(products: List<Product>) =
         RVAdapter<Product, ItemProductHorizontalBinding>(
             R.layout.item_product_horizontal,
             products
@@ -61,9 +62,9 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
             mBinding.layoutArFeatured.cvArFeatured.isVisible = data.model != null
             mBinding.tvProductRating.text = "5.0"
 
-            mBinding.root.setOnClickListener { onCartProductClick(mBinding, data) }
+            mBinding.root.setOnClickListener { onFavouriteProductClick(mBinding, data) }
             mBinding.root.setOnLongClickListener {
-                onCardProductLongClick(mBinding, data)
+                onFavouriteProductLongClick(mBinding, data)
                 true
             }
 
@@ -76,7 +77,10 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
             }
         }
 
-    private fun onCardProductLongClick(binding: ItemProductHorizontalBinding, product: Product) {
+    private fun onFavouriteProductLongClick(
+        binding: ItemProductHorizontalBinding,
+        product: Product
+    ) {
         if (!isSelectionEnabled) {
             isSelectionEnabled = true
             selectionItemsIdSet.add(product.id)
@@ -85,7 +89,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
         }
     }
 
-    private fun onCartProductClick(binding: ItemProductHorizontalBinding, product: Product) {
+    private fun onFavouriteProductClick(binding: ItemProductHorizontalBinding, product: Product) {
         if (isSelectionEnabled) {
             if (selectionItemsIdSet.contains(product.id)) {
                 selectionItemsIdSet.remove(product.id)
@@ -98,7 +102,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
             }
             return;
         }
-        // TODO : Navigate to Product Detail
+        RouteHelper.routeProductDetail(requireActivity(), product)
     }
 
     private fun onSelectionEnabled() {

@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.neupanesushant.kastha.R
+import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentCartBinding
 import com.neupanesushant.kastha.databinding.ItemLargeProductCardBinding
@@ -184,7 +185,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
             }
             return;
         }
-        // TODO : Navigate to Product Detail
+        RouteHelper.routeProductDetail(requireActivity(), product)
     }
 
     private fun onSelectionEnabled() {

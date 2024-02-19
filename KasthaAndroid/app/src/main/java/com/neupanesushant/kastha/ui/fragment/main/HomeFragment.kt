@@ -11,6 +11,7 @@ import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.appcore.RouteConfig
+import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.core.Router
@@ -22,7 +23,6 @@ import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.usecase.managers.GlideManager
 import com.neupanesushant.kastha.domain.usecase.managers.PaletteManager
 import com.neupanesushant.kastha.extra.extensions.dpToPx
-import com.neupanesushant.kastha.ui.activity.MainActivity
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
@@ -124,7 +124,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             mBinding.tvProductPrice.text = "Rs." + data.price
             mBinding.cvArFeatured.isVisible = data.model != null
             mBinding.root.setOnClickListener {
-                (requireActivity() as MainActivity).routeProductDetail(data)
+                RouteHelper.routeProductDetail(requireActivity(), data)
             }
             if (data.images.isNotEmpty()) {
                 GlideManager.load(
@@ -153,6 +153,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             mBinding.tvProductTitle.text = data.name
             mBinding.tvProductPrice.text = "Rs." + data.price
             mBinding.layoutArFeatured.cvArFeatured.isVisible = data.model != null
+            mBinding.root.setOnClickListener {
+                RouteHelper.routeProductDetail(requireActivity(), data)
+            }
 
             if (data.images.isNotEmpty()) {
                 GlideManager.loadWithBitmap(

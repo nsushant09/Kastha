@@ -3,11 +3,10 @@ package com.neupanesushant.kastha.ui.fragment.main
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.os.Build
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
 import com.neupanesushant.kastha.R
+import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentCategoriesViewPagerBinding
 import com.neupanesushant.kastha.databinding.ItemProductHorizontalBinding
@@ -67,10 +66,8 @@ class CategoriesViewPagerFragment : BaseFragment<FragmentCategoriesViewPagerBind
             mBinding.tvProductPrice.text = "Rs." + data.price
             mBinding.layoutArFeatured.cvArFeatured.isVisible = data.model != null
             mBinding.tvProductRating.text = "5.0"
-            mBinding.root.setOnLongClickListener {
-                mBinding.ivProductImage.foreground =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.overlay_selected_item)
-                true
+            mBinding.root.setOnClickListener {
+                RouteHelper.routeProductDetail(requireActivity(), data)
             }
             if (data.images.isNotEmpty()) {
                 GlideManager.load(
