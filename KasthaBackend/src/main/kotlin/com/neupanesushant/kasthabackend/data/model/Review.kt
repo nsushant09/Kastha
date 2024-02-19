@@ -14,10 +14,10 @@ import java.sql.Date
 data class Review(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Int,
-    val description : Int,
-    val rating : Int,
-    val date : Date,
+    val id: Int,
+    val description: String,
+    val rating: Int,
+    val date: Date,
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -25,5 +25,5 @@ data class Review(
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    var user : User
+    var user: User
 )

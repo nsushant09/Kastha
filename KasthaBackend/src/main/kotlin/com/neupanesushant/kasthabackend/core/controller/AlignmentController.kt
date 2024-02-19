@@ -19,7 +19,7 @@ class AlignmentController(
     @PutMapping
     fun update(@RequestBody alignment: Alignment) = ResponseEntity.ok(alignmentService.update(alignment))
 
-    @GetMapping
+    @GetMapping("/all")
     fun all() = ResponseEntity.ok(alignmentService.all)
 
     @GetMapping

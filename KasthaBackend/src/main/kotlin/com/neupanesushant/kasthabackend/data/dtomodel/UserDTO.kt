@@ -1,6 +1,7 @@
 package com.neupanesushant.kasthabackend.data.dtomodel
 
-import javax.management.relation.Role
+import com.neupanesushant.kasthabackend.data.model.Role
+
 
 data class UserDTO(
     val id : Int,

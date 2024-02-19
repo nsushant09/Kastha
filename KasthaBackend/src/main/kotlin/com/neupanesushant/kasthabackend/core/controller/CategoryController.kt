@@ -19,7 +19,7 @@ class CategoryController(
     @PutMapping
     fun update(@RequestBody category: Category) = ResponseEntity.ok(categoryServices.update(category))
 
-    @GetMapping
+    @GetMapping("/all")
     fun all() = ResponseEntity.ok(categoryServices.all)
 
     @GetMapping

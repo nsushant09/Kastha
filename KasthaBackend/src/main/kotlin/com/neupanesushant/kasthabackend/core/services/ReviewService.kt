@@ -21,4 +21,5 @@ class ReviewService(
         return reviewRepo.save(review)
     }
 
+    fun byId(productId: Int) = reviewRepo.findByProductId(productId)
 }
