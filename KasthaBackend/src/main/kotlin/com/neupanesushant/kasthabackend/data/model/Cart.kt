@@ -15,11 +15,11 @@ import com.neupanesushant.kasthabackend.utils.constants.Table
 data class Cart(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Int,
+    val id: Int = -1,
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    val user : User,
+    val user: User,
 
     @ManyToMany
     @JoinTable(
@@ -27,5 +27,5 @@ data class Cart(
         joinColumns = [JoinColumn(name = "cart_id")],
         inverseJoinColumns = [JoinColumn(name = "product_id")]
     )
-    val products : Set<Product> = linkedSetOf()
+    val products: MutableCollection<Product> = mutableSetOf()
 )

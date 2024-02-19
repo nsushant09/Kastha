@@ -8,7 +8,7 @@ import jakarta.persistence.*
 data class Favorite(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Int,
+    val id : Int = -1,
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -20,5 +20,5 @@ data class Favorite(
         joinColumns = [JoinColumn(name = "favorite_id")],
         inverseJoinColumns = [JoinColumn(name = "product_id")]
     )
-    val products : Set<Product> = linkedSetOf()
+    val products : MutableCollection<Product> = mutableSetOf()
 )
