@@ -33,8 +33,10 @@ class SecurityConfig @Autowired constructor(
     public fun securityFilterChain(http: HttpSecurity): SecurityFilterChain =
         http.csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("/api/auth/**").permitAll()
-                it.anyRequest().authenticated()
+                it.anyRequest().permitAll()
+//                it.requestMatchers("/api/mail/**").permitAll()
+//                it.requestMatchers("/api/auth/**").permitAll()
+//                it.anyRequest().authenticated()
             }
             .exceptionHandling { it.authenticationEntryPoint(point) }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
