@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.*
 class CategoryController(
     @Autowired private val categoryServices: CategoryService
 ) {
-    @PostMapping("/")
+    @PostMapping
     fun insert(@RequestBody category: Category) = ResponseEntity.ok(categoryServices.insert(category))
 
-    @PutMapping("/")
+    @PutMapping
     fun update(@RequestBody category: Category) = ResponseEntity.ok(categoryServices.update(category))
 
-    @GetMapping("/all")
+    @GetMapping
     fun all() = ResponseEntity.ok(categoryServices.all)
 
-    @GetMapping("/of_id")
+    @GetMapping
     fun ofId(@RequestParam("category_id") id: Int): ResponseEntity<Category> {
         val category = categoryServices.ofId(id)
         if (category.isEmpty)

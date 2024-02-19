@@ -22,13 +22,13 @@ class ObjectModelController(
     @Value("\${user.home}/kastha_data/glb")
     private lateinit var uploadDirectory: String
 
-    @PostMapping("/")
+    @PostMapping
     fun upload(request: HttpServletRequest, @RequestParam("file") file: MultipartFile): ResponseEntity<String> {
         val fileName = fileService.upload(uploadDirectory, file)
         return ResponseEntity.ok(fileUrl(fileName))
     }
 
-    @GetMapping("/")
+    @GetMapping
     fun get(@RequestParam("fileName") fileName: String): ResponseEntity<FileSystemResource> {
         return fileService.get(uploadDirectory, fileName)
     }

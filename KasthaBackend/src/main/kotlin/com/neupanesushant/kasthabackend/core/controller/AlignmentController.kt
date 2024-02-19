@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.*
 class AlignmentController(
     @Autowired private val alignmentService: AlignmentService
 ) {
-    @PostMapping("/")
+    @PostMapping
     fun insert(@RequestBody alignment: Alignment) = ResponseEntity.ok(alignmentService.insert(alignment))
 
-    @PutMapping("/")
+    @PutMapping
     fun update(@RequestBody alignment: Alignment) = ResponseEntity.ok(alignmentService.update(alignment))
 
-    @GetMapping("/all")
+    @GetMapping
     fun all() = ResponseEntity.ok(alignmentService.all)
 
-    @GetMapping("/of_id")
+    @GetMapping
     fun ofId(@RequestParam("alignment_id") id: Int): ResponseEntity<Alignment> {
         val alignment = alignmentService.ofId(id)
         if (alignment.isEmpty)
