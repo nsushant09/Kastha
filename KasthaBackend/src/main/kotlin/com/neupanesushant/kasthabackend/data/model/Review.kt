@@ -21,9 +21,9 @@ data class Review(
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    val product: Product,
+    var product: Product,
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    val user : User
+    var user : User
 )
