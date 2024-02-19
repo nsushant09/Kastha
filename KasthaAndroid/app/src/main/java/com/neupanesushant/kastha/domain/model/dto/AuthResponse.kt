@@ -1,4 +1,4 @@
-package com.neupanesushant.kastha.domain.model
+package com.neupanesushant.kastha.domain.model.dto
 
 data class AuthResponse(
     val accessToken: String,

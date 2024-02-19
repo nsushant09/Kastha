@@ -1,5 +1,6 @@
 package com.neupanesushant.kastha.ui.fragment.authentication
 
+import androidx.core.os.bundleOf
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.appcore.RouteConfig
 import com.neupanesushant.kastha.core.AppConfig
@@ -17,10 +18,11 @@ class FPEmailVerificationFragment : BaseFragment<FragmentFpEmailVerificationBind
     override fun setupEventListener() {
         binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
         binding.btnVerify.setOnClickListener {
-            Router(requireActivity())
+            val bundle = bundleOf(OTPFragment.OTP_ARGUMENT to OTPFragment.OTPAction.PASSWORD_RESET)
+            Router(requireActivity(), bundle)
                 .route(
                     R.id.authentication_fragment_container,
-                    AppConfig.getFragment(RouteConfig.FP_RESET_FRAGMENT)
+                    AppConfig.getFragment(RouteConfig.OTP_FRAGMENT)
                 )
         }
     }

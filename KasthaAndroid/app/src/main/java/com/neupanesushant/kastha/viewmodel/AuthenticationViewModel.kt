@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.neupanesushant.kastha.core.NetworkResponseResolver
 import com.neupanesushant.kastha.core.State
-import com.neupanesushant.kastha.domain.model.AuthResponse
+import com.neupanesushant.kastha.domain.model.dto.AuthResponse
 import com.neupanesushant.kastha.domain.usecase.AuthenticationUseCase
 import kotlinx.coroutines.launch
 

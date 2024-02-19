@@ -1,5 +1,6 @@
 package com.neupanesushant.kastha.ui.fragment.authentication
 
+import androidx.core.os.bundleOf
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.appcore.RouteConfig
 import com.neupanesushant.kastha.core.AppConfig
@@ -33,9 +34,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 binding.etEmail.text.toString(),
                 binding.etPassword.text.toString()
             )
-            Router(requireActivity()).route(
+            val bundle = bundleOf(OTPFragment.OTP_ARGUMENT to OTPFragment.OTPAction.LOGIN)
+            Router(requireActivity(), bundle).route(
                 R.id.authentication_fragment_container,
-                AppConfig.getFragment(RouteConfig.OTP_FRAGMENT)
+                AppConfig.getFragment(RouteConfig.OTP_FRAGMENT),
             )
         }
 

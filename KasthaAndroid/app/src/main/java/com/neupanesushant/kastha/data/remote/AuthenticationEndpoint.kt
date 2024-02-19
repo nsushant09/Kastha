@@ -1,6 +1,6 @@
 package com.neupanesushant.kastha.data.remote
 
-import com.neupanesushant.kastha.domain.model.AuthResponse
+import com.neupanesushant.kastha.domain.model.dto.AuthResponse
 import com.neupanesushant.kastha.domain.model.LoginDTO
 import com.neupanesushant.kastha.domain.model.dto.RegisterDTO
 import retrofit2.http.Body

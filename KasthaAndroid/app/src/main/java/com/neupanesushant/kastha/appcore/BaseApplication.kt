@@ -9,6 +9,7 @@ import com.neupanesushant.kastha.appcore.koin_module.testModule
 import com.neupanesushant.kastha.appcore.koin_module.vmModule
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
+import com.neupanesushant.kastha.ui.activity.FullScreenContainerActivity
 import com.neupanesushant.kastha.ui.activity.MainActivity
 import com.neupanesushant.kastha.ui.fragment.authentication.FPEmailVerificationFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.FPResetFragment
@@ -21,6 +22,7 @@ import com.neupanesushant.kastha.ui.fragment.main.CategoriesFragment
 import com.neupanesushant.kastha.ui.fragment.main.CategoriesViewPagerFragment
 import com.neupanesushant.kastha.ui.fragment.main.FavouriteFragment
 import com.neupanesushant.kastha.ui.fragment.main.HomeFragment
+import com.neupanesushant.kastha.ui.fragment.main.ProductDetailFragment
 import com.neupanesushant.kastha.ui.fragment.main.ProfileFragment
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -44,6 +46,7 @@ class BaseApplication : Application() {
         activityMap.apply {
             put(RouteConfig.MAIN_ACTIVITY, MainActivity::class.java)
             put(RouteConfig.AUTHENTICATION_ACTIVITY, AuthenticationActivity::class.java)
+            put(RouteConfig.FULL_SCREEN_CONTAINER_ACTIVITY, FullScreenContainerActivity::class.java)
         }
     }
 
@@ -64,6 +67,7 @@ class BaseApplication : Application() {
             put(RouteConfig.CATEGORIES_FRAGMENT, CategoriesFragment::class.java)
             put(RouteConfig.CATEGORIES_VIEW_PAGER_FRAGMENT, CategoriesViewPagerFragment::class.java)
             put(RouteConfig.FAVOURITES_FRAGMENT, FavouriteFragment::class.java)
+            put(RouteConfig.PRODUCT_DETAIL_FRAGMENT, ProductDetailFragment::class.java)
         }
     }
 

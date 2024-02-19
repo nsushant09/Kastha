@@ -7,6 +7,4 @@ data class Review(
     val description: String,
     val rating: Int,
     val date: Date,
-    val productId: Int,
-    val user: User
 )

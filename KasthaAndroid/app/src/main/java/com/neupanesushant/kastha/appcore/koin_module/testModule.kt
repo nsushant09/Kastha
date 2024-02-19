@@ -52,16 +52,36 @@ val testModule = module {
     }
 
     single(named("category_bed")) {
-        Category(1, "Bed", "https://img.freepik.com/free-photo/3d-rendering-modern-luxury-pastel-bedroom-with-marble-carpet-decor-deluxe-hotel_105762-2290.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=sph", get())
+        Category(
+            1,
+            "Bed",
+            "https://img.freepik.com/free-photo/3d-rendering-modern-luxury-pastel-bedroom-with-marble-carpet-decor-deluxe-hotel_105762-2290.jpg?size=626&ext=jpg&ga=GA1.1.1827367055.1703056848&semt=sph",
+            get()
+        )
     }
     single(named("category_chair")) {
-        Category(2, "Chair", "https://images.pexels.com/photos/2495555/pexels-photo-2495555.jpeg?auto=compress&cs=tinysrgb&w=800", get())
+        Category(
+            2,
+            "Chair",
+            "https://images.pexels.com/photos/2495555/pexels-photo-2495555.jpeg?auto=compress&cs=tinysrgb&w=800",
+            get()
+        )
     }
     single(named("category_table")) {
-        Category(3, "Table", "https://images.pexels.com/photos/890669/pexels-photo-890669.jpeg?auto=compress&cs=tinysrgb&w=800", get())
+        Category(
+            3,
+            "Table",
+            "https://images.pexels.com/photos/890669/pexels-photo-890669.jpeg?auto=compress&cs=tinysrgb&w=800",
+            get()
+        )
     }
     single(named("category_sofa")) {
-        Category(4, "Sofa", "https://images.pexels.com/photos/276583/pexels-photo-276583.jpeg?auto=compress&cs=tinysrgb&w=800", get())
+        Category(
+            4,
+            "Sofa",
+            "https://images.pexels.com/photos/276583/pexels-photo-276583.jpeg?auto=compress&cs=tinysrgb&w=800",
+            get()
+        )
     }
     single(named("test_categories")) {
         listOf<Category>(
@@ -87,6 +107,7 @@ val testModule = module {
                     "\n" +
                     "Whether you're looking to enhance your living room, create a cozy reading nook, or elevate your office waiting area, the Wooden Elegance Sofa effortlessly combines form and function. Invest in quality, style, and comfort with this timeless wooden sofa that transcends trends and adds a touch of sophistication to your living space. Upgrade your home with the enduring appeal of our Wooden Elegance Sofa – where luxury meets longevity.",
             124.1f,
+            get(named("category_chair")),
             listOf<Image>(
                 get(named("test_image")),
                 get(named("test_image_2")),
