@@ -11,6 +11,7 @@ data class Product(
     val name: String,
     val description: String,
     val price: Float,
+    val stockQuantity: Int,
 
     @OneToMany(
         cascade = [CascadeType.ALL],
@@ -21,5 +22,9 @@ data class Product(
 
     @OneToOne
     @JoinColumn(name = "model_id")
-    val model: ObjectModel? = null
+    val model: ObjectModel? = null,
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    val category: Category
 )

@@ -1,6 +1,5 @@
 package com.neupanesushant.kasthabackend.core.controller
 
-import com.neupanesushant.kasthabackend.core.appcore.NetworkResponse
 import com.neupanesushant.kasthabackend.core.services.CategoryService
 import com.neupanesushant.kasthabackend.data.model.Category
 import org.springframework.beans.factory.annotation.Autowired

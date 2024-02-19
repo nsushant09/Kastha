@@ -4,7 +4,9 @@ import com.neupanesushant.kasthabackend.core.repo.ProductRepo
 import com.neupanesushant.kasthabackend.data.model.Category
 import com.neupanesushant.kasthabackend.data.model.Product
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
+@Service
 class ProductService(
     @Autowired private val productRepo: ProductRepo
 ) {

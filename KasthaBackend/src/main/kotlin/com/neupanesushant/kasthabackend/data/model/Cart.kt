@@ -9,23 +9,20 @@ import jakarta.persistence.JoinTable
 import jakarta.persistence.ManyToMany
 import jakarta.persistence.OneToOne
 import com.neupanesushant.kasthabackend.utils.constants.Table
+import jakarta.persistence.CascadeType
+import jakarta.persistence.OneToMany
 
 @Entity
 @jakarta.persistence.Table(name = Table.CART)
 data class Cart(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int = -1,
+    val id: Int = 1,
 
     @OneToOne
     @JoinColumn(name = "user_id")
     val user: User,
 
-    @ManyToMany
-    @JoinTable(
-        name = Table.CART_PRODUCT,
-        joinColumns = [JoinColumn(name = "cart_id")],
-        inverseJoinColumns = [JoinColumn(name = "product_id")]
-    )
-    val products: MutableCollection<Product> = mutableSetOf()
+    @OneToMany(mappedBy = "cart", cascade = [CascadeType.ALL])
+    val cartProducts: MutableSet<CartProduct> = mutableSetOf()
 )

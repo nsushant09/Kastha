@@ -1,6 +1,5 @@
 package com.neupanesushant.kasthabackend.core.controller
 
-import com.neupanesushant.kasthabackend.core.appcore.NetworkResponse
 import com.neupanesushant.kasthabackend.core.repo.RoleRepo
 import com.neupanesushant.kasthabackend.core.repo.UserRepo
 import com.neupanesushant.kasthabackend.data.dtomodel.AuthResponseDTO
