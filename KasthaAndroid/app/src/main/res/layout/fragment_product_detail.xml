@@ -168,8 +168,7 @@
             android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
-            >
+            android:backgroundTint="@android:color/transparent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -217,19 +216,35 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@drawable/bg_top_rounded"
+            android:divider="@drawable/divider_4_dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/dp_16"
             android:paddingVertical="@dimen/dp_4"
-            android:paddingHorizontal="@dimen/dp_8"
-            >
+            android:showDividers="middle"
+            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+            app:layout_scrollFlags="scroll|enterAlways|snap">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAddToCart"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:text="@string/add_to_cart"
+                android:layout_weight="1"
                 android:fontFamily="@font/titillium_medium"
-                app:cornerRadius="@dimen/dp_16"
-                />
+                android:text="@string/add_to_cart"
+                android:textColor="?attr/surface_grey"
+                app:cornerRadius="@dimen/dp_16" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAugmentedView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:fontFamily="@font/titillium_medium"
+                android:text="@string/ar_view"
+                app:cornerRadius="@dimen/dp_16" />
 
         </LinearLayout>
 

@@ -44,6 +44,8 @@
             android:paddingHorizontal="@dimen/dp_16"
             android:paddingVertical="@dimen/dp_8"
             android:background="@drawable/bg_top_rounded"
+            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
             >
 
             <TextView

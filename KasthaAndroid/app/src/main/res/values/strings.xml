@@ -52,4 +52,5 @@
     <string name="reviews">Reviews</string>
     <string name="this_product_has_no_reviews">This product has no reviews</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="ar_view">AR View</string>
 </resources>
