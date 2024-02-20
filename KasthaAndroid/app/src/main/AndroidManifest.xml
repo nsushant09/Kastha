@@ -2,10 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:name=".appcore.BaseApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,12 +19,12 @@
         android:roundIcon="@drawable/application_icon_adaptive"
         android:supportsRtl="true"
         android:theme="@style/Theme.Kastha"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".ui.activity.AuthenticationActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"
-            >
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,6 +34,11 @@
 
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.FullScreenContainerActivity" />
+        <activity android:name=".ui.activity.AugmentedViewActivity" />
+
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="required" />
 
     </application>
 

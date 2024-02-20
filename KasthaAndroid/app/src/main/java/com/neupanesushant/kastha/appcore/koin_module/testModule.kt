@@ -13,7 +13,7 @@ import java.time.Instant
 
 val testModule = module {
     single(named("test_object_model")) {
-        ObjectModel(1, "")
+        ObjectModel(1, "https://firebasestorage.googleapis.com/v0/b/kurakani-asia.appspot.com/o/glb%2Fchair.glb?alt=media&token=333e9bcf-e2e5-4e02-b997-9377d019782c")
     }
     single(named("test_image")) {
         Image(

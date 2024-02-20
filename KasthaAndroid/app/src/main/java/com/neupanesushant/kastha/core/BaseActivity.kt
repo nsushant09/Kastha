@@ -34,10 +34,5 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     protected open fun initialize() {}
     protected open fun setupExtras() {}
 
-    protected fun isPermissionGranted(grantResults: IntArray): Boolean {
-        return grantResults.isNotEmpty() &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED
-    }
-
     fun getActivityBinding(): T = binding
 }

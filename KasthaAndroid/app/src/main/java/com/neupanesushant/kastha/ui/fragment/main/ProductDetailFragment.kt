@@ -1,16 +1,20 @@
 package com.neupanesushant.kastha.ui.fragment.main
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.PorterDuff
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
 import com.neupanesushant.kastha.R
+import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentProductDetailBinding
 import com.neupanesushant.kastha.databinding.ItemHomeCarouselBinding
@@ -57,7 +61,10 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
     override fun setupEventListener() {
         binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
-
+        binding.btnAugmentedView.setOnClickListener {
+            if (product.model == null) return@setOnClickListener
+            requestCameraPermission()
+        }
     }
 
     override fun setupObserver() {
@@ -118,5 +125,28 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
         imageView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
         return imageView
+    }
+
+    private fun requestCameraPermission() {
+        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            onCameraPermissionGranted()
+        } else {
+            cameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+        }
+    }
+
+    private val cameraPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                onCameraPermissionGranted()
+            }
+        }
+
+    private fun onCameraPermissionGranted() {
+        product.model?.let {
+            RouteHelper.routeAugmentedView(requireActivity(), it)
+        }
     }
 }

@@ -83,6 +83,13 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
     //lottie animation
-    val lottieVersion = "3.7.0"
+    val lottieVersion = "6.1.0"
     implementation("com.airbnb.android:lottie:$lottieVersion")
+
+    val arCoreVersion = "1.41.0"
+    val arSceneFormVersion = "1.17.1"
+    implementation("com.google.ar:core:$arCoreVersion")
+    implementation("com.google.ar.sceneform:core:$arSceneFormVersion")
+    implementation("com.google.ar.sceneform.ux:sceneform-ux:$arSceneFormVersion")
+    implementation("com.google.ar.sceneform:assets:$arSceneFormVersion")
 }
