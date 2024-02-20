@@ -28,13 +28,13 @@ android {
             buildConfigField("STRING", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
         }
 
-        debug{
+        debug {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"",)
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
         }
     }
 
@@ -81,4 +81,8 @@ dependencies {
     val retrofitVersion = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+
+    //lottie animation
+    val lottieVersion = "3.7.0"
+    implementation("com.airbnb.android:lottie:$lottieVersion")
 }

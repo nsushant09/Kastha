@@ -1,19 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/producttv"
-            android:layout_width="wrap_content"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProductImages"
+                    android:layout_width="match_parent"
+                    android:layout_height="196dp"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    tools:itemCount="10"
+                    tools:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
+                    tools:listitem="@layout/item_home_carousel" />
+
+                <TextView
+                    android:id="@+id/tvProductTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dp_16"
+
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:fontFamily="@font/outfit_medium"
+                    android:textSize="24sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+
+                    app:layout_constraintTop_toBottomOf="@id/rvProductImages"
+                    tools:text="Wodden Chair" />
+
+                <TextView
+                    android:id="@+id/tvCategoryTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:fontFamily="@font/outfit_medium"
+                    android:textColor="?attr/surface_grey"
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvProductTitle"
+                    tools:text="Chair" />
+
+                <TextView
+                    android:id="@+id/tvProductPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:fontFamily="@font/titillium_medium"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvCategoryTitle"
+                    tools:text="Rs. 12000.24" />
+
+                <include
+                    android:id="@+id/layoutStockContainers"
+                    layout="@layout/layout_stock_containers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    app:layout_constraintBottom_toBottomOf="@id/tvProductPrice"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvProductPrice" />
+
+                <LinearLayout
+                    android:id="@+id/llDescriptionContainer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:background="@drawable/dialog_bg"
+
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/dp_16"
+                    android:paddingVertical="@dimen/dp_18"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvProductPrice">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/outfit_regular"
+                        android:text="@string/description"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvDescriptionContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:fontFamily="@font/titillium_regular"
+                        android:justificationMode="inter_word"
+                        android:textColor="?attr/surface_grey"
+                        tools:text="Introducing our exquisite Wooden Elegance Sofa – a perfect blend of timeless design and unmatched comfort. Crafted with precision from high-quality solid wood, this sofa is not just a piece of furniture; it's a statement of style and sophistication.\n\nThe frame of the sofa is constructed from sturdy and durable hardwood, ensuring longevity and resilience. The rich, warm tones of the natural wood create an inviting ambiance in any living space, seamlessly integrating with various interior styles.\n\nThe carefully carved details on the arms and legs showcase the artisanal craftsmanship, adding a touch of vintage charm to the overall aesthetic. The wooden sofa is thoughtfully designed to provide both support and relaxation, featuring plush cushions upholstered in a premium fabric that complements the wood's natural beauty.\n\nIts generous seating space makes it ideal for lounging, entertaining, or simply unwinding after a long day. The sofa's ergonomic design ensures optimal comfort, making it a versatile and functional addition to your home.\n Whether you're looking to enhance your living room, create a cozy reading nook, or elevate your office waiting area, the Wooden Elegance Sofa effortlessly combines form and function. Invest in quality, style, and comfort with this timeless wooden sofa that transcends trends and adds a touch of sophistication to your living space. Upgrade your home with the enduring appeal of our Wooden Elegance Sofa – where luxury meets longevity." />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llReviewContainer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+
+                    android:background="@drawable/dialog_bg"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/dp_16"
+                    android:paddingVertical="@dimen/dp_18"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/llDescriptionContainer">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/outfit_regular"
+                        android:text="@string/reviews"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tvNoReview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:fontFamily="@font/titillium_medium"
+                        android:text="@string/this_product_has_no_reviews"
+                        android:textAlignment="center"
+                        android:textColor="?attr/surface_grey"
+                        android:visibility="gone" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvReviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_8"
+                        tools:itemCount="2"
+                        tools:listitem="@layout/item_review" />
+
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            >
 
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:gravity="center_vertical"
+                app:layout_scrollFlags="scroll|enterAlways|snap">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/btnBack"
+                    android:layout_width="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_marginStart="@dimen/dp_4"
+                    android:contentDescription="@string/back"
+                    android:padding="@dimen/dp_12"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="?attr/colorOnBackground" />
+
+                <com.google.android.material.search.SearchBar
+                    android:id="@+id/searchBar"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_48"
+                    android:layout_marginStart="@dimen/dp_4"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:layout_weight="6"
+                    android:backgroundTint="?attr/material3Surface"
+                    android:hint="@string/search"
+                    android:textAppearance="@style/TextInputEditTextStyle"
+                    app:defaultMarginsEnabled="false" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_2"
+                android:foreground="?attr/colorSurface" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <include layout="@layout/layout_search_view" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_top_rounded"
+            android:paddingVertical="@dimen/dp_4"
+            android:paddingHorizontal="@dimen/dp_8"
+            >
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddToCart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="@string/add_to_cart"
+                android:fontFamily="@font/titillium_medium"
+                app:cornerRadius="@dimen/dp_16"
+                />
+
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

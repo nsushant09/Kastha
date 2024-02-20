@@ -45,4 +45,11 @@
     <string name="favourite">Favourite</string>
     <string name="checkout">Checkout</string>
     <string name="total_rs">Total: Rs.</string>
+    <string name="try_searching_again_using_a_different_spelling_or_keyword">Try searching again using a different spelling or keyword</string>
+    <string name="couldn_t_find">Couldn\'t find</string>
+    <string name="out_of_stock">Out of Stock</string>
+    <string name="low_stock">Low Stock</string>
+    <string name="reviews">Reviews</string>
+    <string name="this_product_has_no_reviews">This product has no reviews</string>
+    <string name="add_to_cart">Add to Cart</string>
 </resources>

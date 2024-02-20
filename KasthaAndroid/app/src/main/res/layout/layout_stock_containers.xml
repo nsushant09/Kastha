@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:divider="@drawable/divider_4_dp"
+    android:orientation="horizontal"
+    android:showDividers="middle">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvArFeatured"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:strokeColor="?attr/colorPrimary">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/titillium_regular"
+            android:paddingHorizontal="@dimen/dp_16"
+            android:paddingVertical="@dimen/dp_4"
+            android:text="@string/ar"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="@dimen/dp_12"
+            tools:ignore="SpUsage" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvOutOfStock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#1AB00020"
+        android:visibility="gone"
+        app:strokeColor="?attr/colorError">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/titillium_regular"
+            android:paddingHorizontal="@dimen/dp_8"
+            android:paddingVertical="@dimen/dp_4"
+            android:text="@string/out_of_stock"
+            android:textColor="?attr/colorError"
+            android:textSize="@dimen/dp_12"
+            tools:ignore="SpUsage" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvLowStock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:strokeColor="#D0BF30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/titillium_regular"
+            android:paddingHorizontal="@dimen/dp_8"
+            android:paddingVertical="@dimen/dp_4"
+            android:text="@string/low_stock"
+            android:textColor="#D0BF30"
+            android:textSize="@dimen/dp_12"
+            tools:ignore="SpUsage" />
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

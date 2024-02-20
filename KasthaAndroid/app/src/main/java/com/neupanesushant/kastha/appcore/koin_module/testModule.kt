@@ -5,8 +5,11 @@ import com.neupanesushant.kastha.domain.model.Category
 import com.neupanesushant.kastha.domain.model.Image
 import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.domain.model.Product
+import com.neupanesushant.kastha.domain.model.Review
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import java.sql.Date
+import java.time.Instant
 
 val testModule = module {
     single(named("test_object_model")) {
@@ -129,5 +132,22 @@ val testModule = module {
 
     single<List<Product>>(named("test_products")) {
         List(10) { _ -> get(named("test_product")) }
+    }
+
+    single<Review>(named("test_review")) {
+        Review(
+            1,
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            5, Date(Date.from(Instant.now()).time), "Sushant Neupane"
+        )
+    }
+
+    single<List<Review>>(named("test_reviews")) {
+        listOf(
+            get(named("test_review")),
+            get(named("test_review")),
+            get(named("test_review")),
+            get(named("test_review"))
+        )
     }
 }

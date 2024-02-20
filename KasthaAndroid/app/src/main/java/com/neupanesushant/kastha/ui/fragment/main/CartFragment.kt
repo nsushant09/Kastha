@@ -1,7 +1,6 @@
 package com.neupanesushant.kastha.ui.fragment.main
 
 import android.annotation.SuppressLint
-import android.content.res.Resources
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -12,12 +11,11 @@ import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentCartBinding
-import com.neupanesushant.kastha.databinding.ItemLargeProductCardBinding
 import com.neupanesushant.kastha.databinding.ItemProductHorizontalBinding
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.usecase.managers.GlideManager
-import com.neupanesushant.kastha.domain.usecase.managers.PaletteManager
 import com.neupanesushant.kastha.extra.extensions.dpToPx
+import com.neupanesushant.kastha.ui.adapter.LargeProductCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
@@ -114,55 +112,6 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         // TODO : Decrement Count in Database
     }
 
-    private fun setupForYouProducts(products: List<Product>) {
-        binding.rvForYou.apply {
-            val params = titledRecyclerView.layoutParams as ConstraintLayout.LayoutParams
-            params.setMargins(dpToPx(requireContext(), 16f).toInt(), 0, 0, 0)
-            titledRecyclerView.layoutParams = params
-
-            val title = "All Products"
-            tvRecyclerViewTitle.text = title
-            titledRecyclerView.layoutManager =
-                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-            titledRecyclerView.adapter = getLargeProductCardAdapter(products)
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun getLargeProductCardAdapter(products: List<Product>) =
-        RVAdapter<Product, ItemLargeProductCardBinding>(
-            R.layout.item_large_product_card,
-            products
-        ) { mBinding, data, _ ->
-
-            mBinding.root.layoutParams.width =
-                ((Resources.getSystem().displayMetrics.widthPixels / 2) - dpToPx(
-                    requireContext(),
-                    24f
-                )).toInt()
-
-            mBinding.cvProductImage.layoutParams.height = (mBinding.root.layoutParams.width * 4) / 3
-
-            mBinding.tvProductTitle.text = data.name
-            mBinding.tvProductPrice.text = "Rs." + data.price
-            mBinding.layoutArFeatured.cvArFeatured.isVisible = data.model != null
-
-            if (data.images.isNotEmpty()) {
-                GlideManager.loadWithBitmap(
-                    requireContext(),
-                    data.images.shuffled()[0].url
-                ) { bitmap, _ ->
-                    PaletteManager.setBackgroundDynamically(
-                        requireContext(),
-                        mBinding.cvProductImage,
-                        bitmap
-                    )
-                    mBinding.ivProductImage.setImageBitmap(bitmap)
-                }
-            }
-        }
-
-
     private fun onCardProductLongClick(binding: ItemProductHorizontalBinding, product: Product) {
         if (!isSelectionEnabled) {
             isSelectionEnabled = true
@@ -186,6 +135,20 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
             return;
         }
         RouteHelper.routeProductDetail(requireActivity(), product)
+    }
+
+    private fun setupForYouProducts(products: List<Product>) {
+        binding.rvForYou.apply {
+            val params = titledRecyclerView.layoutParams as ConstraintLayout.LayoutParams
+            params.setMargins(dpToPx(requireContext(), 16f).toInt(), 0, 0, 0)
+            titledRecyclerView.layoutParams = params
+
+            val title = "All Products"
+            tvRecyclerViewTitle.text = title
+            titledRecyclerView.layoutManager =
+                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+            titledRecyclerView.adapter = LargeProductCardAdapter(requireActivity(), products)
+        }
     }
 
     private fun onSelectionEnabled() {

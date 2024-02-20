@@ -6,7 +6,6 @@ import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.BaseActivity
 import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.ActivityAuthenticationBinding
-import com.neupanesushant.kastha.ui.dialog.LoadingDialog
 
 class AuthenticationActivity : BaseActivity<ActivityAuthenticationBinding>() {
     override val layoutId: Int

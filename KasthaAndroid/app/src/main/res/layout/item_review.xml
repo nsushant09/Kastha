@@ -6,9 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp_16"
-        android:background="@drawable/dialog_bg"
-        android:padding="@dimen/dp_16">
+        android:layout_marginBottom="@dimen/dp_16">
 
         <TextView
             android:id="@+id/tvReviewUsername"
@@ -16,7 +14,7 @@
             android:layout_height="wrap_content"
 
             android:ellipsize="end"
-            android:fontFamily="@font/outfit_medium"
+            android:fontFamily="@font/outfit_regular"
             android:maxLines="1"
             android:textSize="18sp"
 
@@ -48,43 +46,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvReviewUsername">
 
-            <ImageView
-                android:layout_width="@dimen/dp_14"
-                android:layout_height="@dimen/dp_14"
-                android:layout_marginEnd="@dimen/dp_2"
-                android:contentDescription="@string/image_view"
-                android:src="@drawable/ic_star_filled"
-                app:tint="?attr/colorPrimary" />
-            <ImageView
-                android:layout_width="@dimen/dp_14"
-                android:layout_height="@dimen/dp_14"
-                android:layout_marginEnd="@dimen/dp_2"
-                android:contentDescription="@string/image_view"
-                android:src="@drawable/ic_star_filled"
-                app:tint="?attr/colorPrimary" />
-            <ImageView
-                android:layout_width="@dimen/dp_14"
-                android:layout_height="@dimen/dp_14"
-                android:layout_marginEnd="@dimen/dp_2"
-                android:contentDescription="@string/image_view"
-                android:src="@drawable/ic_star_filled"
-                app:tint="?attr/colorPrimary" />
-            <ImageView
-                android:layout_width="@dimen/dp_14"
-                android:layout_height="@dimen/dp_14"
-                android:layout_marginEnd="@dimen/dp_2"
-                android:contentDescription="@string/image_view"
-                android:src="@drawable/ic_star_filled"
-                app:tint="?attr/colorPrimary" />
-
-            <ImageView
-                android:layout_width="@dimen/dp_14"
-                android:layout_height="@dimen/dp_14"
-                android:layout_marginEnd="@dimen/dp_2"
-                android:contentDescription="@string/image_view"
-                android:src="@drawable/ic_star_filled"
-                app:tint="?attr/colorPrimary" />
-
         </LinearLayout>
 
         <TextView
@@ -102,6 +63,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/llStartContainer"
             tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dp_4"
+            android:background="?attr/surface_grey"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvReviewDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

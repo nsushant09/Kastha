@@ -1,19 +1,15 @@
 package com.neupanesushant.kastha.ui.fragment.main
 
-import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.os.Build
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.neupanesushant.kastha.R
-import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentCategoriesViewPagerBinding
-import com.neupanesushant.kastha.databinding.ItemProductHorizontalBinding
 import com.neupanesushant.kastha.domain.model.Category
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.usecase.managers.GlideManager
-import com.neupanesushant.kastha.ui.adapter.RVAdapter
+import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 
@@ -53,28 +49,7 @@ class CategoriesViewPagerFragment : BaseFragment<FragmentCategoriesViewPagerBind
 
     private fun setupProducts(products: List<Product>) {
         binding.rvCategoryProducts.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvCategoryProducts.adapter = getProductsAdapter(products)
+        binding.rvCategoryProducts.adapter =
+            ProductHorizontalCardAdapter(requireActivity(), products)
     }
-
-    @SuppressLint("SetTextI18n")
-    private fun getProductsAdapter(products: List<Product>) =
-        RVAdapter<Product, ItemProductHorizontalBinding>(
-            R.layout.item_product_horizontal,
-            products
-        ) { mBinding, data, datas ->
-            mBinding.tvProductTitle.text = data.name
-            mBinding.tvProductPrice.text = "Rs." + data.price
-            mBinding.layoutArFeatured.cvArFeatured.isVisible = data.model != null
-            mBinding.tvProductRating.text = "5.0"
-            mBinding.root.setOnClickListener {
-                RouteHelper.routeProductDetail(requireActivity(), data)
-            }
-            if (data.images.isNotEmpty()) {
-                GlideManager.load(
-                    requireContext(),
-                    data.images.shuffled()[0].url,
-                    mBinding.ivProductImage
-                )
-            }
-        }
 }
