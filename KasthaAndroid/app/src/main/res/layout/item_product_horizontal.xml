@@ -78,7 +78,7 @@
                     android:fontFamily="@font/titillium_regular"
                     android:maxLines="1"
                     android:textColor="?attr/surface_grey"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     tools:text="5.0" />
 
                 <include

@@ -1,5 +1,6 @@
 package com.neupanesushant.kastha.ui.fragment.authentication
 
+import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.appcore.RouteConfig
@@ -16,6 +17,7 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding>() {
         get() = R.layout.fragment_signup
 
     override fun setupViews() {
+        setupGenderAutoCompleteView()
     }
 
     override fun setupEventListener() {
@@ -33,18 +35,15 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding>() {
         }
 
         binding.btnSignUp.setOnClickListener {
-            validateFieldData()
         }
     }
 
     override fun setupObserver() {
     }
 
-    private fun validateFieldData(): Boolean {
-        return validateUserData()
-    }
-
-    private fun validateUserData(): Boolean {
-        return false
+    private fun setupGenderAutoCompleteView() {
+        val options = arrayOf("Male", "Female")
+        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, options)
+        binding.etGender.setAdapter(adapter)
     }
 }

@@ -50,7 +50,7 @@
                     android:fontFamily="@font/outfit_medium"
                     android:paddingVertical="@dimen/dp_8"
                     android:text="@string/favourite"
-                    android:textSize="32sp"
+                    android:textSize="24sp"
 
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -74,6 +74,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/cancel"
                         android:textAppearance="@style/TitilliumButtonTextAppearance"
+                        android:textSize="14sp"
                         android:textColor="?attr/surface_grey" />
 
                     <com.google.android.material.button.MaterialButton
@@ -82,6 +83,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/delete"
+                        android:textSize="14sp"
                         android:textAppearance="@style/TitilliumButtonTextAppearance" />
 
                 </LinearLayout>
@@ -92,7 +94,9 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_2"
-                android:foreground="?attr/colorSurface" />
+                android:foreground="?attr/colorSurface"
+                android:layout_marginTop="@dimen/dp_4"
+                />
         </com.google.android.material.appbar.AppBarLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

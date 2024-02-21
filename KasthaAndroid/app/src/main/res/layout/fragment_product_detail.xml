@@ -40,13 +40,29 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/dp_16"
 
-                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginTop="@dimen/dp_12"
                     android:fontFamily="@font/outfit_medium"
                     android:textSize="24sp"
                     app:layout_constraintLeft_toLeftOf="parent"
 
                     app:layout_constraintTop_toBottomOf="@id/rvProductImages"
                     tools:text="Wodden Chair" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFavourites"
+                    style="@style/Widget.App.Button.IconOnly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:clickable="true"
+                    android:contentDescription="@string/favourites"
+                    app:icon="@drawable/ic_heart"
+                    app:iconSize="@dimen/dp_28"
+                    app:iconTint="?attr/surface_grey"
+                    app:layout_constraintBottom_toBottomOf="@id/tvProductTitle"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tvProductTitle" />
+
 
                 <TextView
                     android:id="@+id/tvCategoryTitle"
@@ -155,6 +171,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_8"
                         tools:itemCount="2"
+                        android:overScrollMode="never"
                         tools:listitem="@layout/item_review" />
 
                 </LinearLayout>
