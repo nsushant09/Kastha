@@ -17,7 +17,7 @@ class EmailController(
     @Autowired @Qualifier("OTPEmailService") private val mailService: OTPEmailService
 ) {
     @RequestMapping(value = ["/otp"], method = [RequestMethod.GET])
-    fun sendOTPEmail(@RequestParam("email") toEmail: String): ResponseEntity<HashMap<String, String>> {
+    fun sendOTPEmail(@RequestParam("email") toEmail: String): ResponseEntity<HashMap<String, Any>> {
         val mailResponse = mailService.send(toEmail)
         return ResponseEntity(mailResponse, HttpStatus.OK)
     }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -33,10 +34,10 @@ class SecurityConfig @Autowired constructor(
     public fun securityFilterChain(http: HttpSecurity): SecurityFilterChain =
         http.csrf { it.disable() }
             .authorizeHttpRequests {
-                it.anyRequest().permitAll()
-//                it.requestMatchers("/api/mail/**").permitAll()
-//                it.requestMatchers("/api/auth/**").permitAll()
-//                it.anyRequest().authenticated()
+                it
+                    .anyRequest().permitAll()
+//                    .requestMatchers("/api/mail/**", "/api/auth/**").permitAll()
+//                    .anyRequest().authenticated()
             }
             .exceptionHandling { it.authenticationEntryPoint(point) }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }

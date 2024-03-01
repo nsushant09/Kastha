@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.history.support.RevisionEntityInformation
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -28,8 +29,8 @@ class ReviewController(
         return ResponseEntity.ok(reviewService.insert(review, userId, productId))
     }
 
-    @GetMapping
-    fun all(@RequestParam("product_id") productId: Int): ResponseEntity<List<ReviewDTO>> {
+    @GetMapping("/{product_id}")
+    fun all(@PathVariable("product_id") productId: Int): ResponseEntity<List<ReviewDTO>> {
         return ResponseEntity.ok(reviewService.byId(productId).map(Mapper::toDto))
     }
 }

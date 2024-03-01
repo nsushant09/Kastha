@@ -9,12 +9,14 @@ data class User(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Int,
-    val firstName : String,
-    val lastName : String,
+    val id: Int,
+    val firstName: String,
+    val lastName: String,
     @Column(unique = true)
-    val email : String,
-    val password : String,
+    val email: String,
+    val password: String,
+    val gender: String,
+    val location: String,
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinTable(
@@ -22,5 +24,5 @@ data class User(
         joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")]
     )
-    val roles : List<Role>
+    val roles: List<Role>
 )

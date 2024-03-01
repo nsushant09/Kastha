@@ -22,8 +22,8 @@ class CategoryController(
     @GetMapping("/all")
     fun all() = ResponseEntity.ok(categoryServices.all)
 
-    @GetMapping
-    fun ofId(@RequestParam("category_id") id: Int): ResponseEntity<Category> {
+    @GetMapping("/{category_id}")
+    fun ofId(@PathVariable("category_id") id: Int): ResponseEntity<Category> {
         val category = categoryServices.ofId(id)
         if (category.isEmpty)
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build()

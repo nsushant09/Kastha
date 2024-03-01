@@ -63,15 +63,11 @@ class AuthController @Autowired constructor(
             registerDTO.lastName,
             registerDTO.email,
             passwordEncoder.encode(registerDTO.password),
+            registerDTO.gender,
+            registerDTO.location,
             Collections.singletonList(roles)
         )
         userRepo.save(user)
         return login(LoginDTO(user.email, user.password))
     }
-
-    @PostMapping("/otp")
-    private fun register(@RequestParam("email") email: String) {
-
-    }
-
 }

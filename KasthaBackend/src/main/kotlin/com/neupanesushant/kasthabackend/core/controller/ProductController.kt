@@ -7,6 +7,7 @@ import com.neupanesushant.kasthabackend.data.model.Product
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -34,18 +35,18 @@ class ProductController(
         return ResponseEntity.ok(productService.update(product))
     }
 
-    @GetMapping("/by_id")
-    fun byId(@RequestParam("product_id") productId: Int): ResponseEntity<Product> {
+    @GetMapping("/id/{product_id}")
+    fun byId(@PathVariable("product_id") productId: Int): ResponseEntity<Product> {
         return ResponseEntity.ok(productService.byId(productId))
     }
 
-    @GetMapping("/by_category")
-    fun byCategory(@RequestParam("category_id") categoryId: Int): ResponseEntity<Collection<Product>> {
+    @GetMapping("/category/{category_id}")
+    fun byCategory(@PathVariable("category_id") categoryId: Int): ResponseEntity<Collection<Product>> {
         val category = categoryService.ofId(categoryId).getOrNull() ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(productService.byCategory(category))
     }
 
-    @GetMapping("/by_search")
+    @GetMapping("/search")
     fun bySearchValue(@RequestParam("value") value: String): ResponseEntity<Collection<Product>> {
         return ResponseEntity.ok(productService.bySearch(value))
     }

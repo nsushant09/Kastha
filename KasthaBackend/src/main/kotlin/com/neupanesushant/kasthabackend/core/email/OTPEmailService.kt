@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Service
 import java.util.*
+import kotlin.collections.HashMap
 
 @Service
 @Qualifier("OTPEmailService")
@@ -19,8 +20,8 @@ class OTPEmailService(
 ) : EmailService {
 
     private var authenticationKey = "-1"
-    override fun send(to: String): HashMap<String, String> {
-        val response = HashMap<String, String>()
+    override fun send(to: String): HashMap<String, Any> {
+        val response = HashMap<String, Any>()
         try {
             val mail = env.getProperty("spring.mail.username") ?: throw Exception("Mail not found")
             val message: MimeMessage = mailSender.createMimeMessage()
@@ -32,10 +33,10 @@ class OTPEmailService(
 
             mailSender.send(message)
 
-            response["Success"] = "true"
+            response["success"] = true
             response["authenticationKey"] = authenticationKey
         } catch (e: Exception) {
-            response["Success"] = "false"
+            response["success"] = false
             response["authenticationKey"] = "false"
         }
 

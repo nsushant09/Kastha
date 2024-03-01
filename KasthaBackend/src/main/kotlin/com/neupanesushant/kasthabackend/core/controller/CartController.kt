@@ -28,9 +28,9 @@ class CartController(
         return ResponseEntity.ok(cart.cartProducts.map(Mapper::toDto))
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{product_id}")
     fun remove(
-        @RequestParam("product_id") productId: Int,
+        @PathVariable("product_id") productId: Int,
     ): ResponseEntity<Collection<CartProductDTO>> {
         val cart =
             cartService.remove(productId) ?: return ResponseEntity.notFound().build<Collection<CartProductDTO>>()
@@ -38,9 +38,9 @@ class CartController(
     }
 
 
-    @GetMapping
+    @GetMapping("/{user_id}")
     fun all(
-        @RequestParam("user_id") userId: Int
+        @PathVariable("user_id") userId: Int
     ): ResponseEntity<Collection<CartProductDTO>> {
         val products = cartService.all(userId = userId)
         return ResponseEntity.ok(products?.map(Mapper::toDto))

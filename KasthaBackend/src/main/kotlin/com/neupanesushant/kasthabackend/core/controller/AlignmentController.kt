@@ -22,8 +22,8 @@ class AlignmentController(
     @GetMapping("/all")
     fun all() = ResponseEntity.ok(alignmentService.all)
 
-    @GetMapping
-    fun ofId(@RequestParam("alignment_id") id: Int): ResponseEntity<Alignment> {
+    @GetMapping("/{alignment_id")
+    fun ofId(@PathVariable("alignment_id") id: Int): ResponseEntity<Alignment> {
         val alignment = alignmentService.ofId(id)
         if (alignment.isEmpty)
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build<Alignment>()

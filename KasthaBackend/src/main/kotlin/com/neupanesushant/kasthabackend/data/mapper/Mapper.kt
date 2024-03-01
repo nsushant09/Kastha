@@ -12,8 +12,14 @@ object Mapper {
         CartProductDTO(cartProduct.id, cartProduct.product, cartProduct.quantity)
 
     fun toDto(user: User): UserDTO =
-        UserDTO(user.id, user.firstName, user.lastName, user.email, user.roles)
+        UserDTO(user.id, user.firstName, user.lastName, user.email, user.location, user.gender, user.roles)
 
     fun toDto(review: Review): ReviewDTO =
-        ReviewDTO(review.id, review.description, review.rating, review.date)
+        ReviewDTO(
+            review.id,
+            review.description,
+            review.rating,
+            review.date,
+            "${review.user.firstName} ${review.user.lastName}"
+        )
 }
