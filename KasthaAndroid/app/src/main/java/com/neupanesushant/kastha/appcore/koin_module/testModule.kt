@@ -6,14 +6,30 @@ import com.neupanesushant.kastha.domain.model.Image
 import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.Review
+import com.neupanesushant.kastha.domain.model.Role
+import com.neupanesushant.kastha.domain.model.User
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import java.sql.Date
 import java.time.Instant
 
 val testModule = module {
+    single(named("test_user")) {
+        User(
+            1,
+            firstName = "Sushant",
+            lastName = "Neupane",
+            email = "nsushant09@gmail.com",
+            gender = "Male",
+            location = "Kalanki, Kathmandu",
+            roles = listOf(Role(1, "User"))
+        )
+    }
     single(named("test_object_model")) {
-        ObjectModel(1, "https://firebasestorage.googleapis.com/v0/b/kurakani-asia.appspot.com/o/glb%2Fchair.glb?alt=media&token=333e9bcf-e2e5-4e02-b997-9377d019782c")
+        ObjectModel(
+            1,
+            "https://firebasestorage.googleapis.com/v0/b/kurakani-asia.appspot.com/o/glb%2Fchair.glb?alt=media&token=333e9bcf-e2e5-4e02-b997-9377d019782c"
+        )
     }
     single(named("test_image")) {
         Image(

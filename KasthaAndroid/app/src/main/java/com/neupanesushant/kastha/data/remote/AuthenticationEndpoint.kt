@@ -1,7 +1,8 @@
 package com.neupanesushant.kastha.data.remote
 
-import com.neupanesushant.kastha.domain.model.dto.AuthResponse
 import com.neupanesushant.kastha.domain.model.LoginDTO
+import com.neupanesushant.kastha.domain.model.OTPMailResponse
+import com.neupanesushant.kastha.domain.model.dto.AuthResponse
 import com.neupanesushant.kastha.domain.model.dto.RegisterDTO
 import retrofit2.http.Body
 import retrofit2.http.Field
@@ -23,5 +24,5 @@ interface AuthenticationEndpoint {
     @POST("/auth/otp")
     suspend fun sendOTP(
         @Field("email") email: String
-    ): AuthResponse
+    ): OTPMailResponse
 }

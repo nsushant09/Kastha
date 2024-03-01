@@ -17,4 +17,9 @@ class AuthenticationUseCase(
                 RegisterDTO(firstName, lastName, email, password)
             )
         }
+
+    suspend fun sendOTP(email: String) =
+        safeApiCall {
+            authenticationEndpoint.sendOTP(email)
+        }
 }

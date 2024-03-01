@@ -81,7 +81,7 @@
                     android:clickable="true"
                     android:contentDescription="@string/favourites"
                     app:icon="@drawable/ic_heart"
-                    app:iconSize="@dimen/dp_28"
+                    app:iconSize="@dimen/dp_24"
                     app:iconTint="?attr/surface_grey" />
             </LinearLayout>
 

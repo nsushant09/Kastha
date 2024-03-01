@@ -3,8 +3,8 @@ package com.neupanesushant.kastha.ui.fragment.main
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import com.google.ar.core.Session
+import com.google.ar.sceneform.rendering.Color
 import com.google.ar.sceneform.ux.ArFragment
 import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.extra.extensions.show
@@ -57,6 +57,11 @@ class AugmentedViewFragment : ArFragment() {
             val anchor = hitResult.createAnchor()
             modelManager.buildModel(Uri.parse(objectModel.url)) {
                 modelManager.addTransformableNodeModel(this, anchor, it)
+//                val copy = it
+//                copy.getMaterial(1).setFloat3("baseColor", Color(android.graphics.Color.RED))
+//                copy.getMaterial(1).setFloat3("baseColorTint", Color(android.graphics.Color.RED))
+//                modelManager.addTransformableNodeModel(this, anchor, copy)
+
             }
             requireContext().show("Displaying Augmented Object")
             isModelSet = true
@@ -69,6 +74,7 @@ class AugmentedViewFragment : ArFragment() {
         if (!arInitializer.isArAvailable())
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
     }
+
     override fun onDestroy() {
         super.onDestroy()
         if (this::session.isInitialized)

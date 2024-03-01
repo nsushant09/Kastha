@@ -10,13 +10,17 @@ import kotlinx.parcelize.Parcelize
 class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
 
     companion object {
-        const val OTP_ARGUMENT = "OTPAction"
+        const val OTP_ACTION = "OTP_ACTION"
+        const val OTP_ARGUMENT = "OTP_ARGUMENT"
+
+        const val LOGIN_EMAIL_ARGUMENT = "LOGIN_EMAIL_ARGUMENT"
+        const val LOGIN_PASSWORD_ARGUMENT = "LOGIN_PASSWORD_ARGUMENT"
     }
 
     @Parcelize
-    enum class OTPAction : Parcelable {
-        LOGIN,
-        PASSWORD_RESET
+    enum class OTPAction(val value: String) : Parcelable {
+        LOGIN("LOGIN"),
+        PASSWORD_RESET("PASSWORD_RESET")
     }
 
     private var otpValue: String? = null
@@ -26,7 +30,7 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
 
     override fun initialize() {
         super.initialize()
-        val action = arguments?.getParcelable<OTPFragment.OTPAction>(OTP_ARGUMENT)
+        val action = arguments?.getParcelable<OTPAction>(OTP_ACTION)
         if (action == null) requireActivity().onBackPressedDispatcher.onBackPressed()
         otpAction = action!!
     }
@@ -40,9 +44,9 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
         binding.otpView.otpListener = this
 
         binding.btnVerify.setOnClickListener {
-            if (otpAction == OTPFragment.OTPAction.LOGIN) {
+            if (otpAction.value == OTPAction.LOGIN.value) {
             }
-            if (otpAction == OTPFragment.OTPAction.PASSWORD_RESET) {
+            if (otpAction.value == OTPAction.PASSWORD_RESET.value) {
 
             }
         }

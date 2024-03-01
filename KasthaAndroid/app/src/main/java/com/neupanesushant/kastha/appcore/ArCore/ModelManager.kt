@@ -17,7 +17,7 @@ class ModelManager(private val context: Context) {
             .setSource(
                 context,
                 RenderableSource.builder().setSource(context, uri, RenderableSource.SourceType.GLB)
-                    .setScale(0.50f).build()
+                    .build()
             )
             .setRegistryId(uri.toString())
             .build()

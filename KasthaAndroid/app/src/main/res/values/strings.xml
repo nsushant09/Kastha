@@ -54,4 +54,9 @@
     <string name="add_to_cart">Add to Cart</string>
     <string name="ar_view">AR View</string>
     <string name="gender">Gender</string>
+    <string name="services">Services</string>
+    <string name="account_information">Account Information</string>
+    <string name="policies">Policies</string>
+    <string name="help">Help</string>
+    <string name="logout">Logout</string>
 </resources>
