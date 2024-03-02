@@ -36,8 +36,6 @@ class SecurityConfig @Autowired constructor(
             .authorizeHttpRequests {
                 it
                     .anyRequest().permitAll()
-//                    .requestMatchers("/api/mail/**", "/api/auth/**").permitAll()
-//                    .anyRequest().authenticated()
             }
             .exceptionHandling { it.authenticationEntryPoint(point) }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }

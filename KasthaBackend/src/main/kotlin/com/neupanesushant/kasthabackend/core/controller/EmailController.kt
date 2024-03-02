@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 class EmailController(
     @Autowired @Qualifier("OTPEmailService") private val mailService: OTPEmailService
 ) {
-    @RequestMapping(value = ["/otp"], method = [RequestMethod.GET])
+    @RequestMapping(value = ["/otp"], method = [RequestMethod.POST])
     fun sendOTPEmail(@RequestParam("email") toEmail: String): ResponseEntity<HashMap<String, Any>> {
         val mailResponse = mailService.send(toEmail)
         return ResponseEntity(mailResponse, HttpStatus.OK)

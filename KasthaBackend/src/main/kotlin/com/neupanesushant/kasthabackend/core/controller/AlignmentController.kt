@@ -22,7 +22,7 @@ class AlignmentController(
     @GetMapping("/all")
     fun all() = ResponseEntity.ok(alignmentService.all)
 
-    @GetMapping("/{alignment_id")
+    @GetMapping("/{alignment_id}")
     fun ofId(@PathVariable("alignment_id") id: Int): ResponseEntity<Alignment> {
         val alignment = alignmentService.ofId(id)
         if (alignment.isEmpty)
