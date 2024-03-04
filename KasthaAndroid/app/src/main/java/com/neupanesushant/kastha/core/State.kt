@@ -1,5 +1,7 @@
 package com.neupanesushant.kastha.core
 
+import androidx.databinding.ViewDataBinding
+
 sealed class State<out T> {
     data object Default : State<Nothing>()
     data object Loading : State<Nothing>()

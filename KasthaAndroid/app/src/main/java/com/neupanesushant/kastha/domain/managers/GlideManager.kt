@@ -1,4 +1,4 @@
-package com.neupanesushant.kastha.domain.usecase.managers
+package com.neupanesushant.kastha.domain.managers
 
 import android.annotation.SuppressLint
 import android.content.Context

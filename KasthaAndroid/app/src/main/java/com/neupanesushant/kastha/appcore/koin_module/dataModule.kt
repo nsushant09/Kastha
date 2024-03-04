@@ -2,7 +2,7 @@ package com.neupanesushant.kastha.appcore.koin_module
 
 import com.neupanesushant.kastha.data.remote.AuthenticationEndpoint
 import com.neupanesushant.kastha.data.remote.Endpoint
-import com.neupanesushant.kastha.domain.usecase.managers.RetrofitClient
+import com.neupanesushant.kastha.domain.managers.RetrofitClient
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

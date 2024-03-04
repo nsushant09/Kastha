@@ -39,8 +39,6 @@ class OnboardingFragment : BaseFragment<FragmentOnboardingBinding>() {
         }
 
         val gestureDetector = GestureDetector(requireContext(), DoubleTapListener {
-//            val dialog = LoadingDialog()
-//            dialog.show(childFragmentManager, dialog::class.java.name)
             Router(requireActivity()).routeClearTask(MainActivity::class.java)
             Handler(Looper.getMainLooper()).postDelayed({
 //                dialog.dismiss()

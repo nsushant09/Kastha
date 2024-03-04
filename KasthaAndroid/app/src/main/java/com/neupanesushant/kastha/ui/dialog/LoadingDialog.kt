@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.databinding.DialogLoadingBinding
 
-class LoadingDialog(
+class LoadingDialog private constructor(
     private val infoText: String = "Loading...",
     private val showBackground: Boolean = true,
     private val showInfoText: Boolean = true
@@ -42,6 +42,10 @@ class LoadingDialog(
         if (!showBackground) {
             binding.llLoadingContainer.background = null
         }
+    }
+
+    companion object {
+        val instance: LoadingDialog get() = LoadingDialog()
     }
 
 }

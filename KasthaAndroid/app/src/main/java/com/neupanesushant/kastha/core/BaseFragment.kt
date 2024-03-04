@@ -9,8 +9,8 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import com.neupanesushant.kastha.R
-import com.neupanesushant.kastha.extra.Constants
+import com.neupanesushant.kastha.extra.extensions.show
+import com.neupanesushant.kastha.ui.dialog.LoadingDialog
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
@@ -56,9 +56,21 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     protected open fun animate() {
         AnimationUtils.loadAnimation(
             requireContext(),
-             androidx.appcompat.R.anim.abc_fade_in
+            androidx.appcompat.R.anim.abc_fade_in
         ).also {
             binding.root.animation = it
         }
+    }
+
+    fun toast(message: String) {
+        requireContext().show(message)
+    }
+
+    fun showLoading() {
+        LoadingDialog.instance.show(childFragmentManager, LoadingDialog::class.java.name)
+    }
+
+    fun hideLoading() {
+        LoadingDialog.instance.dismiss()
     }
 }

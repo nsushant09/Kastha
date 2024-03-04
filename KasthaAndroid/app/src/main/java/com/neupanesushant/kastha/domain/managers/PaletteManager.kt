@@ -1,4 +1,4 @@
-package com.neupanesushant.kastha.domain.usecase.managers
+package com.neupanesushant.kastha.domain.managers
 
 import android.content.Context
 import android.content.res.ColorStateList

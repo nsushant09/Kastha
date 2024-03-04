@@ -1,6 +1,5 @@
 package com.neupanesushant.kastha.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +8,7 @@ import com.neupanesushant.kastha.core.NetworkResponseResolver
 import com.neupanesushant.kastha.core.State
 import com.neupanesushant.kastha.domain.model.OTPMailResponse
 import com.neupanesushant.kastha.domain.model.dto.AuthResponse
+import com.neupanesushant.kastha.domain.model.dto.RegisterDTO
 import com.neupanesushant.kastha.domain.usecase.AuthenticationUseCase
 import kotlinx.coroutines.launch
 
@@ -28,20 +28,23 @@ class AuthenticationViewModel(
         viewModelScope.launch {
             val response = authenticationUseCase.login(email, password)
             NetworkResponseResolver(response, onFailure = {
-                Log.d("Network", "Login api failure cause : $it")
+                _isAuthenticationTokenReceived.value = State.Error(it)
             }, onSuccess = {
-                Log.d("Network", "Login api response$it")
+                _isAuthenticationTokenReceived.value = State.Success(it)
             })
         }
     }
 
-    fun register(firstName: String, lastName: String, email: String, password: String) {
+    fun register(
+        registerDTO: RegisterDTO
+    ) {
+        _isAuthenticationTokenReceived.value = State.Loading
         viewModelScope.launch {
-            val response = authenticationUseCase.register(firstName, lastName, email, password)
+            val response = authenticationUseCase.register(registerDTO)
             NetworkResponseResolver(response, onFailure = {
-                Log.d("Network", "Register api failure cause : $it")
+                State.Error(it)
             }, onSuccess = {
-                Log.d("Network", "Register api response$it")
+                State.Success(it)
             })
         }
     }

@@ -10,18 +10,18 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface AuthenticationEndpoint {
-    @POST("/auth/login")
+    @POST("auth/login")
     suspend fun login(
         @Body loginDTO: LoginDTO
     ): AuthResponse
 
-    @POST("/auth/register")
+    @POST("auth/register")
     suspend fun register(
         @Body registerDTO: RegisterDTO
     ): AuthResponse
 
     @FormUrlEncoded
-    @POST("/auth/otp")
+    @POST("mail/otp")
     suspend fun sendOTP(
         @Field("email") email: String
     ): OTPMailResponse

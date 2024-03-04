@@ -11,12 +11,13 @@ class AuthenticationUseCase(
     suspend fun login(email: String, password: String) =
         safeApiCall { authenticationEndpoint.login(LoginDTO(email, password)) }
 
-    suspend fun register(firstName: String, lastName: String, email: String, password: String) =
+    suspend fun register(registerDTO: RegisterDTO) =
         safeApiCall {
             authenticationEndpoint.register(
-                RegisterDTO(firstName, lastName, email, password)
+                registerDTO
             )
         }
+
 
     suspend fun sendOTP(email: String) =
         safeApiCall {

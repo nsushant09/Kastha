@@ -79,8 +79,10 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:$glideVersion")
 
     val retrofitVersion = "2.9.0"
+    val interceptorVersion = "3.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:$interceptorVersion")
 
     //lottie animation
     val lottieVersion = "6.1.0"

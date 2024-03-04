@@ -21,7 +21,7 @@ import com.neupanesushant.kastha.databinding.ItemHomeCarouselBinding
 import com.neupanesushant.kastha.databinding.ItemReviewBinding
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.Review
-import com.neupanesushant.kastha.domain.usecase.managers.GlideManager
+import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named

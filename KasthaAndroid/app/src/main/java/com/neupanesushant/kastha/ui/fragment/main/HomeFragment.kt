@@ -19,7 +19,7 @@ import com.neupanesushant.kastha.databinding.FragmentHomeBinding
 import com.neupanesushant.kastha.databinding.ItemHomeCarouselBinding
 import com.neupanesushant.kastha.databinding.ItemMiniProductCardBinding
 import com.neupanesushant.kastha.domain.model.Product
-import com.neupanesushant.kastha.domain.usecase.managers.GlideManager
+import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.extra.extensions.dpToPx
 import com.neupanesushant.kastha.ui.adapter.LargeProductCardAdapter
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter

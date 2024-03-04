@@ -13,7 +13,7 @@ import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentCartBinding
 import com.neupanesushant.kastha.databinding.ItemProductHorizontalBinding
 import com.neupanesushant.kastha.domain.model.Product
-import com.neupanesushant.kastha.domain.usecase.managers.GlideManager
+import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.extra.extensions.dpToPx
 import com.neupanesushant.kastha.ui.adapter.LargeProductCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter

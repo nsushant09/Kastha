@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.databinding.ItemLargeProductCardBinding
 import com.neupanesushant.kastha.domain.model.Product
-import com.neupanesushant.kastha.domain.usecase.managers.GlideManager
-import com.neupanesushant.kastha.domain.usecase.managers.PaletteManager
+import com.neupanesushant.kastha.domain.managers.GlideManager
+import com.neupanesushant.kastha.domain.managers.PaletteManager
 import com.neupanesushant.kastha.extra.extensions.dpToPx
 
 class LargeProductCardAdapter(

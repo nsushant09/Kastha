@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.databinding.ItemProductHorizontalBinding
 import com.neupanesushant.kastha.domain.model.Product
-import com.neupanesushant.kastha.domain.usecase.managers.GlideManager
+import com.neupanesushant.kastha.domain.managers.GlideManager
 
 class ProductHorizontalCardAdapter(
     private val activity: Activity,

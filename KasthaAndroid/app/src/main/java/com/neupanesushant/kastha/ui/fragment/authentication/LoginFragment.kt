@@ -6,10 +6,7 @@ import com.neupanesushant.kastha.appcore.RouteConfig
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.core.Router
-import com.neupanesushant.kastha.core.StateResolver
 import com.neupanesushant.kastha.databinding.FragmentLoginBinding
-import com.neupanesushant.kastha.domain.model.dto.AuthResponse
-import com.neupanesushant.kastha.extra.extensions.show
 import com.neupanesushant.kastha.viewmodel.AuthenticationViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -19,9 +16,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_login
 
-
-    private var logInEmail = ""
-    private var logInPassword = ""
     override fun setupViews() {
     }
 
@@ -36,9 +30,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
 
         binding.btnSignIn.setOnClickListener {
-            logInEmail = binding.etEmail.text.toString()
-            logInPassword = binding.etPassword.text.toString()
-            authenticationViewModel.sendOTP(binding.etEmail.text.toString())
+            onSignInClick()
         }
 
         binding.btnForgotPassword.setOnClickListener {
@@ -49,19 +41,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
     }
 
-    override fun setupObserver() {
-        authenticationViewModel.isAuthenticationTokenReceived.observe(viewLifecycleOwner) {
-            StateResolver<AuthResponse>(it, onSuccess = {
-                onOTPSent()
-            }, onError = {
-                requireContext().show("Could not log in")
-            })
-        }
-    }
+    override fun setupObserver() {}
 
-    private fun onOTPSent() {
+    private fun onSignInClick() {
+        val email = binding.etEmail.text.toString()
+        val password = binding.etPassword.text.toString()
+        authenticationViewModel.sendOTP(email)
+
         val bundle = bundleOf(
-            OTPFragment.OTPAction.LOGIN.value to OTPFragment.OTP_ACTION
+            OTPFragment.OTP_ACTION to OTPFragment.OTPAction.LOGIN,
+            OTPFragment.LOGIN_EMAIL_ARGUMENT to email,
+            OTPFragment.LOGIN_PASSWORD_ARGUMENT to password
         )
 
         Router(requireActivity(), bundle).route(

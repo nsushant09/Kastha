@@ -3,11 +3,18 @@ package com.neupanesushant.kastha.ui.fragment.authentication
 import android.os.Parcelable
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
+import com.neupanesushant.kastha.core.StateResolver
 import com.neupanesushant.kastha.databinding.FragmentOtpBinding
+import com.neupanesushant.kastha.domain.model.dto.RegisterDTO
+import com.neupanesushant.kastha.extra.Utils.getParcelable
+import com.neupanesushant.kastha.viewmodel.AuthenticationViewModel
 import com.otpview.OTPListener
 import kotlinx.parcelize.Parcelize
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
+
+    private val authenticationViewModel by sharedViewModel<AuthenticationViewModel>()
 
     companion object {
         const val OTP_ACTION = "OTP_ACTION"
@@ -15,12 +22,13 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
 
         const val LOGIN_EMAIL_ARGUMENT = "LOGIN_EMAIL_ARGUMENT"
         const val LOGIN_PASSWORD_ARGUMENT = "LOGIN_PASSWORD_ARGUMENT"
+
+        const val REGISTER_DTO_ARGUMENT = "REGISTER_DTO_ARGUMENT"
     }
 
     @Parcelize
     enum class OTPAction(val value: String) : Parcelable {
-        LOGIN("LOGIN"),
-        PASSWORD_RESET("PASSWORD_RESET")
+        LOGIN("LOGIN"), PASSWORD_RESET("PASSWORD_RESET"), REGISTER("REGISTER")
     }
 
     private var otpValue: String? = null
@@ -30,7 +38,7 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
 
     override fun initialize() {
         super.initialize()
-        val action = arguments?.getParcelable<OTPAction>(OTP_ACTION)
+        val action = getParcelable<OTPAction>(OTP_ACTION)
         if (action == null) requireActivity().onBackPressedDispatcher.onBackPressed()
         otpAction = action!!
     }
@@ -44,24 +52,63 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
         binding.otpView.otpListener = this
 
         binding.btnVerify.setOnClickListener {
-            if (otpAction.value == OTPAction.LOGIN.value) {
-            }
-            if (otpAction.value == OTPAction.PASSWORD_RESET.value) {
-
+            if (binding.otpView.otp == authenticationViewModel.oneTimePassword.value?.authenticationKey) {
+                onOTPVerified()
             }
         }
     }
 
     override fun setupObserver() {
+        authenticationViewModel.isAuthenticationTokenReceived.observe(viewLifecycleOwner) {
+            StateResolver(it, onSuccess = {
+                hideLoading()
+                toast("Success")
+            }, onLoading = { showLoading() }, onError = { hideLoading() })
+        }
     }
 
     override fun onInteractionListener() {
         val otpContent = binding.otpView.otp
         binding.btnVerify.isEnabled = !(otpContent.isNullOrEmpty() || otpContent.length != 6)
+        if (otpContent == authenticationViewModel.oneTimePassword.value?.authenticationKey) {
+            onOTPVerified()
+        }
     }
 
     override fun onOTPComplete(otp: String) {
         binding.btnVerify.isEnabled = true
         otpValue = otp
+    }
+
+    private fun onOTPVerified() {
+        if (otpAction.value == OTPAction.LOGIN.value) {
+            logInAction()
+        }
+        if (otpAction.value == OTPAction.PASSWORD_RESET.value) {
+            passwordResetAction()
+        }
+        if (otpAction.value == OTPAction.REGISTER.value) {
+            registerAction()
+        }
+    }
+
+    private fun logInAction() {
+        val email = getParcelable<String>(LOGIN_EMAIL_ARGUMENT)
+        val password = getParcelable<String>(LOGIN_PASSWORD_ARGUMENT)
+        if (email == null || password == null) {
+            toast("An error occured during login")
+        } else {
+            authenticationViewModel.login(email, password)
+        }
+    }
+
+    private fun passwordResetAction() {}
+    private fun registerAction() {
+        val registerDTO = getParcelable<RegisterDTO>(REGISTER_DTO_ARGUMENT)
+        if (registerDTO == null) {
+            toast("An error occured during registration")
+        } else {
+            authenticationViewModel.register(registerDTO)
+        }
     }
 }
