@@ -5,6 +5,7 @@ import com.neupanesushant.kastha.domain.model.CartProduct
 import com.neupanesushant.kastha.domain.model.Category
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.Review
+import com.neupanesushant.kastha.domain.model.ReviewResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
@@ -90,6 +91,6 @@ interface Endpoint {
     ): Review
 
     @GET("review/{product_id}")
-    suspend fun getReviewsOf(@Path("product_id") productId: Int): List<Review>
+    suspend fun getReviewsOf(@Path("product_id") productId: Int): List<ReviewResponse>
 
 }

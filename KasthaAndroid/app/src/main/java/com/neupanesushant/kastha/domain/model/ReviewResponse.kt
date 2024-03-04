@@ -1,10 +1,11 @@
 package com.neupanesushant.kastha.domain.model
 
-import java.sql.Date
+import java.util.Date
 
-data class Review(
+data class ReviewResponse(
     val id: Int,
     val description: String,
     val rating: Int,
-    val date: Date
+    val date: Date,
+    val userName: String? = null
 )
