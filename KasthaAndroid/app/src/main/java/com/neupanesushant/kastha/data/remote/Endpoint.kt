@@ -12,6 +12,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface Endpoint {
@@ -65,6 +66,13 @@ interface Endpoint {
     suspend fun getCategoryOf(@Path("category_id") alignmentId: Int): Category
 
     // Product
+
+    @POST("product")
+    suspend fun addProduct(@Body product: Product): Product
+
+    @PUT("product")
+    suspend fun updateProduct(@Body product: Product): Product
+
     @get:GET("product")
     val products: List<Product>
 
