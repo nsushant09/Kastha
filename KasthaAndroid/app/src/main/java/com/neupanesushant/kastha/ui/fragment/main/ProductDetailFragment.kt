@@ -22,6 +22,7 @@ import com.neupanesushant.kastha.databinding.ItemReviewBinding
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.Review
 import com.neupanesushant.kastha.domain.managers.GlideManager
+import com.neupanesushant.kastha.domain.model.ReviewResponse
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
@@ -36,7 +37,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
         get() = R.layout.fragment_product_detail
 
     private lateinit var product: Product
-    private val reviews: List<Review> by inject(named("test_reviews"))
+    private val reviews: List<ReviewResponse> by inject(named("test_reviews"))
 
     override fun initialize() {
         try {
@@ -92,12 +93,12 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
         binding.rvProductImages.adapter = adapter
     }
 
-    private fun setupReviews(reviews: List<Review>) {
+    private fun setupReviews(reviews: List<ReviewResponse>) {
         binding.rvReviews.adapter = getReviewAdapter(reviews)
     }
 
-    private fun getReviewAdapter(reviews: List<Review>) =
-        RVAdapter<Review, ItemReviewBinding>(
+    private fun getReviewAdapter(reviews: List<ReviewResponse>) =
+        RVAdapter<ReviewResponse, ItemReviewBinding>(
             R.layout.item_review,
             reviews
         ) { mBinding, data, datas ->

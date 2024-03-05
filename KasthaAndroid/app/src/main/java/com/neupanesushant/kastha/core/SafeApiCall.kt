@@ -23,3 +23,10 @@ suspend fun <T> safeApiCall(
         }
     }
 }
+
+suspend fun <T> safeApiCall(
+    dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    value: T
+) = withContext(dispatcher) {
+    return@withContext NetworkResponse.Success(value)
+}
