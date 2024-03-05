@@ -1,6 +1,5 @@
 package com.neupanesushant.kastha.data.repo
 
-import com.neupanesushant.kastha.domain.model.Alignment
 import com.neupanesushant.kastha.domain.model.Category
 
 interface CategoryRepo {
