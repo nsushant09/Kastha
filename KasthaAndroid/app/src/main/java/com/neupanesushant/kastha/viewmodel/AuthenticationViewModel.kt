@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.neupanesushant.kastha.core.NetworkResponseResolver
+import com.neupanesushant.kastha.core.ResponseResolver
 import com.neupanesushant.kastha.core.State
 import com.neupanesushant.kastha.domain.model.OTPMailResponse
 import com.neupanesushant.kastha.domain.model.dto.AuthResponse
@@ -27,7 +27,7 @@ class AuthenticationViewModel(
         _isAuthenticationTokenReceived.value = State.Loading
         viewModelScope.launch {
             val response = authenticationUseCase.login(email, password)
-            NetworkResponseResolver(response, onFailure = {
+            ResponseResolver(response, onFailure = {
                 _isAuthenticationTokenReceived.value = State.Error(it)
             }, onSuccess = {
                 _isAuthenticationTokenReceived.value = State.Success(it)
@@ -41,7 +41,7 @@ class AuthenticationViewModel(
         _isAuthenticationTokenReceived.value = State.Loading
         viewModelScope.launch {
             val response = authenticationUseCase.register(registerDTO)
-            NetworkResponseResolver(response, onFailure = {
+            ResponseResolver(response, onFailure = {
                 State.Error(it)
             }, onSuccess = {
                 State.Success(it)
@@ -52,7 +52,7 @@ class AuthenticationViewModel(
     fun sendOTP(email: String) {
         viewModelScope.launch {
             val response = authenticationUseCase.sendOTP(email)
-            NetworkResponseResolver(response, onSuccess = {
+            ResponseResolver(response, onSuccess = {
                 _oneTimePassword.value = it
             })
         }

@@ -6,7 +6,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
-suspend fun <T> safeHandler(
+suspend fun <T> requestHandler(
     dispatcher: CoroutineDispatcher = Dispatchers.IO,
     apiCall: suspend () -> T
 ): Response<T> = withContext(dispatcher) {
@@ -24,7 +24,7 @@ suspend fun <T> safeHandler(
     }
 }
 
-suspend fun <T> safeHandler(
+suspend fun <T> requestHandler(
     dispatcher: CoroutineDispatcher = Dispatchers.IO,
     value: T
 ) = withContext(dispatcher) {
