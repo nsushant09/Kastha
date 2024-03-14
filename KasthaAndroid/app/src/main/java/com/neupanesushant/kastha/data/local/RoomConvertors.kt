@@ -3,22 +3,24 @@ package com.neupanesushant.kastha.data.local
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.neupanesushant.kastha.domain.model.Image
+import com.neupanesushant.kastha.domain.model.Product
 
 class RoomConvertors {
     companion object {
 
         @TypeConverter
         @JvmStatic
-        fun toJson(obj: List<Any>): String? {
+        fun toJson(obj: Collection<Any>): String? {
             return Gson().toJson(obj)
         }
 
         @TypeConverter
         @JvmStatic
-        fun fromJsonListTask(obj: String): List<Any> {
+        fun fromJsonCollection(obj: String): Collection<Any> {
             return Gson().fromJson(
                 obj,
-                object : TypeToken<List<Any>>() {}.type
+                object : TypeToken<Collection<Any>>() {}.type
             )
         }
 
@@ -35,6 +37,28 @@ class RoomConvertors {
                 obj,
                 object : TypeToken<Any>() {}.type
             )
+        }
+
+        @TypeConverter
+        fun fromImagesList(images: List<Image>): String {
+            return Gson().toJson(images)
+        }
+
+        @TypeConverter
+        fun toImagesList(imagesString: String): List<Image> {
+            val type = object : TypeToken<List<Image>>() {}.type
+            return Gson().fromJson(imagesString, type)
+        }
+
+        @TypeConverter
+        fun fromProductSet(products: Set<Product>): String {
+            return Gson().toJson(products)
+        }
+
+        @TypeConverter
+        fun toProductSet(productsString: String): Set<Product> {
+            val type = object : TypeToken<Set<Product>>() {}.type
+            return Gson().fromJson(productsString, type)
         }
     }
 }
