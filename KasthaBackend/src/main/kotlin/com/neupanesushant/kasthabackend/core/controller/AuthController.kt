@@ -47,7 +47,8 @@ class AuthController @Autowired constructor(
             )
         SecurityContextHolder.getContext().authentication = authentication
         val token = jwtGenerator.generateToken(authentication)
-        return ResponseEntity.ok(AuthResponseDTO(accessToken = token))
+        val user = userRepo.findByEmail(loginDTO.email) ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(AuthResponseDTO(userId = user.id, accessToken = token))
     }
 
     @PostMapping("/register")
