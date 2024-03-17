@@ -18,10 +18,16 @@ class CartService(
     @Autowired private val cartProductRepo: CartProductRepo,
     @Autowired private val userRepo: UserRepo
 ) {
-    fun insert(productId: Int, userId: Int): Cart? {
+
+    private fun getCart(userId: Int): Cart? {
         val user = userRepo.findById(userId).getOrNull() ?: return null
-        val product = productRepo.findById(productId).getOrNull() ?: return null
         val cart = cartRepo.findByUser(user) ?: Cart(user = user)
+        return cart
+    }
+
+    fun insert(productId: Int, userId: Int): Cart? {
+        val product = productRepo.findById(productId).getOrNull() ?: return null
+        val cart = getCart(userId) ?: return null
         cart.cartProducts.add(CartProduct(cart = cart, product = product))
         return cartRepo.save(cart)
     }
@@ -29,6 +35,7 @@ class CartService(
     fun remove(cartProductId: Int): Cart? {
         val cartProduct = cartProductRepo.findById(cartProductId).getOrNull() ?: return null
         val cart = cartProduct.cart
+        cart.cartProducts.remove(cartProduct)
         return cartRepo.save(cart)
     }
 
@@ -36,5 +43,27 @@ class CartService(
         val user = userRepo.findById(userId).orElse(null) ?: return null
         val cart = cartRepo.findByUser(user)
         return cart?.cartProducts ?: emptySet()
+    }
+
+    fun incrementCartProduct(cartProductId: Int): Cart? {
+        val cartProduct = cartProductRepo.findById(cartProductId).getOrNull() ?: return null
+        val cart = cartProduct.cart
+        cart.cartProducts.forEach {
+            if (it.id == cartProductId) {
+                it.quantity++
+            }
+        }
+        return cartRepo.save(cart)
+    }
+
+    fun decrementCartProduct(cartProductId: Int): Cart? {
+        val cartProduct = cartProductRepo.findById(cartProductId).getOrNull() ?: return null
+        val cart = cartProduct.cart
+        cart.cartProducts.forEach {
+            if (it.id == cartProductId) {
+                it.quantity--
+            }
+        }
+        return cartRepo.save(cart)
     }
 }

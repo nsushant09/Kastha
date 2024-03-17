@@ -18,5 +18,5 @@ data class CartProduct(
     @ManyToOne
     @JoinColumn(name = "product_id")
     val product: Product,
-    val quantity: Int = 1
+    var quantity: Int = 1
 )

@@ -45,4 +45,22 @@ class CartController(
         val products = cartService.all(userId = userId)
         return ResponseEntity.ok(products?.map(Mapper::toDto))
     }
+
+    @PostMapping("/increment/{cart_product_id}")
+    fun increment(
+        @PathVariable("cart_product_id") cartProductId: Int
+    ): ResponseEntity<Collection<CartProductDTO>> {
+        val cart = cartService.incrementCartProduct(cartProductId) ?: return ResponseEntity.notFound()
+            .build()
+        return ResponseEntity.ok(cart.cartProducts.map(Mapper::toDto))
+    }
+
+    @PostMapping("/decrement/{cart_product_id}")
+    fun decrement(
+        @PathVariable("cart_product_id") cartProductId: Int
+    ): ResponseEntity<Collection<CartProductDTO>> {
+        val cart = cartService.decrementCartProduct(cartProductId) ?: return ResponseEntity.notFound()
+            .build()
+        return ResponseEntity.ok(cart.cartProducts.map(Mapper::toDto))
+    }
 }
