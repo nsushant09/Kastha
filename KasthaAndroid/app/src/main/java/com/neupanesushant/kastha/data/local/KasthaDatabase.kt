@@ -16,7 +16,7 @@ import com.neupanesushant.kastha.domain.model.Product
     exportSchema = false
 )
 @TypeConverters(RoomConvertors::class)
-abstract class KasthaDatabase : RoomDatabase() {
+abstract class KasthaDatabase : RoomDatabase(){
     abstract val cartProductDao: CartProductDao
     abstract val categoryDao: CategoryDao
     abstract val favouriteDao: FavouriteDao

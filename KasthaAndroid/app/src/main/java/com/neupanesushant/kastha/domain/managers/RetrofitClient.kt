@@ -1,22 +1,27 @@
 package com.neupanesushant.kastha.domain.managers
 
 import com.neupanesushant.kastha.BuildConfig
+import com.neupanesushant.kastha.extra.Preferences
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitClient {
+object NetworkUtils {
     private val interceptor = HttpLoggingInterceptor()
 
-    private val client = OkHttpClient.Builder().apply {
+    val loggingClient: OkHttpClient = OkHttpClient.Builder().apply {
         val level =
             if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
         interceptor.level = level
         addInterceptor(interceptor)
     }.build()
 
-    val instance: Retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
-        .client(client)
-        .baseUrl(BuildConfig.BASE_URL).build()
+    val authorizationClient: OkHttpClient = OkHttpClient.Builder().apply {
+        addInterceptor { chain ->
+            val original = chain.request()
+            val requestBuilder = original.newBuilder()
+                .header("Authorization", Preferences.getAuthenticationToken() ?: "")
+                .method(original.method(), original.body())
+            chain.proceed(requestBuilder.build())
+        }
+    }.build()
 }

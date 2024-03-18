@@ -10,6 +10,7 @@ import com.neupanesushant.kastha.domain.model.OTPMailResponse
 import com.neupanesushant.kastha.domain.model.dto.AuthResponse
 import com.neupanesushant.kastha.domain.model.dto.RegisterDTO
 import com.neupanesushant.kastha.domain.usecase.AuthenticationUseCase
+import com.neupanesushant.kastha.extra.Preferences
 import kotlinx.coroutines.launch
 
 class AuthenticationViewModel(
@@ -31,6 +32,10 @@ class AuthenticationViewModel(
                 _isAuthenticationTokenReceived.value = State.Error(it)
             }, onSuccess = {
                 _isAuthenticationTokenReceived.value = State.Success(it)
+                Preferences.onLogIn(
+                    userId = it.userId,
+                    authenticationToken = it.tokenType + it.accessToken
+                )
             })
         }
     }
@@ -42,9 +47,13 @@ class AuthenticationViewModel(
         viewModelScope.launch {
             val response = authenticationUseCase.register(registerDTO)
             ResponseResolver(response, onFailure = {
-                State.Error(it)
+                _isAuthenticationTokenReceived.value = State.Error(it)
             }, onSuccess = {
-                State.Success(it)
+                _isAuthenticationTokenReceived.value = State.Success(it)
+                Preferences.onLogIn(
+                    userId = it.userId,
+                    authenticationToken = it.tokenType + it.accessToken
+                )
             })
         }
     }
@@ -57,6 +66,7 @@ class AuthenticationViewModel(
             })
         }
     }
+
 
     fun resetOTP() {
         _oneTimePassword.value = null

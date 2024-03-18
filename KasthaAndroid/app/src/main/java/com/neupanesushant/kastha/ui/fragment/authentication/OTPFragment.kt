@@ -62,7 +62,6 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
         authenticationViewModel.isAuthenticationTokenReceived.observe(viewLifecycleOwner) {
             StateResolver(it, onSuccess = {
                 hideLoading()
-                toast("Success")
             }, onLoading = { showLoading() }, onError = { hideLoading() })
         }
     }

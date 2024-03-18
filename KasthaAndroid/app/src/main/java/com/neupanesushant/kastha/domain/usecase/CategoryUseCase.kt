@@ -1,5 +1,6 @@
 package com.neupanesushant.kastha.domain.usecase
 
+import com.neupanesushant.kastha.data.local.CategoryDao
 import com.neupanesushant.kastha.data.repo.CategoryRepo
 import com.neupanesushant.kastha.domain.model.Category
 
