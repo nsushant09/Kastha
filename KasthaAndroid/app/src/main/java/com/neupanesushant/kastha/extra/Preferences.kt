@@ -36,4 +36,6 @@ object Preferences : KoinComponent {
     fun getAuthenticationToken(): String? {
         return preferences.getString(KEY_AUTHENTICATION_TOKEN, null)
     }
+
+    fun isUserLoggedIn() = preferences.getBoolean(KEY_LOGGED_IN, false)
 }

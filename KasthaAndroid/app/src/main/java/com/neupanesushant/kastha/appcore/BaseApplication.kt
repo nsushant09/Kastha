@@ -1,6 +1,7 @@
 package com.neupanesushant.kastha.appcore
 
 import android.app.Application
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.neupanesushant.kastha.appcore.koin_module.dataModule
@@ -8,6 +9,7 @@ import com.neupanesushant.kastha.appcore.koin_module.domainModule
 import com.neupanesushant.kastha.appcore.koin_module.testModule
 import com.neupanesushant.kastha.appcore.koin_module.vmModule
 import com.neupanesushant.kastha.core.AppConfig
+import com.neupanesushant.kastha.extra.Preferences
 import com.neupanesushant.kastha.ui.activity.AugmentedViewActivity
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
 import com.neupanesushant.kastha.ui.activity.FullScreenContainerActivity
@@ -42,6 +44,15 @@ class BaseApplication : Application() {
         setupActivities()
         setupFragments()
         setOnAppConfig()
+
+        val targetActivityClass = if (Preferences.isUserLoggedIn()) {
+            MainActivity::class.java
+        } else {
+            AuthenticationActivity::class.java
+        }
+        startActivity(Intent(this, targetActivityClass).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
     }
 
     private fun setupActivities() {
