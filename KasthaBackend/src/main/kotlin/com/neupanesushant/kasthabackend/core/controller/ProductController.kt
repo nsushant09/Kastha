@@ -51,6 +51,24 @@ class ProductController(
         return ResponseEntity.ok(productService.bySearch(value))
     }
 
+    @GetMapping("/latest")
+    fun latest(): ResponseEntity<Collection<Product>> = ResponseEntity.ok(productService.latest())
+
+    @GetMapping("/recommended")
+    fun recommended(
+        @RequestParam("category_one_id") categoryOneId: Int,
+        @RequestParam("category_two_id") categoryTwoId: Int,
+        @RequestParam("category_three_id") categoryThreeId: Int
+    ): ResponseEntity<Collection<Product>> {
+        return ResponseEntity.ok(
+            productService.recommended(
+                categoryService.ofId(categoryOneId),
+                categoryService.ofId(categoryTwoId),
+                categoryService.ofId(categoryThreeId),
+            )
+        )
+    }
+
     @GetMapping
     fun all(): Collection<Product> {
         return productService.all
