@@ -21,8 +21,8 @@ class AuthenticationViewModel(
         MutableLiveData(State.Default)
     val isAuthenticationTokenReceived: LiveData<State<AuthResponse>> get() = _isAuthenticationTokenReceived
 
-    private var _oneTimePassword: MutableLiveData<OTPMailResponse?> = MutableLiveData(null)
-    val oneTimePassword: LiveData<OTPMailResponse?> get() = _oneTimePassword
+    private var _oneTimePassword: MutableLiveData<OTPMailResponse> = MutableLiveData()
+    val oneTimePassword: LiveData<OTPMailResponse> get() = _oneTimePassword
 
     fun login(email: String, password: String) {
         _isAuthenticationTokenReceived.value = State.Loading

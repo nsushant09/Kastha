@@ -4,18 +4,21 @@ import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.extra.Preferences
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import kotlin.math.log
 
 object NetworkUtils {
-    private val interceptor = HttpLoggingInterceptor()
-
-    val loggingClient: OkHttpClient = OkHttpClient.Builder().apply {
+    private val loggingInterceptor = HttpLoggingInterceptor().apply {
         val level =
             if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-        interceptor.level = level
-        addInterceptor(interceptor)
+        this.level = level
+    }
+
+    val loggingClient: OkHttpClient = OkHttpClient.Builder().apply {
+        addInterceptor(loggingInterceptor)
     }.build()
 
     val authorizationClient: OkHttpClient = OkHttpClient.Builder().apply {
+        addInterceptor(loggingInterceptor)
         addInterceptor { chain ->
             val original = chain.request()
             val requestBuilder = original.newBuilder()

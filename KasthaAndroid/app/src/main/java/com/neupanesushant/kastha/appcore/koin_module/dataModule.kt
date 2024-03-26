@@ -23,7 +23,6 @@ val dataModule = module {
     single {
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .client(NetworkUtils.loggingClient)
             .client(NetworkUtils.authorizationClient)
             .build()
             .create(Endpoint::class.java)

@@ -7,6 +7,7 @@ import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.FragmentLoginBinding
+import com.neupanesushant.kastha.extra.helper.Validator
 import com.neupanesushant.kastha.viewmodel.AuthenticationViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -46,8 +47,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private fun onSignInClick() {
         val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
-        authenticationViewModel.sendOTP(email)
 
+        if (!areValidDetails(email, password)) {
+            return
+        }
+
+        authenticationViewModel.sendOTP(email)
         val bundle = bundleOf(
             OTPFragment.OTP_ACTION to OTPFragment.OTPAction.LOGIN,
             OTPFragment.LOGIN_EMAIL_ARGUMENT to email,
@@ -58,5 +63,27 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             R.id.authentication_fragment_container,
             AppConfig.getFragment(RouteConfig.OTP_FRAGMENT),
         )
+    }
+
+    private fun areValidDetails(email: String, password: String): Boolean {
+        binding.apply {
+            tilEmail.error = null
+            tilPassword.error = null
+        }
+
+        var allValid = true
+        val emailValidation = Validator.email(email)
+        val passwordValidation = Validator.password(password)
+
+        if (!emailValidation.first) {
+            binding.tilEmail.error = emailValidation.second
+            allValid = false
+        }
+
+        if (!passwordValidation.first) {
+            binding.tilPassword.error = passwordValidation.second
+            allValid = false
+        }
+        return allValid
     }
 }
