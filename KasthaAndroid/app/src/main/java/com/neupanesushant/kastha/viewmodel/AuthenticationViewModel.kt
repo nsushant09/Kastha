@@ -9,6 +9,7 @@ import com.neupanesushant.kastha.core.ResponseResolver
 import com.neupanesushant.kastha.core.State
 import com.neupanesushant.kastha.domain.model.OTPMailResponse
 import com.neupanesushant.kastha.domain.model.dto.AuthResponse
+import com.neupanesushant.kastha.domain.model.dto.BaseResponse
 import com.neupanesushant.kastha.domain.model.dto.RegisterDTO
 import com.neupanesushant.kastha.domain.usecase.AuthenticationUseCase
 import com.neupanesushant.kastha.extra.Preferences
@@ -32,11 +33,11 @@ class AuthenticationViewModel(
             ResponseResolver(response, onFailure = {
                 _isAuthenticationTokenReceived.value = State.Error(it)
             }, onSuccess = {
-                _isAuthenticationTokenReceived.value = State.Success(it)
                 Preferences.onLogIn(
                     userId = it.userId,
                     authenticationToken = it.tokenType + it.accessToken
                 )
+                _isAuthenticationTokenReceived.value = State.Success(it)
             })
         }
     }
@@ -50,16 +51,20 @@ class AuthenticationViewModel(
             ResponseResolver(response, onFailure = {
                 _isAuthenticationTokenReceived.value = State.Error(it)
             }, onSuccess = {
-                _isAuthenticationTokenReceived.value = State.Success(it)
                 Preferences.onLogIn(
                     userId = it.userId,
                     authenticationToken = it.tokenType + it.accessToken
                 )
+                _isAuthenticationTokenReceived.value = State.Success(it)
             })
         }
     }
 
-    fun validateLogin(email: String, password: String, onResponse: (Response<String>) -> Unit) {
+    fun validateLogin(
+        email: String,
+        password: String,
+        onResponse: (Response<BaseResponse<String>>) -> Unit
+    ) {
         viewModelScope.launch {
             val response = authenticationUseCase.validateLogin(email, password)
             onResponse(response)

@@ -3,6 +3,7 @@ package com.neupanesushant.kastha.data.remote
 import com.neupanesushant.kastha.domain.model.LoginDTO
 import com.neupanesushant.kastha.domain.model.OTPMailResponse
 import com.neupanesushant.kastha.domain.model.dto.AuthResponse
+import com.neupanesushant.kastha.domain.model.dto.BaseResponse
 import com.neupanesushant.kastha.domain.model.dto.RegisterDTO
 import retrofit2.Response
 import retrofit2.http.Body
@@ -30,5 +31,5 @@ interface AuthenticationEndpoint {
     @POST("auth/loginValidation")
     suspend fun validateLogin(
         @Body loginDTO: LoginDTO
-    ): Response<String>
+    ): Response<BaseResponse<String>>
 }

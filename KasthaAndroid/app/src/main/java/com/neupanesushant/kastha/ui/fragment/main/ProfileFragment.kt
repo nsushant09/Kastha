@@ -1,9 +1,13 @@
 package com.neupanesushant.kastha.ui.fragment.main
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
+import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.FragmentProfileBinding
 import com.neupanesushant.kastha.domain.model.User
+import com.neupanesushant.kastha.extra.Preferences
+import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 
@@ -17,6 +21,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     }
 
     override fun setupEventListener() {
+        binding.btnLogOut.setOnClickListener {
+            showConfirmationDialog()
+        }
     }
 
     override fun setupObserver() {
@@ -36,5 +43,19 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private fun isUserMale(gender: String): Boolean {
         return gender.first().equals('m', true)
+    }
+
+    private fun showConfirmationDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Sign Out")
+            .setMessage("Are you sure you want to sign out?")
+            .setPositiveButton("YES") { dialog, value ->
+                Preferences.onLogOut()
+                Router(requireActivity()).routeClearTask(AuthenticationActivity::class.java)
+            }
+            .setNegativeButton("CANCEL") { dialog, value ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }
