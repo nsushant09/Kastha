@@ -51,6 +51,7 @@ class BaseApplication : Application() {
             AuthenticationActivity::class.java
         }
         startActivity(Intent(this, targetActivityClass).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         })
     }

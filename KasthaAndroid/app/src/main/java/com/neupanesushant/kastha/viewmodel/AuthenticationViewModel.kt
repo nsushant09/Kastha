@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.neupanesushant.kastha.core.Response
 import com.neupanesushant.kastha.core.ResponseResolver
 import com.neupanesushant.kastha.core.State
 import com.neupanesushant.kastha.domain.model.OTPMailResponse
@@ -55,6 +56,13 @@ class AuthenticationViewModel(
                     authenticationToken = it.tokenType + it.accessToken
                 )
             })
+        }
+    }
+
+    fun validateLogin(email: String, password: String, onResponse: (Response<String>) -> Unit) {
+        viewModelScope.launch {
+            val response = authenticationUseCase.validateLogin(email, password)
+            onResponse(response)
         }
     }
 

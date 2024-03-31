@@ -55,6 +55,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun setupObserver() {
+
     }
 
     private fun setupCarouselView() {

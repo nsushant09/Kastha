@@ -3,10 +3,13 @@ package com.neupanesushant.kastha.ui.fragment.authentication
 import android.os.Parcelable
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
+import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.core.StateResolver
 import com.neupanesushant.kastha.databinding.FragmentOtpBinding
 import com.neupanesushant.kastha.domain.model.dto.RegisterDTO
 import com.neupanesushant.kastha.extra.Utils.getParcelable
+import com.neupanesushant.kastha.ui.activity.MainActivity
+import com.neupanesushant.kastha.ui.dialog.DialogUtils
 import com.neupanesushant.kastha.viewmodel.AuthenticationViewModel
 import com.otpview.OTPListener
 import kotlinx.parcelize.Parcelize
@@ -59,10 +62,14 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
     }
 
     override fun setupObserver() {
-        authenticationViewModel.isAuthenticationTokenReceived.observe(viewLifecycleOwner) {
-            StateResolver(it, onSuccess = {
+        authenticationViewModel.isAuthenticationTokenReceived.observe(viewLifecycleOwner) { state ->
+            StateResolver(state, onSuccess = {
                 hideLoading()
-            }, onLoading = { showLoading() }, onError = { hideLoading() })
+                Router(requireActivity()).routeClearTask(MainActivity::class.java)
+            }, onError = {
+                hideLoading()
+                DialogUtils.generalDialog(requireContext(), "Could not login. Please try again", "Login Error")
+            })
         }
     }
 

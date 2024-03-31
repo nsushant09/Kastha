@@ -14,6 +14,7 @@ val dataModule = module {
 
     single {
         Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(NetworkUtils.loggingClient)
             .build()
@@ -22,6 +23,7 @@ val dataModule = module {
 
     single {
         Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(NetworkUtils.authorizationClient)
             .build()

@@ -5,9 +5,11 @@ import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.appcore.RouteConfig
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.BaseFragment
+import com.neupanesushant.kastha.core.ResponseResolver
 import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.FragmentLoginBinding
 import com.neupanesushant.kastha.extra.helper.Validator
+import com.neupanesushant.kastha.ui.dialog.DialogUtils
 import com.neupanesushant.kastha.viewmodel.AuthenticationViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -52,6 +54,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             return
         }
 
+        authenticationViewModel.validateLogin(email, password) {
+            ResponseResolver(it, onFailure = {
+                DialogUtils.generalDialog(requireContext(), description = it)
+            }, onSuccess = {
+                onLoginDetailsValidated(email, password)
+            })
+        }
+    }
+
+    private fun onLoginDetailsValidated(email: String, password: String) {
         authenticationViewModel.sendOTP(email)
         val bundle = bundleOf(
             OTPFragment.OTP_ACTION to OTPFragment.OTPAction.LOGIN,
