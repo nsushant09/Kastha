@@ -57,7 +57,10 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
         binding.btnVerify.setOnClickListener {
             if (binding.otpView.otp == authenticationViewModel.oneTimePassword.value?.authenticationKey) {
                 onOTPVerified()
+            } else {
+                binding.otpView.showError()
             }
+
         }
     }
 
@@ -68,8 +71,12 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
                 Router(requireActivity()).routeClearTask(MainActivity::class.java)
             }, onError = {
                 hideLoading()
-                DialogUtils.generalDialog(requireContext(), "Could not login. Please try again", "Login Error")
-            })
+                DialogUtils.generalDialog(
+                    requireContext(),
+                    "Could not login. Please try again",
+                    "Login Error"
+                )
+            }, onLoading = { showLoading() })()
         }
     }
 

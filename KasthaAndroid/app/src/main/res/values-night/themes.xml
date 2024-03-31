@@ -24,5 +24,6 @@
         <item name="material3Surface">#1E1E1E</item>
         <item name="themeColor">@color/black</item>
         <item name="textAppearanceTitleSmall">@style/CustomTextAppearanceTitleSmall</item>
+        <item name="materialAlertDialogTheme">@style/MaterialAlertDialogTheme</item>
     </style>
 </resources>

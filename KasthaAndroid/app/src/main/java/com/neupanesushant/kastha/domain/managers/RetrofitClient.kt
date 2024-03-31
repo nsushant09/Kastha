@@ -4,7 +4,7 @@ import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.extra.Preferences
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import kotlin.math.log
+import java.util.concurrent.TimeUnit
 
 object NetworkUtils {
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -15,6 +15,9 @@ object NetworkUtils {
 
     val loggingClient: OkHttpClient = OkHttpClient.Builder().apply {
         addInterceptor(loggingInterceptor)
+        connectTimeout(30, TimeUnit.SECONDS)
+        readTimeout(30, TimeUnit.SECONDS)
+        writeTimeout(30, TimeUnit.SECONDS)
     }.build()
 
     val authorizationClient: OkHttpClient = OkHttpClient.Builder().apply {
@@ -26,5 +29,8 @@ object NetworkUtils {
                 .method(original.method(), original.body())
             chain.proceed(requestBuilder.build())
         }
+        connectTimeout(30, TimeUnit.SECONDS)
+        readTimeout(30, TimeUnit.SECONDS)
+        writeTimeout(30, TimeUnit.SECONDS)
     }.build()
 }

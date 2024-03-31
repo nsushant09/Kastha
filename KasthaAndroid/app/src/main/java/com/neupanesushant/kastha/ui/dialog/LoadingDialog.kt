@@ -44,6 +44,11 @@ class LoadingDialog private constructor(
         }
     }
 
+    override fun dismiss() {
+        if (this.isVisible)
+            super.dismiss()
+    }
+
     companion object {
         val instance: LoadingDialog get() = LoadingDialog()
     }

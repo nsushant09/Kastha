@@ -54,8 +54,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             return
         }
 
-        authenticationViewModel.validateLogin(email, password) {
-            ResponseResolver(it, onFailure = {
+        authenticationViewModel.validateLogin(email, password) { response ->
+            ResponseResolver(response, onFailure = {
                 DialogUtils.generalDialog(requireContext(), description = it)
             }, onSuccess = {
                 onLoginDetailsValidated(email, password)
