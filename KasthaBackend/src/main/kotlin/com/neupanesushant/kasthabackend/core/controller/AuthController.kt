@@ -6,6 +6,7 @@ import com.neupanesushant.kasthabackend.data.dtomodel.AuthResponseDTO
 import com.neupanesushant.kasthabackend.data.dtomodel.LoginDTO
 import com.neupanesushant.kasthabackend.data.dtomodel.RegisterDTO
 import com.neupanesushant.kasthabackend.data.dtomodel.UserDTO
+import com.neupanesushant.kasthabackend.data.model.BaseResponse
 import com.neupanesushant.kasthabackend.data.model.User
 import com.neupanesushant.kasthabackend.security.JwtHelper
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -70,5 +72,16 @@ class AuthController @Autowired constructor(
         )
         userRepo.save(user)
         return login(LoginDTO(user.email, user.password))
+    }
+
+    @PostMapping("/loginValidation")
+    private fun loginValidation(
+        @RequestBody loginDTO: LoginDTO
+    ): ResponseEntity<out Any> {
+        val user = userRepo.findByEmail(loginDTO.email) ?: return ResponseEntity.badRequest()
+            .body("Please provide a registered email")
+        if (!passwordEncoder.matches(loginDTO.password, user.password)) return ResponseEntity.badRequest()
+            .body("The provided password does not match")
+        return ResponseEntity.ok(BaseResponse(success = true, "Valid Details"))
     }
 }
