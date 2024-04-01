@@ -1,5 +1,6 @@
 package com.neupanesushant.kasthabackend.core.controller
 
+import com.neupanesushant.kastha.domain.model.KeyValue
 import com.neupanesushant.kasthabackend.core.repo.RoleRepo
 import com.neupanesushant.kasthabackend.core.repo.UserRepo
 import com.neupanesushant.kasthabackend.data.dtomodel.AuthResponseDTO
@@ -54,7 +55,7 @@ class AuthController @Autowired constructor(
     }
 
     @PostMapping("/register")
-    private fun register(@RequestBody registerDTO: RegisterDTO): ResponseEntity<AuthResponseDTO> {
+    private fun register(@RequestBody registerDTO: RegisterDTO): ResponseEntity<KeyValue<String, String>> {
         if (userRepo.existsByEmail(registerDTO.email)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
         }
@@ -71,7 +72,7 @@ class AuthController @Autowired constructor(
             Collections.singletonList(roles)
         )
         userRepo.save(user)
-        return login(LoginDTO(user.email, user.password))
+        return ResponseEntity.ok(KeyValue(registerDTO.email, registerDTO.password))
     }
 
     @PostMapping("/loginValidation")
