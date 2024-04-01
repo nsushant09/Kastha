@@ -1,5 +1,6 @@
 package com.neupanesushant.kastha.data.remote
 
+import com.neupanesushant.kastha.domain.model.KeyValue
 import com.neupanesushant.kastha.domain.model.LoginDTO
 import com.neupanesushant.kastha.domain.model.OTPMailResponse
 import com.neupanesushant.kastha.domain.model.dto.AuthResponse
@@ -20,7 +21,7 @@ interface AuthenticationEndpoint {
     @POST("auth/register")
     suspend fun register(
         @Body registerDTO: RegisterDTO
-    ): Response<AuthResponse>
+    ): Response<KeyValue<String, String>>
 
     @FormUrlEncoded
     @POST("mail/otp")

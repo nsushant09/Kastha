@@ -64,7 +64,7 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding>() {
                 return
             }
 
-            authenticationViewModel.sendOTP(email)
+            authenticationViewModel.sendOTP("nsushant09@gmail.com")
             val registerDTO = RegisterDTO(firstName, lastName, email, password, location, gender)
             val data = bundleOf(
                 OTPFragment.OTP_ACTION to OTPFragment.OTPAction.REGISTER,

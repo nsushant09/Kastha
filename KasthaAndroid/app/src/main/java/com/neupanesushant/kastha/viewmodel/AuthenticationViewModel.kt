@@ -45,17 +45,12 @@ class AuthenticationViewModel(
     fun register(
         registerDTO: RegisterDTO
     ) {
-        _isAuthenticationTokenReceived.value = State.Loading
         viewModelScope.launch {
             val response = authenticationUseCase.register(registerDTO)
             ResponseResolver(response, onFailure = {
-                _isAuthenticationTokenReceived.value = State.Error(it)
+                return@ResponseResolver
             }, onSuccess = {
-                Preferences.onLogIn(
-                    userId = it.userId,
-                    authenticationToken = it.tokenType + it.accessToken
-                )
-                _isAuthenticationTokenReceived.value = State.Success(it)
+                login(it.key, it.value)
             })
         }
     }

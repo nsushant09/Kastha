@@ -10,6 +10,7 @@ import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.FragmentLoginBinding
 import com.neupanesushant.kastha.extra.helper.Validator
 import com.neupanesushant.kastha.ui.dialog.DialogUtils
+import com.neupanesushant.kastha.ui.dialog.LoadingDialog
 import com.neupanesushant.kastha.viewmodel.AuthenticationViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

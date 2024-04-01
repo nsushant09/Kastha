@@ -73,10 +73,12 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
                 hideLoading()
                 DialogUtils.generalDialog(
                     requireContext(),
-                    "Could not login. Please try again",
+                    it,
                     "Login Error"
                 )
-            }, onLoading = { showLoading() })()
+            }, onLoading = {
+//                showLoading()
+            })()
         }
     }
 
