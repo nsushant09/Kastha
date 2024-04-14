@@ -7,7 +7,7 @@ import com.neupanesushant.kastha.domain.model.Alignment
 class AlignmentRemoteImpl(
     private val endpoint: Endpoint
 ) : AlignmentRepo {
-    override suspend fun getAlignments()= endpoint.alignments
+    override suspend fun getAlignments()= endpoint.getAlignments()
 
     override suspend fun getAlignmentOf(id: Int): Alignment = endpoint.getAlignmentOf(id)
 

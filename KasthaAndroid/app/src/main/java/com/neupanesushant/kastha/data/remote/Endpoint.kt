@@ -18,8 +18,8 @@ import retrofit2.http.Path
 interface Endpoint {
 
     // Alignment
-    @get:GET("alignment/all")
-    val alignments: List<Alignment>
+    @GET("alignment/all")
+    suspend fun getAlignments(): List<Alignment>
 
     @GET("alignment/{alignment_id}")
     suspend fun getAlignmentOf(@Path("alignment_id") alignmentId: Int): Alignment
@@ -59,8 +59,8 @@ interface Endpoint {
     suspend fun allFavoriteProducts(@Path("user_id") userId: Int): List<Product>
 
     // Category
-    @get:GET("category/all")
-    val categories: List<Category>
+    @GET("category/all")
+    suspend fun getCategories(): List<Category>
 
     @GET("category/{category_id}")
     suspend fun getCategoryOf(@Path("category_id") alignmentId: Int): Category
@@ -73,8 +73,8 @@ interface Endpoint {
     @PUT("product")
     suspend fun updateProduct(@Body product: Product): Product
 
-    @get:GET("product")
-    val products: List<Product>
+    @GET("product")
+    suspend fun getProducts(): List<Product>
 
     @GET("product/id/{product_id}")
     suspend fun getProductById(@Path("product_id") productId: Int): Product

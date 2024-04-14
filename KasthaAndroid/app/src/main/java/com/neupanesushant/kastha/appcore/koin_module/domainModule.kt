@@ -7,15 +7,18 @@ import com.neupanesushant.kastha.data.repo.AlignmentRepo
 import com.neupanesushant.kastha.data.repo.CartRepo
 import com.neupanesushant.kastha.data.repo.CategoryRepo
 import com.neupanesushant.kastha.data.repo.FavoriteRepo
+import com.neupanesushant.kastha.data.repo.ProductRepo
 import com.neupanesushant.kastha.domain.repo_impl.remote.AlignmentRemoteImpl
 import com.neupanesushant.kastha.domain.repo_impl.remote.CartRemoteImpl
 import com.neupanesushant.kastha.domain.repo_impl.remote.CategoryRemoteImpl
 import com.neupanesushant.kastha.domain.repo_impl.remote.FavoriteRemoteImpl
+import com.neupanesushant.kastha.domain.repo_impl.remote.ProductRemoteImpl
 import com.neupanesushant.kastha.domain.usecase.AlignmentUseCase
 import com.neupanesushant.kastha.domain.usecase.AuthenticationUseCase
 import com.neupanesushant.kastha.domain.usecase.CartUseCase
 import com.neupanesushant.kastha.domain.usecase.CategoryUseCase
 import com.neupanesushant.kastha.domain.usecase.FavoriteUseCase
+import com.neupanesushant.kastha.domain.usecase.ProductUseCase
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
@@ -57,5 +60,12 @@ val domainModule = module {
     }
     single {
         CartUseCase(get())
+    }
+
+    single<ProductRepo> {
+        ProductRemoteImpl(get())
+    }
+    single {
+        ProductUseCase(get())
     }
 }

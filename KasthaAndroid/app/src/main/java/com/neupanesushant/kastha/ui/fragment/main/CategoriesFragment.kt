@@ -6,16 +6,16 @@ import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentCategoriesBinding
 import com.neupanesushant.kastha.domain.model.Category
-import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.ui.adapter.CategoryViewPagerAdapter
-import org.koin.android.ext.android.inject
-import org.koin.core.qualifier.named
+import com.neupanesushant.kastha.viewmodel.CategoryViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CategoriesFragment : BaseFragment<FragmentCategoriesBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_categories
 
-    private val categories: List<Category> by inject(named("test_categories"))
+    private val categoryViewModel: CategoryViewModel by viewModel()
+
 
     override fun setupViews() {
     }
@@ -24,8 +24,10 @@ class CategoriesFragment : BaseFragment<FragmentCategoriesBinding>() {
     }
 
     override fun setupObserver() {
-        setupViewPager(categories)
-        setupTabLayout(categories)
+        categoryViewModel.categories.observe(viewLifecycleOwner) {
+            setupViewPager(it)
+            setupTabLayout(it)
+        }
     }
 
     @SuppressLint("CheckResult")

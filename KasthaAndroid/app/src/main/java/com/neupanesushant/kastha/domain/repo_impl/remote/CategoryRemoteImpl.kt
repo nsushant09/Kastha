@@ -7,7 +7,7 @@ import com.neupanesushant.kastha.domain.model.Category
 class CategoryRemoteImpl(
     private val endpoint: Endpoint
 ) : CategoryRepo {
-    override suspend fun getCategories(): List<Category> = endpoint.categories
+    override suspend fun getCategories(): List<Category> = endpoint.getCategories()
 
     override suspend fun getCategoryOf(id: Int): Category = endpoint.getCategoryOf(id)
 }

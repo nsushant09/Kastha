@@ -19,5 +19,5 @@ class ProductRemoteImpl(
     override suspend fun getProductsBySearch(value: String): List<Product> =
         endpoint.getProductBySearch(value)
 
-    override suspend fun all(): List<Product> = endpoint.products
+    override suspend fun all(): List<Product> = endpoint.getProducts()
 }
