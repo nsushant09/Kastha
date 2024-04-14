@@ -1,6 +1,7 @@
 package com.neupanesushant.kasthabackend.core.controller
 
 import com.neupanesushant.kasthabackend.core.services.FileService
+import com.neupanesushant.kasthabackend.data.model.BaseResponse
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -18,9 +19,12 @@ class ImageController(
     private lateinit var uploadDirectory: String
 
     @PostMapping
-    fun upload(request: HttpServletRequest, @RequestParam("file") file: MultipartFile): ResponseEntity<String> {
+    fun upload(
+        request: HttpServletRequest,
+        @RequestParam("file") file: MultipartFile
+    ): ResponseEntity<BaseResponse<String>> {
         val fileName = fileService.upload(uploadDirectory, file)
-        return ResponseEntity.ok(fileUrl(fileName))
+        return ResponseEntity.ok(BaseResponse(true, fileUrl(fileName)))
     }
 
     @GetMapping

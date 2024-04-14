@@ -17,7 +17,7 @@ data class Product(
         cascade = [CascadeType.ALL],
         fetch = FetchType.EAGER
     )
-    @JoinColumn(name = "image_id")
+    @JoinColumn(name = "product_id")
     val images: List<Image>,
 
     @OneToOne
