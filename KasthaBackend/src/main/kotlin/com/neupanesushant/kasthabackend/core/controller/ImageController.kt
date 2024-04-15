@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.FileSystemResource
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
@@ -27,11 +28,11 @@ class ImageController(
         return ResponseEntity.ok(BaseResponse(true, fileUrl(fileName)))
     }
 
-    @GetMapping
-    fun get(@RequestParam("fileName") fileName: String): ResponseEntity<FileSystemResource> {
-        return fileService.get(uploadDirectory, fileName)
+    @GetMapping("/{fileName}")
+    fun get(@PathVariable("fileName") fileName: String): ResponseEntity<FileSystemResource> {
+        return fileService.get(uploadDirectory, MediaType.IMAGE_JPEG, fileName)
     }
 
-    private fun fileUrl(fileName: String) = "/api/image/$fileName"
+    private fun fileUrl(fileName: String) = "api/image/$fileName"
 
 }

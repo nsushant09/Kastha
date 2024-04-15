@@ -9,6 +9,7 @@ data class Product(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int,
     val name: String,
+    @Column(columnDefinition = "TEXT")
     val description: String,
     val price: Float,
     val stockQuantity: Int,

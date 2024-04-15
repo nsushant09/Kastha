@@ -25,7 +25,7 @@ class FileService {
         return fileName
     }
 
-    fun get(uploadDirectory: String, fileName: String): ResponseEntity<FileSystemResource> {
+    fun get(uploadDirectory: String,mediaType: MediaType, fileName: String): ResponseEntity<FileSystemResource> {
         val filePath = "$uploadDirectory/$fileName"
         val imageFile = File(filePath)
         if (!imageFile.exists()) {
@@ -33,7 +33,7 @@ class FileService {
         }
         return ResponseEntity
             .ok()
-            .contentType(MediaType.parseMediaType("model/gltf-binary"))
+            .contentType(mediaType)
             .body(FileSystemResource(imageFile))
     }
 }

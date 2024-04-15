@@ -32,11 +32,11 @@ class ObjectModelController(
         return ResponseEntity.ok(BaseResponse(true, fileUrl(fileName)))
     }
 
-    @GetMapping
-    fun get(@RequestParam("fileName") fileName: String): ResponseEntity<FileSystemResource> {
-        return fileService.get(uploadDirectory, fileName)
+    @GetMapping("/{fileName}")
+    fun get(@PathVariable("fileName") fileName: String): ResponseEntity<FileSystemResource> {
+        return fileService.get(uploadDirectory,MediaType.parseMediaType("model/gltf-binary"), fileName)
     }
 
-    private fun fileUrl(fileName: String) = "/api/model/$fileName"
+    private fun fileUrl(fileName: String) = "api/model/$fileName"
 
 }
