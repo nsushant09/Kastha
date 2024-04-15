@@ -20,7 +20,7 @@ interface CategoryDao {
     @Query("SELECT * FROM ${RoomConstants.CATEGORY}")
     suspend fun getCategories(): List<Category>
 
-    @Query("SELECT * FROM ${RoomConstants.CATEGORY} WHERE id = :id")
+    @Query("SELECT * FROM ${RoomConstants.CATEGORY} WHERE category_id = :id")
     suspend fun getCategoryById(id: Int): Category
 
     @Query("DELETE FROM ${RoomConstants.CATEGORY}")

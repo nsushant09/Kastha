@@ -12,12 +12,12 @@ interface FavouriteDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addFavorite(favorite: Favourite)
 
-    @Query("DELETE FROM ${RoomConstants.FAVORITE} WHERE id = :productId")
+    @Query("DELETE FROM ${RoomConstants.FAVORITE} WHERE favourite_id = :productId")
     suspend fun removeFavorite(productId : Int)
 
     @Query("SELECT * FROM ${RoomConstants.FAVORITE} WHERE userId = :userId")
     suspend fun getAllFavorites(userId : Int): Favourite
 
-    @Query("DELETE FROM ${RoomConstants.FAVORITE} WHERE id IN (:productIds)")
+    @Query("DELETE FROM ${RoomConstants.FAVORITE} WHERE favourite_id IN (:productIds)")
     suspend fun removeFavoritesByProductIds(productIds: List<Int>)
 }

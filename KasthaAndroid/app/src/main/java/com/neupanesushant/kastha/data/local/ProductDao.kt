@@ -16,13 +16,13 @@ interface ProductDao {
     @Update
     suspend fun update(product: Product)
 
-    @Query("SELECT * FROM ${RoomConstants.PRODUCT} WHERE id = :id")
+    @Query("SELECT * FROM ${RoomConstants.PRODUCT} WHERE product_id = :id")
     suspend fun getProductById(id: Int): Product
 
-    @Query("SELECT * FROM ${RoomConstants.PRODUCT} WHERE category = :category")
-    suspend fun getProductsByCategoryId(category: Category): List<Product>
+    @Query("SELECT * FROM ${RoomConstants.PRODUCT} WHERE category_id = :categoryId")
+    suspend fun getProductsByCategoryId(categoryId : Int): List<Product>
 
-    @Query("SELECT * FROM ${RoomConstants.PRODUCT} WHERE name LIKE :value OR description LIKE :value")
+    @Query("SELECT * FROM ${RoomConstants.PRODUCT} WHERE product_name LIKE :value OR description LIKE :value")
     suspend fun getProductsBySearch(value: String): List<Product>
 
     @Query("SELECT * FROM ${RoomConstants.PRODUCT}")

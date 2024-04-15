@@ -1,7 +1,10 @@
 package com.neupanesushant.kastha.appcore.koin_module
 
 import android.content.Context
+import androidx.room.Room
 import com.neupanesushant.kastha.BuildConfig
+import com.neupanesushant.kastha.data.local.CategoryDao
+import com.neupanesushant.kastha.data.local.KasthaDatabase
 import com.neupanesushant.kastha.data.remote.AuthenticationEndpoint
 import com.neupanesushant.kastha.data.remote.Endpoint
 import com.neupanesushant.kastha.domain.managers.NetworkUtils
@@ -35,5 +38,30 @@ val dataModule = module {
             BuildConfig.APPLICATION_ID + ".preferences",
             Context.MODE_PRIVATE
         )
+    }
+
+    single<KasthaDatabase> {
+        Room.databaseBuilder(
+            androidApplication(),
+            KasthaDatabase::class.java,
+            BuildConfig.APPLICATION_ID + ".database"
+        )
+            .build()
+    }
+
+    single<CategoryDao> {
+        get<KasthaDatabase>().categoryDao()
+    }
+
+    single {
+        get<KasthaDatabase>().cartProductDao()
+    }
+
+    single {
+        get<KasthaDatabase>().favouriteDao()
+    }
+
+    single {
+        get<KasthaDatabase>().productDao()
     }
 }

@@ -1,11 +1,13 @@
 package com.neupanesushant.kastha.core
 
-import android.content.pm.PackageManager
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.neupanesushant.kastha.broadcast_receivers.NetworkChangeReceiver
 
 abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
@@ -13,6 +15,8 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
     @get:LayoutRes
     protected abstract val layoutId: Int
+
+    private val networkChangeReceiver = NetworkChangeReceiver()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, layoutId)
@@ -35,4 +39,17 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     protected open fun setupExtras() {}
 
     fun getActivityBinding(): T = binding
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(
+            networkChangeReceiver,
+            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(networkChangeReceiver)
+    }
 }

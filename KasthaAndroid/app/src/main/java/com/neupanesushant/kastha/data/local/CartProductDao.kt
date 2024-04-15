@@ -12,7 +12,7 @@ interface CartProductDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(cartProduct: CartProduct)
 
-    @Query("DELETE FROM ${RoomConstants.CART} WHERE id = :cartProductId")
+    @Query("DELETE FROM ${RoomConstants.CART} WHERE cart_product_id = :cartProductId")
     suspend fun remove(cartProductId: Int)
 
     @Query("SELECT * FROM ${RoomConstants.CART}")

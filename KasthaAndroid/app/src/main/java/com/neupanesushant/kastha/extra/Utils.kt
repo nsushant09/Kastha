@@ -1,5 +1,8 @@
 package com.neupanesushant.kastha.extra
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.fragment.app.Fragment
 
@@ -11,12 +14,5 @@ object Utils {
         } else {
             arguments?.getParcelable(key)
         }
-    }
-
-    fun areFieldsEmpty(fields: List<String>): Boolean {
-        fields.forEach {
-            if (it.isEmpty()) return true
-        }
-        return false
     }
 }

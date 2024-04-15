@@ -1,5 +1,7 @@
 package com.neupanesushant.kastha.appcore.koin_module
 
+import com.neupanesushant.kastha.data.local.CategoryDao
+import com.neupanesushant.kastha.data.repo.CategoryRepo
 import com.neupanesushant.kastha.domain.usecase.AuthenticationUseCase
 import com.neupanesushant.kastha.viewmodel.AuthenticationViewModel
 import com.neupanesushant.kastha.viewmodel.CategoryViewModel
@@ -13,6 +15,6 @@ val vmModule = module {
     }
 
     viewModel {
-        CategoryViewModel(get(), get())
+        CategoryViewModel(get<CategoryRepo>(), get<CategoryDao>())
     }
 }

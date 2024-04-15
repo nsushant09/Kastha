@@ -61,8 +61,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.databinding:databinding-runtime:8.2.2")
-    implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.databinding:databinding-runtime:8.3.2")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -95,4 +94,10 @@ dependencies {
     implementation("com.google.ar.sceneform:core:$arSceneFormVersion")
     implementation("com.google.ar.sceneform.ux:sceneform-ux:$arSceneFormVersion")
     implementation("com.google.ar.sceneform:assets:$arSceneFormVersion")
+
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
 }
