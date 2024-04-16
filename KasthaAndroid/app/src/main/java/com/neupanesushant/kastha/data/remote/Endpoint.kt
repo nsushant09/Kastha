@@ -31,13 +31,19 @@ interface Endpoint {
     suspend fun addProductToCart(
         @Field("product_id") productId: Int,
         @Field("user_id") userId: Int
-    ): List<CartProduct>
+    ): CartProduct
 
     @DELETE("cart/{product_id}")
-    suspend fun removeProductFromCart(@Path("product_id") cartProductId: Int): List<CartProduct>
+    suspend fun removeProductFromCart(@Path("product_id") cartProductId: Int)
 
     @GET("cart/{user_id}")
     suspend fun allCartProducts(@Path("user_id") userId: Int): List<CartProduct>
+
+    @POST("cart/increment/{cart_product_id}")
+    suspend fun increment(@Path("cart_product_id") cartProductId: Int): CartProduct
+
+    @POST("cart/increment/{cart_product_id}")
+    suspend fun decrement(@Path("cart_product_id") cartProductId: Int): CartProduct
 
     // Favorite
 
@@ -63,7 +69,7 @@ interface Endpoint {
     suspend fun getCategories(): List<Category>
 
     @GET("category/{category_id}")
-    suspend fun getCategoryOf(@Path("category_id") alignmentId: Int): Category
+    suspend fun getCategoryOf(@Path("category_id") categoryId: Int): Category
 
     // Product
 

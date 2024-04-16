@@ -1,6 +1,7 @@
 package com.neupanesushant.kastha.extra
 
 import com.neupanesushant.kastha.BuildConfig
+import com.neupanesushant.kastha.domain.model.CartProduct
 import com.neupanesushant.kastha.domain.model.Product
 
 object Mapper {
@@ -12,5 +13,9 @@ object Mapper {
             model.copy(url = "${BuildConfig.BASE_URL}${model.url}")
         }
         return product.copy(images = imagesWithBaseUrl, model = modelWithBaseUrl)
+    }
+
+    fun toBaseUrl(cartProduct: CartProduct): CartProduct {
+        return cartProduct.copy(product = toBaseUrl(cartProduct.product))
     }
 }

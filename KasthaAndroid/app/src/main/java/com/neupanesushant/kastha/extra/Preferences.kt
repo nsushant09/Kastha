@@ -28,9 +28,9 @@ object Preferences : KoinComponent {
         editor.apply()
     }
 
-    fun getUserId(): Int? {
+    fun getUserId(): Int {
         val value = preferences.getInt(KEY_USER_ID, -1)
-        return if (value != -1) value else null
+        return value
     }
 
     fun getAuthenticationToken(): String? {

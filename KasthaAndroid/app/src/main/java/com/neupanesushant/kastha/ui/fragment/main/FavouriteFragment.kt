@@ -71,7 +71,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
             if (data.images.isNotEmpty()) {
                 GlideManager.load(
                     requireContext(),
-                    data.images.shuffled()[0].url,
+                    data.images[0].url,
                     mBinding.ivProductImage
                 )
             }

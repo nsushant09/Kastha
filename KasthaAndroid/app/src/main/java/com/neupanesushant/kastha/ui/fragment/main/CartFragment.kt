@@ -12,18 +12,23 @@ import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentCartBinding
 import com.neupanesushant.kastha.databinding.ItemProductHorizontalBinding
-import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.managers.GlideManager
+import com.neupanesushant.kastha.domain.model.CartProduct
+import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.extra.extensions.dpToPx
 import com.neupanesushant.kastha.ui.adapter.LargeProductCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
+import com.neupanesushant.kastha.viewmodel.CartViewModel
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.qualifier.named
 
 class CartFragment : BaseFragment<FragmentCartBinding>() {
 
     private val products: List<Product>
             by inject(named("test_products"))
+
+    private val cartViewModel: CartViewModel by sharedViewModel()
 
     private val selectionItemsIdSet = mutableSetOf<Int>()
     private var isSelectionEnabled: Boolean = false
@@ -43,32 +48,35 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
             isSelectionEnabled = false
         }
         binding.btnDeleteSelection.setOnClickListener {
-            // TODO : Delete Selection Data
+            cartViewModel.removeProducts(selectionItemsIdSet)
         }
     }
 
     override fun setupObserver() {
-        setupCartProducts(products)
+        cartViewModel.allProducts.observe(viewLifecycleOwner) { products ->
+            setupCartProducts(products)
+            setTotalAmount(products)
+        }
         setupForYouProducts(products)
-        setTotalAmount(products)
     }
 
-    private fun setupCartProducts(products: List<Product>) {
+    private fun setupCartProducts(products: List<CartProduct>) {
         binding.rvCartProducts.layoutManager = LinearLayoutManager(requireContext())
         binding.rvCartProducts.adapter = getCartProductsAdapter(products)
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getCartProductsAdapter(products: List<Product>) =
-        RVAdapter<Product, ItemProductHorizontalBinding>(
+    private fun getCartProductsAdapter(products: List<CartProduct>) =
+        RVAdapter<CartProduct, ItemProductHorizontalBinding>(
             R.layout.item_product_horizontal,
             products
         ) { mBinding, data, datas ->
-            mBinding.tvProductTitle.text = data.name
-            mBinding.tvProductPrice.text = "Rs." + data.price
-            mBinding.layoutArFeatured.cvArFeatured.isVisible = data.model != null
+            val product = data.product
+            mBinding.tvProductTitle.text = product.name
+            mBinding.tvProductPrice.text = "Rs." + product.price
+            mBinding.layoutArFeatured.cvArFeatured.isVisible = product.model != null
             mBinding.tvProductRating.text = "5.0"
-            mBinding.layoutItemCount.tvItemCount.text = "1"
+            mBinding.layoutItemCount.tvItemCount.text = data.quantity.toString()
             mBinding.layoutItemCount.root.isVisible = true
 
             mBinding.root.setOnClickListener { onCartProductClick(mBinding, data) }
@@ -89,30 +97,39 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                 }
             }
 
-            if (data.images.isNotEmpty()) {
+            if (product.images.isNotEmpty()) {
                 GlideManager.load(
                     requireContext(),
-                    data.images.shuffled()[0].url,
+                    product.images[0].url,
                     mBinding.ivProductImage
                 )
             }
         }
 
-    private fun onItemIncrement(view: TextView, product: Product, prevCount: Int) {
-        // TODO : If prevCount == stockQuantity ; cannot increment
+    private fun onItemIncrement(view: TextView, product: CartProduct, prevCount: Int) {
+        if (prevCount == product.quantity) {
+            toast("Maximum product quantity")
+            return
+        }
         val newCount = prevCount + 1
         view.text = newCount.toString()
-        // TODO : Increment Count in Database
+        cartViewModel.increment(product.id)
     }
 
-    private fun onItemDecrement(view: TextView, product: Product, prevCount: Int) {
-        if (prevCount == 1) return;
+    private fun onItemDecrement(view: TextView, product: CartProduct, prevCount: Int) {
+        if (prevCount == 1) {
+            toast("Minimum product in cart")
+            return
+        }
         val newCount = prevCount - 1
         view.text = newCount.toString()
-        // TODO : Decrement Count in Database
+        cartViewModel.decrement(product.id)
     }
 
-    private fun onCardProductLongClick(binding: ItemProductHorizontalBinding, product: Product) {
+    private fun onCardProductLongClick(
+        binding: ItemProductHorizontalBinding,
+        product: CartProduct
+    ) {
         if (!isSelectionEnabled) {
             isSelectionEnabled = true
             selectionItemsIdSet.add(product.id)
@@ -121,7 +138,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         }
     }
 
-    private fun onCartProductClick(binding: ItemProductHorizontalBinding, product: Product) {
+    private fun onCartProductClick(binding: ItemProductHorizontalBinding, product: CartProduct) {
         if (isSelectionEnabled) {
             if (selectionItemsIdSet.contains(product.id)) {
                 selectionItemsIdSet.remove(product.id)
@@ -134,7 +151,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
             }
             return;
         }
-        RouteHelper.routeProductDetail(requireActivity(), product)
+        RouteHelper.routeProductDetail(requireActivity(), product.product)
     }
 
     private fun setupForYouProducts(products: List<Product>) {
@@ -155,11 +172,10 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         binding.llDeletionContainer.isVisible = true
     }
 
-    private fun setTotalAmount(products: List<Product>) {
+    private fun setTotalAmount(cartProducts: List<CartProduct>) {
         var total: Double = 0.0
-        products.forEach {
-            total += it.price
-            // TODO : multiply with count in cart
+        cartProducts.forEach {
+            total += it.quantity * it.product.price
         }
         binding.tvTotalAmount.text = String.format("%.2f", total)
     }

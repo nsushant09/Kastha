@@ -20,12 +20,12 @@ import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentProductDetailBinding
 import com.neupanesushant.kastha.databinding.ItemHomeCarouselBinding
 import com.neupanesushant.kastha.databinding.ItemReviewBinding
-import com.neupanesushant.kastha.domain.model.Product
-import com.neupanesushant.kastha.domain.model.Review
 import com.neupanesushant.kastha.domain.managers.GlideManager
+import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.ReviewResponse
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
+import com.neupanesushant.kastha.viewmodel.CartViewModel
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -42,6 +42,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
     private lateinit var product: Product
     private val productViewModel: ProductViewModel by sharedViewModel()
+    private val cartViewModel: CartViewModel by sharedViewModel()
     private val reviews: List<ReviewResponse> by inject(named("test_reviews"))
 
     override fun initialize() {
@@ -71,10 +72,13 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             if (product.model == null) return@setOnClickListener
             requestCameraPermission()
         }
+        binding.btnAddToCart.setOnClickListener {
+            cartViewModel.addProductToCart(product.id)
+        }
     }
 
     override fun setupObserver() {
-        productViewModel.allProduct.observe(viewLifecycleOwner){
+        productViewModel.allProduct.observe(viewLifecycleOwner) {
             setupSearchView()
         }
         setupReviews(reviews)
