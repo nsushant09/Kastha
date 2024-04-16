@@ -6,6 +6,7 @@ import android.graphics.PorterDuff
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -23,8 +24,11 @@ import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.Review
 import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.ReviewResponse
+import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
+import com.neupanesushant.kastha.viewmodel.ProductViewModel
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.qualifier.named
 
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
@@ -37,6 +41,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
         get() = R.layout.fragment_product_detail
 
     private lateinit var product: Product
+    private val productViewModel: ProductViewModel by sharedViewModel()
     private val reviews: List<ReviewResponse> by inject(named("test_reviews"))
 
     override fun initialize() {
@@ -69,6 +74,9 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     }
 
     override fun setupObserver() {
+        productViewModel.allProduct.observe(viewLifecycleOwner){
+            setupSearchView()
+        }
         setupReviews(reviews)
     }
 
@@ -148,6 +156,33 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private fun onCameraPermissionGranted() {
         product.model?.let {
             RouteHelper.routeAugmentedView(requireActivity(), it)
+        }
+    }
+
+    private fun setupSearchView() {
+        binding.layoutSearchView.apply {
+            searchView.editText.setOnEditorActionListener { textView, i, keyEvent ->
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    val searchResults = productViewModel.getSearchResults(textView.text.toString())
+                    setSearchViewContentVisibility(searchResults.isNotEmpty())
+                    setupSearchedProducts(searchResults)
+                }
+                false
+            }
+        }
+    }
+
+    private fun setSearchViewContentVisibility(isProductsAvailable: Boolean) {
+        binding.layoutSearchView.apply {
+            rvSearchView.isVisible = isProductsAvailable
+            llInvalidContainer.isVisible = !isProductsAvailable
+        }
+    }
+
+    private fun setupSearchedProducts(products: List<Product>) {
+        binding.layoutSearchView.apply {
+            rvSearchView.layoutManager = LinearLayoutManager(requireContext())
+            rvSearchView.adapter = ProductHorizontalCardAdapter(requireActivity(), products)
         }
     }
 }

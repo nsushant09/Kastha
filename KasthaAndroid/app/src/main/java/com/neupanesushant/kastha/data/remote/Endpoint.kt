@@ -86,7 +86,6 @@ interface Endpoint {
     @GET("product/search")
     suspend fun getProductBySearch(@Field("value") value: String): List<Product>
 
-
     // Object Model
     // Image
     // Review

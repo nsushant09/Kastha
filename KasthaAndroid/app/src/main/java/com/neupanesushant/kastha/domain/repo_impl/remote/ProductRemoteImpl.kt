@@ -8,6 +8,8 @@ import com.neupanesushant.kastha.extra.Mapper
 class ProductRemoteImpl(
     private val endpoint: Endpoint
 ) : ProductRepo {
+
+    private var allProducts: List<Product> = emptyList()
     override suspend fun add(product: Product): Product =
         Mapper.toBaseUrl(endpoint.addProduct(product))
 
@@ -23,7 +25,10 @@ class ProductRemoteImpl(
     override suspend fun getProductsBySearch(value: String): List<Product> =
         endpoint.getProductBySearch(value).map(Mapper::toBaseUrl)
 
-    override suspend fun all(): List<Product> = endpoint.getProducts().map(Mapper::toBaseUrl)
+    override suspend fun all(): List<Product> {
+        allProducts.ifEmpty { allProducts = endpoint.getProducts().map(Mapper::toBaseUrl) }
+        return allProducts
+    }
 
 
 }

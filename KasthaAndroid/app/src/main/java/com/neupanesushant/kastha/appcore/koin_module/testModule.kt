@@ -159,7 +159,7 @@ val testModule = module {
         )
     }
 
-    single<List<Review>>(named("test_reviews")) {
+    single<List<ReviewResponse>>(named("test_reviews")) {
         listOf(
             get(named("test_review")),
             get(named("test_review")),
@@ -167,4 +167,5 @@ val testModule = module {
             get(named("test_review"))
         )
     }
+
 }

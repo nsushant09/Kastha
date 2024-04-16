@@ -27,7 +27,6 @@ import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -55,8 +54,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun setupObserver() {
         productViewModel.allProduct.observe(viewLifecycleOwner) { products ->
             setupRecommendedProducts(products)
-            setupLatestProducts(products)
+            setupLatestProducts(products.sortedByDescending { it.id }.slice(0..9))
             setupAllProducts(products)
+            setupSearchView()
         }
     }
 
@@ -143,8 +143,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.layoutSearchView.apply {
             searchView.editText.setOnEditorActionListener { textView, i, keyEvent ->
                 if (i == EditorInfo.IME_ACTION_SEARCH) {
-                    // TODO : Search for value and update rv
-                    true
+                    val searchResults = productViewModel.getSearchResults(textView.text.toString())
+                    setSearchViewContentVisibility(searchResults.isNotEmpty())
+                    setupSearchedProducts(searchResults)
                 }
                 false
             }

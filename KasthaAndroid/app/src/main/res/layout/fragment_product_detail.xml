@@ -225,7 +225,9 @@
                 android:foreground="?attr/colorSurface" />
         </com.google.android.material.appbar.AppBarLayout>
 
-        <include layout="@layout/layout_search_view" />
+        <include
+            android:id="@+id/layoutSearchView"
+            layout="@layout/layout_search_view" />
 
         <LinearLayout
             android:layout_width="match_parent"

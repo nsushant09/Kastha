@@ -25,4 +25,24 @@ object Utils {
             connectivityManager.getNetworkCapabilities(network) ?: return false
         return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
+
+    fun isStringInTarget(name: String?, target: String): Boolean {
+        val lengthOfTarget = target.length
+        var lengthOfName = name?.length
+        if (lengthOfName == null) {
+            lengthOfName = 0
+        }
+        val loopSize = lengthOfName - lengthOfTarget
+        for (i in 0 until loopSize + 1) {
+            try {
+                if (name?.substring(i, lengthOfTarget + i).equals(target, true)) {
+                    return true
+                }
+            } catch (e: Exception) {
+                continue
+            }
+        }
+        return false
+
+    }
 }

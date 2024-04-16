@@ -8,6 +8,7 @@ import com.neupanesushant.kastha.data.local.ProductDao
 import com.neupanesushant.kastha.data.repo.ProductRepo
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.extra.AppContext
+import com.neupanesushant.kastha.extra.Utils
 import kotlinx.coroutines.launch
 
 class ProductViewModel(
@@ -21,7 +22,8 @@ class ProductViewModel(
     init {
         getAllProducts()
     }
-    fun getAllProducts() {
+
+    private fun getAllProducts() {
         viewModelScope.launch {
             if (AppContext.isOnline) {
                 _allProducts.value = productRepo.all()
@@ -30,4 +32,9 @@ class ProductViewModel(
             }
         }
     }
+
+    fun getSearchResults(searchValue: String) = _allProducts.value?.filter {
+        Utils.isStringInTarget(it.name, searchValue)
+                || Utils.isStringInTarget(it.category.name, searchValue)
+    } ?: emptyList()
 }
