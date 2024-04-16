@@ -18,31 +18,28 @@ import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.FragmentHomeBinding
 import com.neupanesushant.kastha.databinding.ItemHomeCarouselBinding
 import com.neupanesushant.kastha.databinding.ItemMiniProductCardBinding
-import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.managers.GlideManager
+import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.extra.extensions.dpToPx
 import com.neupanesushant.kastha.ui.adapter.LargeProductCardAdapter
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
+import com.neupanesushant.kastha.viewmodel.ProductViewModel
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_home
 
-    private val products: List<Product>
-            by inject(named("test_products"))
+    private val productViewModel: ProductViewModel by viewModel()
     private val carouselImages: List<String>
             by inject(named("test_carousel_images"))
 
     override fun setupViews() {
-
         setupCarouselView()
         setCarouselData(carouselImages)
-        setupRecommendedProducts(products)
-        setupLatestProducts(products)
-        setupAllProducts(products)
     }
 
     override fun setupEventListener() {
@@ -55,7 +52,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun setupObserver() {
-
+        productViewModel.allProduct.observe(viewLifecycleOwner) { products ->
+            setupRecommendedProducts(products)
+            setupLatestProducts(products)
+            setupAllProducts(products)
+        }
     }
 
     private fun setupCarouselView() {
@@ -131,7 +132,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             if (data.images.isNotEmpty()) {
                 GlideManager.load(
                     requireContext(),
-                    data.images.shuffled()[0].url,
+                    data.images[0].url,
                     mBinding.ivProductImage
                 )
             }

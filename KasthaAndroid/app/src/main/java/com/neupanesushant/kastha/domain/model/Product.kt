@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.extra.RoomConstants
 import kotlinx.parcelize.Parcelize
 

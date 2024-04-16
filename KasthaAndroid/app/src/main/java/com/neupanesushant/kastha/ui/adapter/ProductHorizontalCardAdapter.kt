@@ -7,8 +7,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.databinding.ItemProductHorizontalBinding
-import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.managers.GlideManager
+import com.neupanesushant.kastha.domain.model.Product
 
 class ProductHorizontalCardAdapter(
     private val activity: Activity,
@@ -39,7 +39,7 @@ class ProductHorizontalCardAdapter(
         if (data.images.isNotEmpty()) {
             GlideManager.load(
                 activity,
-                data.images.shuffled()[0].url,
+                data.images[0].url,
                 mBinding.ivProductImage
             )
         }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.databinding.ItemLargeProductCardBinding
 import com.neupanesushant.kastha.domain.model.Product
@@ -52,7 +53,7 @@ class LargeProductCardAdapter(
         if (data.images.isNotEmpty()) {
             GlideManager.loadWithBitmap(
                 activity,
-                data.images.shuffled()[0].url
+                data.images[0].url
             ) { bitmap, _ ->
                 PaletteManager.setBackgroundDynamically(
                     activity,

@@ -3,21 +3,27 @@ package com.neupanesushant.kastha.domain.repo_impl.remote
 import com.neupanesushant.kastha.data.remote.Endpoint
 import com.neupanesushant.kastha.data.repo.ProductRepo
 import com.neupanesushant.kastha.domain.model.Product
+import com.neupanesushant.kastha.extra.Mapper
 
 class ProductRemoteImpl(
     private val endpoint: Endpoint
 ) : ProductRepo {
-    override suspend fun add(product: Product): Product = endpoint.addProduct(product)
+    override suspend fun add(product: Product): Product =
+        Mapper.toBaseUrl(endpoint.addProduct(product))
 
-    override suspend fun update(product: Product): Product = endpoint.updateProduct(product)
+    override suspend fun update(product: Product): Product =
+        Mapper.toBaseUrl(endpoint.updateProduct(product))
 
-    override suspend fun getProductOfId(id: Int): Product = endpoint.getProductById(id)
+    override suspend fun getProductOfId(id: Int): Product =
+        Mapper.toBaseUrl(endpoint.getProductById(id))
 
     override suspend fun getProductsOfCategory(categoryId: Int): List<Product> =
-        endpoint.getProductsByCategory(categoryId)
+        endpoint.getProductsByCategory(categoryId).map(Mapper::toBaseUrl)
 
     override suspend fun getProductsBySearch(value: String): List<Product> =
-        endpoint.getProductBySearch(value)
+        endpoint.getProductBySearch(value).map(Mapper::toBaseUrl)
 
-    override suspend fun all(): List<Product> = endpoint.getProducts()
+    override suspend fun all(): List<Product> = endpoint.getProducts().map(Mapper::toBaseUrl)
+
+
 }
