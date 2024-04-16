@@ -8,13 +8,14 @@ import com.neupanesushant.kastha.databinding.FragmentCategoriesBinding
 import com.neupanesushant.kastha.domain.model.Category
 import com.neupanesushant.kastha.ui.adapter.CategoryViewPagerAdapter
 import com.neupanesushant.kastha.viewmodel.CategoryViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CategoriesFragment : BaseFragment<FragmentCategoriesBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_categories
 
-    private val categoryViewModel: CategoryViewModel by viewModel()
+    private val categoryViewModel: CategoryViewModel by sharedViewModel()
 
 
     override fun setupViews() {

@@ -21,8 +21,7 @@ class ProductViewModel(
     init {
         getAllProducts()
     }
-
-    private fun getAllProducts() {
+    fun getAllProducts() {
         viewModelScope.launch {
             if (AppContext.isOnline) {
                 _allProducts.value = productRepo.all()

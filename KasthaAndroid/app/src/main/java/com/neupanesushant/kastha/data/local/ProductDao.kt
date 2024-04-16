@@ -2,6 +2,7 @@ package com.neupanesushant.kastha.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.neupanesushant.kastha.domain.model.Category
@@ -10,7 +11,7 @@ import com.neupanesushant.kastha.extra.RoomConstants
 
 @Dao
 interface ProductDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(product: Product)
 
     @Update

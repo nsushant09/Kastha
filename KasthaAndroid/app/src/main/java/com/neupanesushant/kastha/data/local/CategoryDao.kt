@@ -11,7 +11,7 @@ import com.neupanesushant.kastha.extra.RoomConstants
 @Dao
 interface CategoryDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(category: Category)
 
     @Delete

@@ -1,6 +1,7 @@
 package com.neupanesushant.kastha.ui.activity
 
 import android.os.Bundle
+import androidx.annotation.IdRes
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.appcore.RouteConfig
 import com.neupanesushant.kastha.core.AppConfig
@@ -65,5 +66,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 else -> false
             }
         }
+    }
+
+    fun setSelectedItem(@IdRes itemId: Int) {
+        binding.bnvMain.selectedItemId = itemId
     }
 }

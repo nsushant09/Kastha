@@ -2,23 +2,25 @@ package com.neupanesushant.kastha.ui.fragment.main
 
 import android.content.res.Resources
 import android.os.Build
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentCategoriesViewPagerBinding
+import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.Category
 import com.neupanesushant.kastha.domain.model.Product
-import com.neupanesushant.kastha.domain.managers.GlideManager
+import com.neupanesushant.kastha.ui.activity.MainActivity
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
-import org.koin.android.ext.android.inject
-import org.koin.core.qualifier.named
+import com.neupanesushant.kastha.viewmodel.ProductViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class CategoriesViewPagerFragment : BaseFragment<FragmentCategoriesViewPagerBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_categories_view_pager
 
     private lateinit var category: Category
-    private val products: List<Product> by inject(named("test_products"))
+    private val productViewModel: ProductViewModel by sharedViewModel()
     override fun initialize() {
         category = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable("category", Category::class.java) ?: return
@@ -33,10 +35,19 @@ class CategoriesViewPagerFragment : BaseFragment<FragmentCategoriesViewPagerBind
     }
 
     override fun setupEventListener() {
+        binding.btnHomeFragment.setOnClickListener {
+            (requireActivity() as MainActivity).setSelectedItem(R.id.menuBnvHome)
+        }
     }
 
     override fun setupObserver() {
-        setupProducts(products)
+        productViewModel.allProduct.observe(viewLifecycleOwner) { products ->
+            val categoryProducts = products.filter { it.category == category }
+            setupProducts(categoryProducts)
+
+            binding.llEmptyView.isVisible = categoryProducts.isEmpty()
+            binding.rvCategoryProducts.isVisible = categoryProducts.isNotEmpty()
+        }
     }
 
     private fun setupCategoryImageView() {

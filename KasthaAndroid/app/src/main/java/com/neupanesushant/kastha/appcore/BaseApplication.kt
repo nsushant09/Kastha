@@ -10,7 +10,9 @@ import com.neupanesushant.kastha.appcore.koin_module.domainModule
 import com.neupanesushant.kastha.appcore.koin_module.testModule
 import com.neupanesushant.kastha.appcore.koin_module.vmModule
 import com.neupanesushant.kastha.core.AppConfig
+import com.neupanesushant.kastha.extra.AppContext
 import com.neupanesushant.kastha.extra.Preferences
+import com.neupanesushant.kastha.extra.Utils
 import com.neupanesushant.kastha.ui.activity.AugmentedViewActivity
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
 import com.neupanesushant.kastha.ui.activity.FullScreenContainerActivity
@@ -46,16 +48,8 @@ class BaseApplication : Application() {
         setupFragments()
         setOnAppConfig()
 
-        val targetActivityClass = if (Preferences.isUserLoggedIn()) {
-            Log.d("TAG", Preferences.getAuthenticationToken() ?: "No auth token")
-            MainActivity::class.java
-        } else {
-            AuthenticationActivity::class.java
-        }
-        startActivity(Intent(this, targetActivityClass).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        })
+        setNetworkConnectionStatus()
+        navigateBasedOnLogInStatus()
     }
 
     private fun setupActivities() {
@@ -92,5 +86,22 @@ class BaseApplication : Application() {
     private fun setOnAppConfig() {
         AppConfig.setActivities(activityMap)
         AppConfig.setFragments(fragmentMap)
+    }
+
+    private fun setNetworkConnectionStatus() {
+        AppContext.isOnline = Utils.isNetworkAvailable(this)
+    }
+
+    private fun navigateBasedOnLogInStatus() {
+        val targetActivityClass = if (Preferences.isUserLoggedIn()) {
+            Log.d("TAG", Preferences.getAuthenticationToken() ?: "No auth token")
+            MainActivity::class.java
+        } else {
+            AuthenticationActivity::class.java
+        }
+        startActivity(Intent(this, targetActivityClass).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
     }
 }

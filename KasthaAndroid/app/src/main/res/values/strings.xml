@@ -59,4 +59,7 @@
     <string name="policies">Policies</string>
     <string name="help">Help</string>
     <string name="logout">Logout</string>
+    <string name="please_check_back_later_for_more_products">Please check back later for more products</string>
+    <string name="we_are_currently_updating_our_inventory">We are currently updating our inventory</string>
+    <string name="go_to_home_page">Go to Home Page</string>
 </resources>

@@ -26,6 +26,7 @@ import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
@@ -33,7 +34,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_home
 
-    private val productViewModel: ProductViewModel by viewModel()
+    private val productViewModel: ProductViewModel by sharedViewModel()
     private val carouselImages: List<String>
             by inject(named("test_carousel_images"))
 
