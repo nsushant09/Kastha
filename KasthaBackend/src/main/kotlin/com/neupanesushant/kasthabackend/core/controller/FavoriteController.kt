@@ -30,11 +30,11 @@ class FavoriteController(
 
     @DeleteMapping
     fun remove(
-        @RequestParam("product_id") productId: Int,
+        @RequestParam("product_ids") productIds: List<Int>,
         @RequestParam("user_id") userId: Int
     ): ResponseEntity<Collection<Product>> {
         val favourite =
-            favoriteService.remove(productId, userId) ?: return ResponseEntity.notFound().build<Collection<Product>>()
+            favoriteService.remove(productIds, userId) ?: return ResponseEntity.notFound().build<Collection<Product>>()
         return ResponseEntity.ok(favourite.products)
     }
 

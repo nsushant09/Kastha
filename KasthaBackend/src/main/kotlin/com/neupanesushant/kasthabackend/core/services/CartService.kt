@@ -25,11 +25,12 @@ class CartService(
         return cart
     }
 
-    fun insert(productId: Int, userId: Int): Cart? {
+    fun insert(productId: Int, userId: Int): CartProduct? {
         val product = productRepo.findById(productId).getOrNull() ?: return null
         val cart = getCart(userId) ?: return null
         cart.cartProducts.add(CartProduct(cart = cart, product = product))
-        return cartRepo.save(cart)
+        val savedCart = cartRepo.save(cart)
+        return savedCart.cartProducts.last()
     }
 
     fun remove(cartProductId: Int): Cart? {
@@ -45,7 +46,7 @@ class CartService(
         return cart?.cartProducts ?: emptySet()
     }
 
-    fun incrementCartProduct(cartProductId: Int): Cart? {
+    fun incrementCartProduct(cartProductId: Int): CartProduct? {
         val cartProduct = cartProductRepo.findById(cartProductId).getOrNull() ?: return null
         val cart = cartProduct.cart
         cart.cartProducts.forEach {
@@ -53,10 +54,11 @@ class CartService(
                 it.quantity++
             }
         }
-        return cartRepo.save(cart)
+        val savedCart = cartRepo.save(cart)
+        return savedCart.cartProducts.find { it.id == cartProductId }
     }
 
-    fun decrementCartProduct(cartProductId: Int): Cart? {
+    fun decrementCartProduct(cartProductId: Int): CartProduct? {
         val cartProduct = cartProductRepo.findById(cartProductId).getOrNull() ?: return null
         val cart = cartProduct.cart
         cart.cartProducts.forEach {
@@ -64,6 +66,7 @@ class CartService(
                 it.quantity--
             }
         }
-        return cartRepo.save(cart)
+        val savedCart = cartRepo.save(cart)
+        return savedCart.cartProducts.find { it.id == cartProductId }
     }
 }

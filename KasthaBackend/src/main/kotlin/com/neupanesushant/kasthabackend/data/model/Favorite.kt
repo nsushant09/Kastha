@@ -8,7 +8,7 @@ import jakarta.persistence.*
 data class Favorite(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Int = 1,
+    val id : Int = -1,
 
     @OneToOne
     @JoinColumn(name = "user_id")

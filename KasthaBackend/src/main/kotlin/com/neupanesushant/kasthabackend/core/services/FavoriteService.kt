@@ -22,11 +22,14 @@ class FavoriteService(
         return favoriteRepo.save(favorite)
     }
 
-    fun remove(productId: Int, userId: Int): Favorite? {
+    fun remove(productIds: List<Int>, userId: Int): Favorite? {
         val user = userRepo.findById(userId).orElse(null) ?: return null
-        val product = productRepo.findById(productId).orElse(null) ?: return null
         val favorite = favoriteRepo.findByUser(user) ?: Favorite(user = user)
-        favorite.products.remove(product)
+
+        productIds.forEach { productId ->
+            val product = productRepo.findById(productId).orElse(null) ?: return null
+            favorite.products.remove(product)
+        }
         return favoriteRepo.save(favorite)
     }
 
