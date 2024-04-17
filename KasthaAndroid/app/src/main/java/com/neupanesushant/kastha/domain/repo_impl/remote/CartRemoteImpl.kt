@@ -12,8 +12,8 @@ class CartRemoteImpl(
     override suspend fun add(productId: Int, userId: Int): CartProduct =
         Mapper.toBaseUrl(endpoint.addProductToCart(productId, userId))
 
-    override suspend fun remove(cartProductId: Int): Unit =
-        endpoint.removeProductFromCart(cartProductId)
+    override suspend fun remove(cartProductIds: List<Int>) =
+        endpoint.removeProductFromCart(cartProductIds)
 
     override suspend fun all(userId: Int) = flow {
         emit(endpoint.allCartProducts(userId).map(Mapper::toBaseUrl))

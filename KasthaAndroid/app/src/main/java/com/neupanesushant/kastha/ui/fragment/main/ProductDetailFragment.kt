@@ -26,6 +26,7 @@ import com.neupanesushant.kastha.domain.model.ReviewResponse
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.viewmodel.CartViewModel
+import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -43,6 +44,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private lateinit var product: Product
     private val productViewModel: ProductViewModel by sharedViewModel()
     private val cartViewModel: CartViewModel by sharedViewModel()
+    private val favouriteViewModel: FavouriteViewModel by sharedViewModel()
+
     private val reviews: List<ReviewResponse> by inject(named("test_reviews"))
 
     override fun initialize() {
@@ -74,6 +77,9 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
         }
         binding.btnAddToCart.setOnClickListener {
             cartViewModel.addProductToCart(product.id)
+        }
+        binding.btnFavourites.setOnClickListener {
+            favouriteViewModel.addToFavourite(product.id)
         }
     }
 

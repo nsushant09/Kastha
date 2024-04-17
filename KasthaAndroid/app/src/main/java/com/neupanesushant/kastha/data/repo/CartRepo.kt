@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CartRepo {
     suspend fun add(productId: Int, userId: Int): CartProduct
-    suspend fun remove(cartProductId: Int)
+    suspend fun remove(cartProductIds: List<Int>)
     suspend fun all(userId: Int): Flow<List<CartProduct>>
 
     suspend fun increment(cartProductId: Int): CartProduct

@@ -9,10 +9,13 @@ import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentFavouriteBinding
 import com.neupanesushant.kastha.databinding.ItemProductHorizontalBinding
-import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.managers.GlideManager
+import com.neupanesushant.kastha.domain.model.Product
+import com.neupanesushant.kastha.ui.activity.MainActivity
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
+import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.qualifier.named
 
 class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
@@ -27,11 +30,12 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
             if (value) onSelectionEnabled() else onSelectionDisabled()
         }
 
+    private val favouriteViewModel: FavouriteViewModel by sharedViewModel()
+
     override val layoutId: Int
         get() = R.layout.fragment_favourite
 
     override fun setupViews() {
-        setupFavouriteProducts(products)
     }
 
     override fun setupEventListener() {
@@ -39,11 +43,20 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
             isSelectionEnabled = false
         }
         binding.btnDeleteSelection.setOnClickListener {
-            // TODO : Delete Selection
+            deleteSelection()
+        }
+        binding.btnHomeFragment.setOnClickListener {
+            (requireActivity() as MainActivity).setSelectedItem(R.id.menuBnvHome)
         }
     }
 
     override fun setupObserver() {
+        favouriteViewModel.favouriteProducts.observe(viewLifecycleOwner) {favoriteProducts ->
+            binding.llEmptyView.isVisible = favoriteProducts.isEmpty()
+            binding.rvFavouriteProducts.isVisible = favoriteProducts.isNotEmpty()
+
+            setupFavouriteProducts(favoriteProducts)
+        }
     }
 
     private fun setupFavouriteProducts(products: List<Product>) {
@@ -112,14 +125,11 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
     private fun onSelectionDisabled() {
         binding.llDeletionContainer.isVisible = false
         selectionItemsIdSet.clear()
-        binding.rvFavouriteProducts.adapter?.notifyItemRangeChanged(
-            0,
-            binding.rvFavouriteProducts.adapter?.itemCount ?: 0
-        )
     }
 
     private fun deleteSelection() {
-
+        favouriteViewModel.removeFromFavourite(selectionItemsIdSet)
+        isSelectionEnabled = false
     }
 
 }

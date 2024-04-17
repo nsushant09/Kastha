@@ -48,7 +48,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
             isSelectionEnabled = false
         }
         binding.btnDeleteSelection.setOnClickListener {
-            cartViewModel.removeProducts(selectionItemsIdSet)
+            deleteSelection()
         }
     }
 
@@ -70,7 +70,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         RVAdapter<CartProduct, ItemProductHorizontalBinding>(
             R.layout.item_product_horizontal,
             products
-        ) { mBinding, data, datas ->
+        ) { mBinding, data, _ ->
             val product = data.product
             mBinding.tvProductTitle.text = product.name
             mBinding.tvProductPrice.text = "Rs." + product.price
@@ -149,7 +149,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                 binding.ivProductImage.foreground =
                     ContextCompat.getDrawable(requireContext(), R.drawable.overlay_selected_item)
             }
-            return;
+            return
         }
         RouteHelper.routeProductDetail(requireActivity(), product.product)
     }
@@ -173,7 +173,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
     }
 
     private fun setTotalAmount(cartProducts: List<CartProduct>) {
-        var total: Double = 0.0
+        var total = 0.0
         cartProducts.forEach {
             total += it.quantity * it.product.price
         }
@@ -189,4 +189,8 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         )
     }
 
+    private fun deleteSelection() {
+        cartViewModel.removeProducts(selectionItemsIdSet)
+        isSelectionEnabled = false
+    }
 }

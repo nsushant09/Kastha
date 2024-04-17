@@ -14,6 +14,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface Endpoint {
 
@@ -34,7 +35,7 @@ interface Endpoint {
     ): CartProduct
 
     @DELETE("cart/{product_id}")
-    suspend fun removeProductFromCart(@Path("product_id") cartProductId: Int)
+    suspend fun removeProductFromCart(@Path("product_ids") cartProductIds: List<Int>)
 
     @GET("cart/{user_id}")
     suspend fun allCartProducts(@Path("user_id") userId: Int): List<CartProduct>
@@ -54,11 +55,10 @@ interface Endpoint {
         @Field("user_id") userId: Int
     ): List<Product>
 
-    @FormUrlEncoded
     @DELETE("favorite")
     suspend fun removeProductFromFavorite(
-        @Field("product_id") productId: Int,
-        @Field("user_id") userId: Int
+        @Query("product_ids") productIds: List<Int>,
+        @Query("user_id") userId: Int
     ): List<Product>
 
     @GET("favorite/{user_id}")

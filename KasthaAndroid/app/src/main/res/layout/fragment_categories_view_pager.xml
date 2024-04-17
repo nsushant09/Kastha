@@ -80,7 +80,9 @@
                     android:text="@string/we_are_currently_updating_our_inventory"
 
                     android:textAlignment="center"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:layout_marginBottom="@dimen/dp_4"
+                    />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -89,7 +91,9 @@
                     android:text="@string/please_check_back_later_for_more_products"
 
                     android:textAlignment="center"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:layout_marginBottom="@dimen/dp_8"
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnHomeFragment"

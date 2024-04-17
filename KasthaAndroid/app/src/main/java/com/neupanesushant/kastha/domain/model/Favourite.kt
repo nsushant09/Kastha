@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
 data class Favourite(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "favourite_id")
-    val id: Int,
+    val id: Int = 1,
     val userId: Int,
     val products: Set<Product>
 ) : Parcelable

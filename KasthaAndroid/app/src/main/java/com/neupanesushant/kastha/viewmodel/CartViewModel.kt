@@ -21,7 +21,12 @@ class CartViewModel(
 
     private val _allProducts: MutableLiveData<List<CartProduct>> = MutableLiveData()
     val allProducts: LiveData<List<CartProduct>> get() = _allProducts
-    private fun getAllCartProducts() = viewModelScope.launch {
+
+    init {
+        getAllCartProducts()
+    }
+
+    fun getAllCartProducts() = viewModelScope.launch {
         if (AppContext.isOffline) {
             _allProducts.value = cartProductDao.getAllCartProducts()
             return@launch
@@ -37,25 +42,23 @@ class CartViewModel(
 
     fun addProductToCart(productId: Int) = viewModelScope.launch {
         val cartProduct = cartRepo.add(productId, Preferences.getUserId())
-        cartProductDao.add(cartProduct)
+//        cartProductDao.add(cartProduct)
     }
 
-    fun removeProduct(cartProductId: Int) = viewModelScope.launch {
-        cartRepo.remove(cartProductId)
-        cartProductDao.remove(cartProductId)
+    fun removeProducts(cartProductIds: Collection<Int>) = viewModelScope.launch {
+        cartRepo.remove(cartProductIds.toList())
+        cartProductIds.forEach { cartProductId ->
+            cartProductDao.remove(cartProductId)
+        }
     }
 
     fun increment(cartProductId: Int) = viewModelScope.launch {
         val cartProduct = cartRepo.increment(cartProductId)
-        cartProductDao.add(cartProduct)
+//        cartProductDao.add(cartProduct)
     }
 
     fun decrement(cartProductId: Int) = viewModelScope.launch {
         val cartProduct = cartRepo.decrement(cartProductId)
-        cartProductDao.add(cartProduct)
-    }
-
-    fun removeProducts(cartProductIds: Collection<Int>) {
-        cartProductIds.forEach { removeProduct(it) }
+//        cartProductDao.add(cartProduct)
     }
 }
