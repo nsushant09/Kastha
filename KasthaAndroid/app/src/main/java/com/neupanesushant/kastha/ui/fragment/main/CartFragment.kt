@@ -107,7 +107,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         }
 
     private fun onItemIncrement(view: TextView, product: CartProduct, prevCount: Int) {
-        if (prevCount == product.quantity) {
+        if (prevCount == product.product.stockQuantity) {
             toast("Maximum product quantity")
             return
         }

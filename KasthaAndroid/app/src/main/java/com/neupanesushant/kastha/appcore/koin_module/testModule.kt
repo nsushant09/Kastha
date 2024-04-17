@@ -127,6 +127,7 @@ val testModule = module {
                     "\n" +
                     "Whether you're looking to enhance your living room, create a cozy reading nook, or elevate your office waiting area, the Wooden Elegance Sofa effortlessly combines form and function. Invest in quality, style, and comfort with this timeless wooden sofa that transcends trends and adds a touch of sophistication to your living space. Upgrade your home with the enduring appeal of our Wooden Elegance Sofa – where luxury meets longevity.",
             124.1f,
+            100,
             get(named("category_chair")),
             listOf<Image>(
                 get(named("test_image")),

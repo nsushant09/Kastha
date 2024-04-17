@@ -32,10 +32,10 @@ interface Endpoint {
     suspend fun addProductToCart(
         @Field("product_id") productId: Int,
         @Field("user_id") userId: Int
-    ): CartProduct
+    ): List<CartProduct>
 
-    @DELETE("cart/{product_id}")
-    suspend fun removeProductFromCart(@Path("product_ids") cartProductIds: List<Int>)
+    @DELETE("cart")
+    suspend fun removeProductFromCart(@Query("cart_product_ids") cartProductIds: List<Int>): List<CartProduct>
 
     @GET("cart/{user_id}")
     suspend fun allCartProducts(@Path("user_id") userId: Int): List<CartProduct>

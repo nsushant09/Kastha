@@ -9,9 +9,6 @@ import com.neupanesushant.kastha.data.repo.CartRepo
 import com.neupanesushant.kastha.domain.model.CartProduct
 import com.neupanesushant.kastha.extra.AppContext
 import com.neupanesushant.kastha.extra.Preferences
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class CartViewModel(
@@ -32,21 +29,16 @@ class CartViewModel(
             return@launch
         }
 
-        cartRepo.all(Preferences.getUserId())
-            .flowOn(Dispatchers.IO)
-            .catch { e -> }
-            .collect {
-                _allProducts.value = it
-            }
+        _allProducts.value = cartRepo.all(Preferences.getUserId())
     }
 
     fun addProductToCart(productId: Int) = viewModelScope.launch {
-        val cartProduct = cartRepo.add(productId, Preferences.getUserId())
+        _allProducts.value = cartRepo.add(productId, Preferences.getUserId())
 //        cartProductDao.add(cartProduct)
     }
 
     fun removeProducts(cartProductIds: Collection<Int>) = viewModelScope.launch {
-        cartRepo.remove(cartProductIds.toList())
+        _allProducts.value = cartRepo.remove(cartProductIds.toList())
         cartProductIds.forEach { cartProductId ->
             cartProductDao.remove(cartProductId)
         }
@@ -54,11 +46,17 @@ class CartViewModel(
 
     fun increment(cartProductId: Int) = viewModelScope.launch {
         val cartProduct = cartRepo.increment(cartProductId)
+        _allProducts.value = _allProducts.value?.map { oldProduct ->
+            if (oldProduct.id == cartProduct.id) cartProduct else oldProduct
+        }
 //        cartProductDao.add(cartProduct)
     }
 
     fun decrement(cartProductId: Int) = viewModelScope.launch {
         val cartProduct = cartRepo.decrement(cartProductId)
+        _allProducts.value = _allProducts.value?.map { oldProduct ->
+            if (oldProduct.id == cartProduct.id) cartProduct else oldProduct
+        }
 //        cartProductDao.add(cartProduct)
     }
 }

@@ -5,7 +5,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.extra.RoomConstants
 import kotlinx.parcelize.Parcelize
 
@@ -19,6 +18,7 @@ data class Product(
     val name: String,
     val description: String,
     val price: Float,
+    val stockQuantity: Int,
     @Embedded
     val category: Category,
     val images: List<Image>,
