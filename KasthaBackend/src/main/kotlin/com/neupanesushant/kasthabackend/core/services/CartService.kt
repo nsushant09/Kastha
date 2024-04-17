@@ -7,6 +7,7 @@ import com.neupanesushant.kasthabackend.core.repo.UserRepo
 import com.neupanesushant.kasthabackend.data.model.Cart
 import com.neupanesushant.kasthabackend.data.model.CartProduct
 import com.neupanesushant.kasthabackend.data.model.Product
+import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import kotlin.jvm.optionals.getOrNull
@@ -25,48 +26,51 @@ class CartService(
         return cart
     }
 
-    fun insert(productId: Int, userId: Int): CartProduct? {
-        val product = productRepo.findById(productId).getOrNull() ?: return null
+    @Transactional
+    fun insert(productId: Int, userId: Int): Collection<CartProduct>? {
+        val product = productRepo.findById(productId).orElse(null) ?: return null
         val cart = getCart(userId) ?: return null
-        cart.cartProducts.add(CartProduct(cart = cart, product = product))
+
+        // Create a new CartProduct and associate it with the Cart
+        val cartProduct = CartProduct(product = product, cart = cart)
+        val savedCartProduct = cartProductRepo.save(cartProduct)
+
+        // Add the saved CartProduct to the Cart
+        cart.products.add(savedCartProduct)
+
+        // Save the updated Cart
         val savedCart = cartRepo.save(cart)
-        return savedCart.cartProducts.last()
+
+        return savedCart.products
     }
 
-    fun remove(cartProductId: Int): Cart? {
-        val cartProduct = cartProductRepo.findById(cartProductId).getOrNull() ?: return null
-        val cart = cartProduct.cart
-        cart.cartProducts.remove(cartProduct)
-        return cartRepo.save(cart)
+    fun remove(cartProductIds: List<Int>): Collection<CartProduct>? {
+        val firstCartProduct = cartProductRepo.findById(cartProductIds.first()).orElse(null) ?: return null
+        val cart = firstCartProduct.cart
+        cartProductIds.forEach { cartProductId ->
+            cartProductRepo.deleteById(cartProductId)
+            cart.products.removeIf { it.id == cartProductId }
+        }
+        return cart.products
     }
 
     fun all(userId: Int): Collection<CartProduct>? {
         val user = userRepo.findById(userId).orElse(null) ?: return null
         val cart = cartRepo.findByUser(user)
-        return cart?.cartProducts ?: emptySet()
+        return cart?.products ?: emptySet()
     }
 
     fun incrementCartProduct(cartProductId: Int): CartProduct? {
         val cartProduct = cartProductRepo.findById(cartProductId).getOrNull() ?: return null
-        val cart = cartProduct.cart
-        cart.cartProducts.forEach {
-            if (it.id == cartProductId) {
-                it.quantity++
-            }
-        }
-        val savedCart = cartRepo.save(cart)
-        return savedCart.cartProducts.find { it.id == cartProductId }
+        cartProduct.copy(quantity = cartProduct.quantity++)
+        cartProductRepo.save(cartProduct)
+        return cartProduct
     }
 
     fun decrementCartProduct(cartProductId: Int): CartProduct? {
         val cartProduct = cartProductRepo.findById(cartProductId).getOrNull() ?: return null
-        val cart = cartProduct.cart
-        cart.cartProducts.forEach {
-            if (it.id == cartProductId) {
-                it.quantity--
-            }
-        }
-        val savedCart = cartRepo.save(cart)
-        return savedCart.cartProducts.find { it.id == cartProductId }
+        cartProduct.copy(quantity = cartProduct.quantity--)
+        cartProductRepo.save(cartProduct)
+        return cartProduct
     }
 }

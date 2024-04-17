@@ -9,7 +9,7 @@ import com.neupanesushant.kasthabackend.data.model.User
 
 object Mapper {
     fun toDto(cartProduct: CartProduct): CartProductDTO =
-        CartProductDTO(cartProduct.id, cartProduct.product, cartProduct.quantity)
+        CartProductDTO(cartProduct.id ?: 0, cartProduct.product, cartProduct.quantity)
 
     fun toDto(user: User): UserDTO =
         UserDTO(user.id, user.firstName, user.lastName, user.email, user.location, user.gender, user.roles)

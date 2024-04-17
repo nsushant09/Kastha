@@ -9,7 +9,7 @@ import jakarta.persistence.*
 data class CartProduct(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int = 1,
+    val id: Int = 0,
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
@@ -18,5 +18,10 @@ data class CartProduct(
     @ManyToOne
     @JoinColumn(name = "product_id")
     val product: Product,
+
     var quantity: Int = 1
-)
+){
+    override fun toString(): String {
+        return "CartProduct(id=$id, quantity=$quantity)"
+    }
+}

@@ -22,20 +22,20 @@ class CartController(
     fun add(
         @RequestParam("product_id") productId: Int,
         @RequestParam("user_id") userId: Int
-    ): ResponseEntity<CartProductDTO> {
-        val cartProduct =
+    ): ResponseEntity<Collection<CartProductDTO>> {
+        val cartProducts =
             cartService.insert(productId, userId) ?: return ResponseEntity.notFound()
-                .build<CartProductDTO>()
-        return ResponseEntity.ok(Mapper.toDto(cartProduct))
+                .build()
+        return ResponseEntity.ok(cartProducts.map(Mapper::toDto))
     }
 
-    @DeleteMapping("/{product_id}")
+    @DeleteMapping
     fun remove(
-        @PathVariable("product_id") productId: Int,
-    ): ResponseEntity<BaseResponse<String>> {
-        val cart =
-            cartService.remove(productId) ?: return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(BaseResponse(true, "Product removed from cart"))
+        @RequestParam("cart_product_ids") cartProductIds: List<Int>,
+    ): ResponseEntity<Collection<CartProductDTO>> {
+        val cartProducts =
+            cartService.remove(cartProductIds) ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(cartProducts.map(Mapper::toDto))
     }
 
 

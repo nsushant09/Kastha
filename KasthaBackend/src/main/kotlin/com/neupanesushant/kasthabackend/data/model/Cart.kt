@@ -17,12 +17,12 @@ import jakarta.persistence.OneToMany
 data class Cart(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int = 1,
+    val id : Int = 0,
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    val user: User,
+    val user : User,
 
     @OneToMany(mappedBy = "cart", cascade = [CascadeType.ALL])
-    val cartProducts: MutableSet<CartProduct> = mutableSetOf()
+    val products : MutableCollection<CartProduct> = mutableSetOf()
 )
