@@ -35,6 +35,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <ImageView
+                android:id="@+id/btnFavourites"
                 android:layout_width="@dimen/dp_28"
                 android:layout_height="@dimen/dp_28"
                 android:layout_margin="@dimen/dp_6"
@@ -44,9 +45,12 @@
                 android:src="@drawable/ic_heart"
                 app:layout_constraintLeft_toLeftOf="@id/cvProductImage"
                 app:layout_constraintTop_toTopOf="@id/cvProductImage"
-                app:tint="?attr/colorOnSurface" />
+                app:tint="?attr/colorOnSurface"
+                android:clickable="true"
+                />
 
             <ImageView
+                android:id="@+id/btnCart"
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="@dimen/dp_36"
                 android:background="@drawable/bg_diagonal_rounded"
@@ -55,7 +59,9 @@
                 android:src="@drawable/ic_cart_plus"
                 app:layout_constraintBottom_toBottomOf="@id/cvProductImage"
                 app:layout_constraintRight_toRightOf="@id/cvProductImage"
-                app:tint="?attr/colorOnSurface" />
+                app:tint="?attr/colorOnSurface"
+                android:clickable="true"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

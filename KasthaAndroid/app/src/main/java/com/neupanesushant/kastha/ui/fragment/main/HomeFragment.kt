@@ -20,26 +20,28 @@ import com.neupanesushant.kastha.databinding.ItemHomeCarouselBinding
 import com.neupanesushant.kastha.databinding.ItemMiniProductCardBinding
 import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.Product
+import com.neupanesushant.kastha.extra.Constants
 import com.neupanesushant.kastha.extra.extensions.dpToPx
 import com.neupanesushant.kastha.ui.adapter.LargeProductCardAdapter
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
+import com.neupanesushant.kastha.viewmodel.CartViewModel
+import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.core.qualifier.named
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_home
 
     private val productViewModel: ProductViewModel by sharedViewModel()
-    private val carouselImages: List<String>
-            by inject(named("test_carousel_images"))
+    private val favouriteViewModel: FavouriteViewModel by viewModel()
+    private val cartViewModel: CartViewModel by viewModel()
 
     override fun setupViews() {
         setupCarouselView()
-        setCarouselData(carouselImages)
+        setCarouselData(Constants.CAROUSEL_IMAGES.map { it.url })
     }
 
     override fun setupEventListener() {
@@ -114,7 +116,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             tvRecyclerViewTitle.text = title
             titledRecyclerView.layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-            titledRecyclerView.adapter = LargeProductCardAdapter(requireActivity(), products)
+            titledRecyclerView.adapter = LargeProductCardAdapter(
+                requireActivity(),
+                products,
+                onCartClick = { id ->
+                    cartViewModel.addProductToCart(id)
+                },
+                onFavouriteClick = { id ->
+                    favouriteViewModel.addToFavourite(id)
+                })
         }
     }
 

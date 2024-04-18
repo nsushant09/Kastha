@@ -16,19 +16,19 @@ import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.CartProduct
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.extra.extensions.dpToPx
+import com.neupanesushant.kastha.ui.activity.MainActivity
 import com.neupanesushant.kastha.ui.adapter.LargeProductCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.viewmodel.CartViewModel
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.core.qualifier.named
+import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
+import com.neupanesushant.kastha.viewmodel.ProductViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CartFragment : BaseFragment<FragmentCartBinding>() {
 
-    private val products: List<Product>
-            by inject(named("test_products"))
-
-    private val cartViewModel: CartViewModel by sharedViewModel()
+    private val productViewModel: ProductViewModel by viewModel()
+    private val cartViewModel: CartViewModel by viewModel()
+    private val favouriteViewModel: FavouriteViewModel by viewModel()
 
     private val selectionItemsIdSet = mutableSetOf<Int>()
     private var isSelectionEnabled: Boolean = false
@@ -50,14 +50,23 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         binding.btnDeleteSelection.setOnClickListener {
             deleteSelection()
         }
+        binding.btnHomeFragment.setOnClickListener {
+            (requireActivity() as MainActivity).setSelectedItem(R.id.menuBnvHome)
+        }
     }
 
     override fun setupObserver() {
-        cartViewModel.allProducts.observe(viewLifecycleOwner) { products ->
-            setupCartProducts(products)
-            setTotalAmount(products)
+        cartViewModel.allProducts.observe(viewLifecycleOwner) { cartProducts ->
+            binding.llEmptyView.isVisible = cartProducts.isEmpty()
+            binding.rvCartProducts.isVisible = cartProducts.isNotEmpty()
+
+            setupCartProducts(cartProducts)
+            setTotalAmount(cartProducts)
         }
-        setupForYouProducts(products)
+
+        productViewModel.allProduct.observe(viewLifecycleOwner) {
+            setupForYouProducts(it.sortedByDescending { it.id }.slice(0..9))
+        }
     }
 
     private fun setupCartProducts(products: List<CartProduct>) {
@@ -164,7 +173,15 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
             tvRecyclerViewTitle.text = title
             titledRecyclerView.layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-            titledRecyclerView.adapter = LargeProductCardAdapter(requireActivity(), products)
+            titledRecyclerView.adapter = LargeProductCardAdapter(
+                requireActivity(),
+                products,
+                onCartClick = { id ->
+                    cartViewModel.addProductToCart(id)
+                },
+                onFavouriteClick = { id ->
+                    favouriteViewModel.addToFavourite(id)
+                })
         }
     }
 

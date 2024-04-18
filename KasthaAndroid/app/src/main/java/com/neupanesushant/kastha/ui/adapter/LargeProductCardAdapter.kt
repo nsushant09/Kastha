@@ -5,19 +5,21 @@ import android.app.Activity
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.databinding.ItemLargeProductCardBinding
-import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.managers.PaletteManager
+import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.extra.extensions.dpToPx
 
 class LargeProductCardAdapter(
     private val activity: Activity,
-    private val products: List<Product>
+    private val products: List<Product>,
+    private val onCartClick: (Int) -> Unit,
+    private val onFavouriteClick: (Int) -> Unit
 ) : RecyclerView.Adapter<LargeProductCardAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemLargeProductCardBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -50,6 +52,16 @@ class LargeProductCardAdapter(
             RouteHelper.routeProductDetail(activity, data)
         }
 
+        mBinding.btnCart.setOnClickListener {
+            onCartClick(data.id)
+            Toast.makeText(holder.itemView.context, "Added to cart", Toast.LENGTH_SHORT).show()
+        }
+        mBinding.btnFavourites.setOnClickListener {
+            onFavouriteClick(data.id)
+            Toast.makeText(holder.itemView.context, "Added to favourites", Toast.LENGTH_SHORT)
+                .show()
+        }
+
         if (data.images.isNotEmpty()) {
             GlideManager.loadWithBitmap(
                 activity,
@@ -63,5 +75,7 @@ class LargeProductCardAdapter(
                 mBinding.ivProductImage.setImageBitmap(bitmap)
             }
         }
+
+
     }
 }

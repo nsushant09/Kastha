@@ -18,6 +18,51 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:id="@+id/llEmptyView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cvCategoryImage">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/outfit_regular"
+                        android:text="@string/uh_oh_your_cart_is_empty"
+
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="@dimen/dp_4"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/titillium_regular"
+                        android:text="@string/continue_shopping_by_adding_items_to_your_cart"
+
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="@dimen/dp_8"
+                        />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnHomeFragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/go_to_home_page"
+                        android:fontFamily="@font/titillium_regular"
+                        />
+                </LinearLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvCartProducts"
                     android:layout_width="match_parent"

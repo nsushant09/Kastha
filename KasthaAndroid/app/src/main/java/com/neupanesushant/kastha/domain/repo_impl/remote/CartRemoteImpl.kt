@@ -14,7 +14,7 @@ class CartRemoteImpl(
         endpoint.removeProductFromCart(cartProductIds).map(Mapper::toBaseUrl)
 
     override suspend fun all(userId: Int) =
-        endpoint.allCartProducts(userId).map(Mapper::toBaseUrl).map(Mapper::toBaseUrl)
+        endpoint.allCartProducts(userId).map(Mapper::toBaseUrl)
 
 
     override suspend fun increment(cartProductId: Int) =

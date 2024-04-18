@@ -16,12 +16,10 @@ import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
 class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
-
-    private val products: List<Product>
-            by inject(named("test_products"))
 
     private val selectionItemsIdSet = mutableSetOf<Int>()
     private var isSelectionEnabled: Boolean = false
@@ -30,7 +28,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
             if (value) onSelectionEnabled() else onSelectionDisabled()
         }
 
-    private val favouriteViewModel: FavouriteViewModel by sharedViewModel()
+    private val favouriteViewModel: FavouriteViewModel by viewModel()
 
     override val layoutId: Int
         get() = R.layout.fragment_favourite

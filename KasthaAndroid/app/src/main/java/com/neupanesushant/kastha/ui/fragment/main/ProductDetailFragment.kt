@@ -30,6 +30,7 @@ import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
@@ -43,8 +44,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
     private lateinit var product: Product
     private val productViewModel: ProductViewModel by sharedViewModel()
-    private val cartViewModel: CartViewModel by sharedViewModel()
-    private val favouriteViewModel: FavouriteViewModel by sharedViewModel()
+    private val cartViewModel: CartViewModel by viewModel()
+    private val favouriteViewModel: FavouriteViewModel by viewModel()
 
     private val reviews: List<ReviewResponse> by inject(named("test_reviews"))
 

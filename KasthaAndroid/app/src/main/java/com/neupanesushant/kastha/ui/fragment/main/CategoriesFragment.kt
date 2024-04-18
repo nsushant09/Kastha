@@ -17,7 +17,6 @@ class CategoriesFragment : BaseFragment<FragmentCategoriesBinding>() {
 
     private val categoryViewModel: CategoryViewModel by sharedViewModel()
 
-
     override fun setupViews() {
     }
 

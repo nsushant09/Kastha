@@ -43,7 +43,7 @@ interface Endpoint {
     @POST("cart/increment/{cart_product_id}")
     suspend fun increment(@Path("cart_product_id") cartProductId: Int): CartProduct
 
-    @POST("cart/increment/{cart_product_id}")
+    @POST("cart/decrement/{cart_product_id}")
     suspend fun decrement(@Path("cart_product_id") cartProductId: Int): CartProduct
 
     // Favorite

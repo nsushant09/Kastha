@@ -64,4 +64,6 @@
     <string name="go_to_home_page">Go to Home Page</string>
     <string name="start_adding_products_to_easily_access_them_later">Start adding products to easily access them later.</string>
     <string name="your_favourites_list_is_empty">Your favourites list is empty.</string>
+    <string name="uh_oh_your_cart_is_empty">Uh-oh! Your cart is empty</string>
+    <string name="continue_shopping_by_adding_items_to_your_cart">Continue Shopping by adding items to your cart.</string>
 </resources>
