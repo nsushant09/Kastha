@@ -28,10 +28,9 @@ import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.viewmodel.CartViewModel
 import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
-import org.koin.android.ext.android.inject
+import com.neupanesushant.kastha.viewmodel.ReviewViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.qualifier.named
 
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
@@ -46,8 +45,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private val productViewModel: ProductViewModel by sharedViewModel()
     private val cartViewModel: CartViewModel by viewModel()
     private val favouriteViewModel: FavouriteViewModel by viewModel()
-
-    private val reviews: List<ReviewResponse> by inject(named("test_reviews"))
+    private val reviewViewModel: ReviewViewModel by viewModel()
 
     override fun initialize() {
         try {
@@ -55,6 +53,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
         } catch (_: Exception) {
             requireActivity().finish()
         }
+        reviewViewModel.getProductReview(product.id)
     }
 
     override fun setupViews() {
@@ -88,7 +87,10 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
         productViewModel.allProduct.observe(viewLifecycleOwner) {
             setupSearchView()
         }
-        setupReviews(reviews)
+        reviewViewModel.productReviews.observe(viewLifecycleOwner) { reviews ->
+            binding.llReviewEmptyView.isVisible = reviews.isEmpty()
+            setupReviews(reviews)
+        }
     }
 
     private fun setupCarouselView() {

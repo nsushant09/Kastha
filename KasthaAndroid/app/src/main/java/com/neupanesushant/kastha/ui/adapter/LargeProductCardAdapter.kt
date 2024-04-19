@@ -52,15 +52,15 @@ class LargeProductCardAdapter(
             RouteHelper.routeProductDetail(activity, data)
         }
 
-        mBinding.btnCart.setOnClickListener {
-            onCartClick(data.id)
-            Toast.makeText(holder.itemView.context, "Added to cart", Toast.LENGTH_SHORT).show()
-        }
-        mBinding.btnFavourites.setOnClickListener {
-            onFavouriteClick(data.id)
-            Toast.makeText(holder.itemView.context, "Added to favourites", Toast.LENGTH_SHORT)
-                .show()
-        }
+//        mBinding.btnCart.setOnClickListener {
+//            onCartClick(data.id)
+//            Toast.makeText(holder.itemView.context, "Added to cart", Toast.LENGTH_SHORT).show()
+//        }
+//        mBinding.btnFavourites.setOnClickListener {
+//            onFavouriteClick(data.id)
+//            Toast.makeText(holder.itemView.context, "Added to favourites", Toast.LENGTH_SHORT)
+//                .show()
+//        }
 
         if (data.images.isNotEmpty()) {
             GlideManager.loadWithBitmap(

@@ -11,5 +11,5 @@ class ReviewRemoteImpl(
     override suspend fun add(productId: Int, userId: Int, review: Review): Review =
         endpoint.addReview(productId, userId, review)
 
-    override suspend fun getReviewOf(productId: Int): List<ReviewResponse> = getReviewOf(productId)
+    override suspend fun getReviewOf(productId: Int): List<ReviewResponse> = endpoint.getReviewsOf(productId)
 }
