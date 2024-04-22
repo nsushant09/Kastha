@@ -13,11 +13,11 @@ interface FavouriteDao {
     suspend fun addFavorite(favorite: Favourite)
 
     @Query("DELETE FROM ${RoomConstants.FAVORITE} WHERE favourite_id = :productId")
-    suspend fun removeFavorite(productId : Int)
+    suspend fun removeFavorite(productId: Int)
 
-    @Query("SELECT * FROM ${RoomConstants.FAVORITE} WHERE userId = :userId")
-    suspend fun getAllFavorites(userId : Int): Favourite
+    @Query("SELECT * FROM ${RoomConstants.FAVORITE} WHERE favourite_id = 1")
+    suspend fun getFavourite(): Favourite
 
-    @Query("DELETE FROM ${RoomConstants.FAVORITE} WHERE favourite_id IN (:productIds)")
+    @Query("DELETE FROM ${RoomConstants.FAVORITE} WHERE favourite_id = 1 AND products IN (:productIds)")
     suspend fun removeFavoritesByProductIds(productIds: List<Int>)
 }

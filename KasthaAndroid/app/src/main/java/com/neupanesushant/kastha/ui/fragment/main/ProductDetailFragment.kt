@@ -23,9 +23,9 @@ import com.neupanesushant.kastha.databinding.ItemReviewBinding
 import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.ReviewResponse
-import com.neupanesushant.kastha.extra.AppContext
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
+import com.neupanesushant.kastha.ui.dialog.DialogUtils
 import com.neupanesushant.kastha.viewmodel.CartViewModel
 import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
@@ -54,7 +54,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
         } catch (_: Exception) {
             requireActivity().finish()
         }
-        reviewViewModel.getProductReview(product.id)
+//        reviewViewModel.getProductReview(product.id)
     }
 
     override fun setupViews() {
@@ -77,7 +77,13 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             requestCameraPermission()
         }
         binding.btnAddToCart.setOnClickListener {
-            cartViewModel.addProductToCart(product.id)
+            cartViewModel.addProductToCart(product.id) {
+                DialogUtils.generalDialog(
+                    requireContext(),
+                    "An error occurred while adding the product to the cart. Please try again later.",
+                    "Error Adding to Cart"
+                )
+            }
         }
         binding.btnFavourites.setOnClickListener {
             favouriteViewModel.addToFavourite(product.id)

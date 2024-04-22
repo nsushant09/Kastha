@@ -99,8 +99,10 @@
     <!--    Dialog-->
     <style name="MaterialAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="alertDialogStyle">@style/MaterialAlertDialogStyle</item>
-        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.App.Body.Text</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text
+        </item>
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.App.Body.Text
+        </item>
     </style>
 
     <style name="MaterialAlertDialogStyle" parent="MaterialAlertDialog.MaterialComponents">
@@ -127,4 +129,5 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/dp_24</item>
     </style>
+
 </resources>

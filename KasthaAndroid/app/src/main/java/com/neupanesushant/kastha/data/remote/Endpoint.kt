@@ -33,19 +33,19 @@ interface Endpoint {
     suspend fun addProductToCart(
         @Field("product_id") productId: Int,
         @Field("user_id") userId: Int
-    ): List<CartProduct>
+    ): Response<List<CartProduct>>
 
     @DELETE("cart")
-    suspend fun removeProductFromCart(@Query("cart_product_ids") cartProductIds: List<Int>): List<CartProduct>
+    suspend fun removeProductFromCart(@Query("cart_product_ids") cartProductIds: List<Int>): Response<List<CartProduct>>
 
     @GET("cart/{user_id}")
-    suspend fun allCartProducts(@Path("user_id") userId: Int): List<CartProduct>
+    suspend fun allCartProducts(@Path("user_id") userId: Int): Response<List<CartProduct>>
 
     @POST("cart/increment/{cart_product_id}")
-    suspend fun increment(@Path("cart_product_id") cartProductId: Int): CartProduct
+    suspend fun increment(@Path("cart_product_id") cartProductId: Int): Response<CartProduct>
 
     @POST("cart/decrement/{cart_product_id}")
-    suspend fun decrement(@Path("cart_product_id") cartProductId: Int): CartProduct
+    suspend fun decrement(@Path("cart_product_id") cartProductId: Int): Response<CartProduct>
 
     // Favorite
 
@@ -63,7 +63,7 @@ interface Endpoint {
     ): List<Product>
 
     @GET("favorite/{user_id}")
-    suspend fun allFavoriteProducts(@Path("user_id") userId: Int): List<Product>
+    suspend fun allFavoriteProducts(@Path("user_id") userId: Int): Response<List<Product>>
 
     // Category
     @GET("category/all")

@@ -20,6 +20,7 @@ import com.neupanesushant.kastha.extra.extensions.itemSize
 import com.neupanesushant.kastha.ui.activity.MainActivity
 import com.neupanesushant.kastha.ui.adapter.LargeProductCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
+import com.neupanesushant.kastha.ui.dialog.DialogUtils
 import com.neupanesushant.kastha.viewmodel.CartViewModel
 import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
@@ -123,7 +124,13 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         }
         val newCount = prevCount + 1
         view.text = newCount.toString()
-        cartViewModel.increment(product.id)
+        cartViewModel.increment(product.id) {
+            DialogUtils.generalDialog(
+                requireContext(),
+                "An error occurred while adding the product to the cart. Please try again later.",
+                "Error Adding"
+            )
+        }
     }
 
     private fun onItemDecrement(view: TextView, product: CartProduct, prevCount: Int) {
@@ -133,7 +140,13 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         }
         val newCount = prevCount - 1
         view.text = newCount.toString()
-        cartViewModel.decrement(product.id)
+        cartViewModel.decrement(product.id) {
+            DialogUtils.generalDialog(
+                requireContext(),
+                "An error occurred while removing products from cart. Please try again later.",
+                "Error Removing from cart"
+            )
+        }
     }
 
     private fun onCardProductLongClick(
@@ -204,7 +217,13 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
     }
 
     private fun deleteSelection() {
-        cartViewModel.removeProducts(selectionItemsIdSet)
+        cartViewModel.removeProducts(selectionItemsIdSet) {
+            DialogUtils.generalDialog(
+                requireContext(),
+                "An error occurred while removing products from cart. Please try again later.",
+                "Error Removing from cart"
+            )
+        }
         isSelectionEnabled = false
     }
 }

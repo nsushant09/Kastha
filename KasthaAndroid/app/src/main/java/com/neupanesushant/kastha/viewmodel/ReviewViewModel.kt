@@ -12,7 +12,7 @@ class ReviewViewModel(
     private val reviewRepo: ReviewRepo
 ) : ViewModel() {
 
-    private val _productReviews: MutableLiveData<List<ReviewResponse>> = MutableLiveData()
+    private val _productReviews: MutableLiveData<List<ReviewResponse>> = MutableLiveData(emptyList())
     val productReviews: LiveData<List<ReviewResponse>> get() = _productReviews
 
     fun getProductReview(productId: Int) = viewModelScope.launch {
