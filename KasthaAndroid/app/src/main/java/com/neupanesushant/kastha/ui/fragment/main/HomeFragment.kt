@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
+import com.bumptech.glide.Glide
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
 import com.neupanesushant.kastha.R
@@ -78,7 +79,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             R.layout.item_home_carousel,
             imageUrls
         ) { mBinding, data, _ ->
-            GlideManager.load(requireContext(), data, mBinding.carouselImageView)
+            Glide.with(mBinding.root.context)
+                .load(data)
+                .into(mBinding.carouselImageView)
         }
         binding.carouselRecyclerView.adapter = adapter
     }

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.neupanesushant.kastha.core.ResponseResolver
 import com.neupanesushant.kastha.data.local.FavouriteDao
 import com.neupanesushant.kastha.data.repo.FavoriteRepo
+import com.neupanesushant.kastha.domain.model.FavouriteProduct
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.extra.Preferences
 import kotlinx.coroutines.launch
@@ -26,17 +27,28 @@ class FavouriteViewModel(
     fun getAllFavouriteProducts() = viewModelScope.launch {
         val response = favoriteRepo.all(Preferences.getUserId())
         ResponseResolver(response, onFailure = {
-            _favouriteProducts.value = favouriteDao.getFavourite().products.toList()
+            _favouriteProducts.value = favouriteDao.getFavourites().map { it.product }
         }, onSuccess = {
             _favouriteProducts.value = it
         })()
     }
 
-    fun addToFavourite(productId: Int) = viewModelScope.launch {
-        _favouriteProducts.value = favoriteRepo.add(productId, Preferences.getUserId())
+    fun addToFavourite(product: Product, onFailure: (String) -> Unit) = viewModelScope.launch {
+        val response = favoriteRepo.add(product.id, Preferences.getUserId())
+        ResponseResolver(response, onFailure = onFailure, onSuccess = {
+            _favouriteProducts.value = it
+            favouriteDao.addFavorite(FavouriteProduct(product = product))
+        })()
     }
 
-    fun removeFromFavourite(productIds: Collection<Int>) = viewModelScope.launch {
-        _favouriteProducts.value = favoriteRepo.remove(productIds.toList(), Preferences.getUserId())
-    }
+    fun removeFromFavourite(productIds: Collection<Int>, onFailure: (String) -> Unit) =
+        viewModelScope.launch {
+            val response = favoriteRepo.remove(productIds.toList(), Preferences.getUserId())
+            ResponseResolver(response, onFailure = onFailure, onSuccess = {
+                _favouriteProducts.value = it
+                productIds.forEach {
+                    favouriteDao.removeFavorite(it)
+                }
+            })()
+        }
 }

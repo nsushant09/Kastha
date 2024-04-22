@@ -54,13 +54,13 @@ interface Endpoint {
     suspend fun addProductToFavorite(
         @Field("product_id") productId: Int,
         @Field("user_id") userId: Int
-    ): List<Product>
+    ): Response<List<Product>>
 
     @DELETE("favorite")
     suspend fun removeProductFromFavorite(
         @Query("product_ids") productIds: List<Int>,
         @Query("user_id") userId: Int
-    ): List<Product>
+    ): Response<List<Product>>
 
     @GET("favorite/{user_id}")
     suspend fun allFavoriteProducts(@Path("user_id") userId: Int): Response<List<Product>>

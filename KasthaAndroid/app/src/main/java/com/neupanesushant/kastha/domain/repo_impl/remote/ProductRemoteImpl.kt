@@ -22,14 +22,14 @@ class ProductRemoteImpl(
         Mapper.toBaseUrl(endpoint.getProductById(id))
 
     override suspend fun getProductsOfCategory(categoryId: Int): List<Product> =
-        endpoint.getProductsByCategory(categoryId).map(Mapper::toBaseUrl)
+        endpoint.getProductsByCategory(categoryId)
 
     override suspend fun getProductsBySearch(value: String): List<Product> =
-        endpoint.getProductBySearch(value).map(Mapper::toBaseUrl)
+        endpoint.getProductBySearch(value)
 
     override suspend fun all() =
         requestHandler {
-            allProducts.ifEmpty { allProducts = endpoint.getProducts().map(Mapper::toBaseUrl) }
+            allProducts.ifEmpty { allProducts = endpoint.getProducts() }
             Response.success(allProducts)
         }
 }

@@ -4,10 +4,10 @@ import android.content.res.Resources
 import android.os.Build
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentCategoriesViewPagerBinding
-import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.Category
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.ui.activity.MainActivity
@@ -55,7 +55,10 @@ class CategoriesViewPagerFragment : BaseFragment<FragmentCategoriesViewPagerBind
         val height = (Resources.getSystem().displayMetrics.widthPixels * 9) / 16
         layoutParams.height = height
         binding.ivCategoryImage.layoutParams = layoutParams
-        GlideManager.load(requireContext(), category.imageUrl, binding.ivCategoryImage)
+
+        Glide.with(requireContext())
+            .load(category.imageUrl)
+            .into(binding.ivCategoryImage)
     }
 
     private fun setupProducts(products: List<Product>) {

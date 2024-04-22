@@ -13,11 +13,9 @@ import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.ui.activity.MainActivity
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
+import com.neupanesushant.kastha.ui.dialog.DialogUtils
 import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.qualifier.named
 
 class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
 
@@ -49,7 +47,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
     }
 
     override fun setupObserver() {
-        favouriteViewModel.favouriteProducts.observe(viewLifecycleOwner) {favoriteProducts ->
+        favouriteViewModel.favouriteProducts.observe(viewLifecycleOwner) { favoriteProducts ->
             binding.llEmptyView.isVisible = favoriteProducts.isEmpty()
             binding.rvFavouriteProducts.isVisible = favoriteProducts.isNotEmpty()
 
@@ -126,7 +124,13 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
     }
 
     private fun deleteSelection() {
-        favouriteViewModel.removeFromFavourite(selectionItemsIdSet)
+        favouriteViewModel.removeFromFavourite(selectionItemsIdSet) {
+            DialogUtils.generalDialog(
+                requireContext(),
+                "An error occurred while removing the product to your favourites. Please try again later.",
+                "Error Removing from Favourites"
+            )
+        }
         isSelectionEnabled = false
     }
 

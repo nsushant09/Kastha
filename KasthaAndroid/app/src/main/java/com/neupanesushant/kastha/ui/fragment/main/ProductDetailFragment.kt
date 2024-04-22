@@ -86,7 +86,13 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             }
         }
         binding.btnFavourites.setOnClickListener {
-            favouriteViewModel.addToFavourite(product.id)
+            favouriteViewModel.addToFavourite(product){
+                DialogUtils.generalDialog(
+                    requireContext(),
+                    "An error occurred while adding the product to your favourites. Please try again later.",
+                    "Error Adding to Favourites"
+                )
+            }
         }
     }
 

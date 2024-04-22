@@ -28,7 +28,6 @@ class CartViewModel(
             _allProducts.value = cartProductDao.getAllCartProducts()
         }, onSuccess = {
             _allProducts.value = it
-            it.forEach { cartProductDao.add(it) }
         })()
     }
 

@@ -10,8 +10,10 @@ import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.FragmentLoginBinding
 import com.neupanesushant.kastha.extra.helper.Validator
 import com.neupanesushant.kastha.ui.dialog.DialogUtils
-import com.neupanesushant.kastha.ui.dialog.LoadingDialog
 import com.neupanesushant.kastha.viewmodel.AuthenticationViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
@@ -56,11 +58,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
 
         authenticationViewModel.validateLogin(email, password) { response ->
-            ResponseResolver(response, onFailure = {
-                DialogUtils.generalDialog(requireContext(), description = it)
-            }, onSuccess = {
-                onLoginDetailsValidated(email, password)
-            })
+            CoroutineScope(Dispatchers.IO).launch {
+                ResponseResolver(response, onFailure = {
+                    DialogUtils.generalDialog(requireContext(), description = it)
+                }, onSuccess = {
+                    onLoginDetailsValidated(email, password)
+                })()
+            }
         }
     }
 

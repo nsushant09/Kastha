@@ -5,13 +5,13 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.neupanesushant.kastha.domain.model.CartProduct
 import com.neupanesushant.kastha.domain.model.Category
-import com.neupanesushant.kastha.domain.model.Favourite
+import com.neupanesushant.kastha.domain.model.FavouriteProduct
 import com.neupanesushant.kastha.domain.model.Image
 import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.domain.model.Product
 
 @Database(
-    entities = [CartProduct::class, Category::class, Favourite::class, Image::class, ObjectModel::class, Product::class],
+    entities = [CartProduct::class, Category::class, FavouriteProduct::class, Image::class, ObjectModel::class, Product::class],
     version = 1,
     exportSchema = false
 )

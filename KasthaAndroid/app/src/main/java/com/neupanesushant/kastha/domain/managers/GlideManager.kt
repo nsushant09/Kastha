@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
+import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.extra.extensions.show
 
 object GlideManager {
@@ -22,7 +23,7 @@ object GlideManager {
     ) {
         Glide.with(context)
             .asBitmap()
-            .load(url)
+            .load(BuildConfig.BASE_URL + url)
             .into(object : SimpleTarget<Bitmap>() {
                 override fun onResourceReady(
                     resource: Bitmap,
@@ -35,7 +36,7 @@ object GlideManager {
 
     fun load(context: Context, url: String, view: ImageView) {
         Glide.with(context)
-            .load(url)
+            .load(BuildConfig.BASE_URL + url)
             .into(view)
     }
 
