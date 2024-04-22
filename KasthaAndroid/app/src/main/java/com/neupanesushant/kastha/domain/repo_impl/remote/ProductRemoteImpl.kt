@@ -1,9 +1,11 @@
 package com.neupanesushant.kastha.domain.repo_impl.remote
 
+import com.neupanesushant.kastha.core.requestHandler
 import com.neupanesushant.kastha.data.remote.Endpoint
 import com.neupanesushant.kastha.data.repo.ProductRepo
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.extra.Mapper
+import retrofit2.Response
 
 class ProductRemoteImpl(
     private val endpoint: Endpoint
@@ -25,10 +27,11 @@ class ProductRemoteImpl(
     override suspend fun getProductsBySearch(value: String): List<Product> =
         endpoint.getProductBySearch(value).map(Mapper::toBaseUrl)
 
-    override suspend fun all(): List<Product> {
-        allProducts.ifEmpty { allProducts = endpoint.getProducts().map(Mapper::toBaseUrl) }
-        return allProducts
-    }
-
-
+    override suspend fun all() =
+        requestHandler {
+            allProducts.ifEmpty { allProducts = endpoint.getProducts().map(Mapper::toBaseUrl) }
+            Response.success(allProducts)
+        }
 }
+
+

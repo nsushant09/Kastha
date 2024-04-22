@@ -33,8 +33,11 @@ class CartViewModel(
     }
 
     fun addProductToCart(productId: Int) = viewModelScope.launch {
-        _allProducts.value = cartRepo.add(productId, Preferences.getUserId())
-//        cartProductDao.add(cartProduct)
+        _allProducts.value = cartRepo.add(productId, Preferences.getUserId()).also { cartProducts ->
+            cartProducts.find { it.product.id == productId }?.let {
+                cartProductDao.add(it)
+            }
+        }
     }
 
     fun removeProducts(cartProductIds: Collection<Int>) = viewModelScope.launch {
@@ -49,7 +52,7 @@ class CartViewModel(
         _allProducts.value = _allProducts.value?.map { oldProduct ->
             if (oldProduct.id == cartProduct.id) cartProduct else oldProduct
         }
-//        cartProductDao.add(cartProduct)
+        cartProductDao.add(cartProduct)
     }
 
     fun decrement(cartProductId: Int) = viewModelScope.launch {
@@ -57,6 +60,6 @@ class CartViewModel(
         _allProducts.value = _allProducts.value?.map { oldProduct ->
             if (oldProduct.id == cartProduct.id) cartProduct else oldProduct
         }
-//        cartProductDao.add(cartProduct)
+        cartProductDao.add(cartProduct)
     }
 }

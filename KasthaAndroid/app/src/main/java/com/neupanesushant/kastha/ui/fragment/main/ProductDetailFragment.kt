@@ -23,6 +23,7 @@ import com.neupanesushant.kastha.databinding.ItemReviewBinding
 import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.ReviewResponse
+import com.neupanesushant.kastha.extra.AppContext
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.viewmodel.CartViewModel

@@ -22,6 +22,7 @@ import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.extra.Constants
 import com.neupanesushant.kastha.extra.extensions.dpToPx
+import com.neupanesushant.kastha.extra.extensions.itemSize
 import com.neupanesushant.kastha.ui.adapter.LargeProductCardAdapter
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
@@ -57,7 +58,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         productViewModel.allProduct.observe(viewLifecycleOwner) { products ->
             setupRecommendedProducts(products)
             setupLatestProducts(products.sortedByDescending { it.id }.slice(0..9))
-            setupAllProducts(products)
+            setupAllProducts(products.subList(0, 20))
             setupSearchView()
         }
     }
@@ -119,12 +120,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             titledRecyclerView.adapter = LargeProductCardAdapter(
                 requireActivity(),
                 products,
-                onCartClick = { id ->
-                    cartViewModel.addProductToCart(id)
-                },
-                onFavouriteClick = { id ->
-                    favouriteViewModel.addToFavourite(id)
-                })
+                itemSize(requireContext(), 0.5f, 24)
+            )
         }
     }
 

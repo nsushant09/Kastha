@@ -38,7 +38,7 @@ class AuthenticationViewModel(
                     authenticationToken = it.tokenType + it.accessToken
                 )
                 _isAuthenticationTokenReceived.value = State.Success(it)
-            })
+            })()
         }
     }
 
@@ -51,7 +51,7 @@ class AuthenticationViewModel(
                 return@ResponseResolver
             }, onSuccess = {
                 login(it.key, it.value)
-            })
+            })()
         }
     }
 
@@ -71,7 +71,7 @@ class AuthenticationViewModel(
             val response = authenticationUseCase.sendOTP(email)
             ResponseResolver(response, onSuccess = {
                 _oneTimePassword.value = it
-            })
+            })()
         }
     }
 

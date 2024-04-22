@@ -16,6 +16,7 @@ import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.CartProduct
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.extra.extensions.dpToPx
+import com.neupanesushant.kastha.extra.extensions.itemSize
 import com.neupanesushant.kastha.ui.activity.MainActivity
 import com.neupanesushant.kastha.ui.adapter.LargeProductCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
@@ -176,12 +177,8 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
             titledRecyclerView.adapter = LargeProductCardAdapter(
                 requireActivity(),
                 products,
-                onCartClick = { id ->
-                    cartViewModel.addProductToCart(id)
-                },
-                onFavouriteClick = { id ->
-                    favouriteViewModel.addToFavourite(id)
-                })
+                itemSize(requireContext(), 0.5f, 24)
+            )
         }
     }
 

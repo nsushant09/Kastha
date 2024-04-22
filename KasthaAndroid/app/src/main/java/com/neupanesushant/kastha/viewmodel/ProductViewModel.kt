@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.neupanesushant.kastha.core.ResponseResolver
 import com.neupanesushant.kastha.data.local.ProductDao
 import com.neupanesushant.kastha.data.repo.ProductRepo
 import com.neupanesushant.kastha.domain.model.Product
-import com.neupanesushant.kastha.extra.AppContext
 import com.neupanesushant.kastha.extra.Utils
 import kotlinx.coroutines.launch
 
@@ -23,14 +23,15 @@ class ProductViewModel(
         getAllProducts()
     }
 
-    private fun getAllProducts() {
-        viewModelScope.launch {
-            if (AppContext.isOnline) {
-                _allProducts.value = productRepo.all()
-            } else {
-                _allProducts.value = productDao.getAllProducts()
-            }
-        }
+    private fun getAllProducts() = viewModelScope.launch {
+
+        val response = productRepo.all()
+        ResponseResolver(response, onFailure = {
+            _allProducts.value = productDao.getAllProducts()
+        }) { products ->
+            _allProducts.value = products
+            products.forEach { productDao.insert(it) }
+        }()
     }
 
     fun getSearchResults(searchValue: String) = _allProducts.value?.filter {
