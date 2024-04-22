@@ -6,6 +6,7 @@ import com.neupanesushant.kastha.domain.model.Category
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.Review
 import com.neupanesushant.kastha.domain.model.ReviewResponse
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
@@ -66,7 +67,7 @@ interface Endpoint {
 
     // Category
     @GET("category/all")
-    suspend fun getCategories(): List<Category>
+    suspend fun getCategories(): Response<List<Category>>
 
     @GET("category/{category_id}")
     suspend fun getCategoryOf(@Path("category_id") categoryId: Int): Category
