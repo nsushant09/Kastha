@@ -1,7 +1,5 @@
 package com.neupanesushant.kastha.core
 
-import androidx.databinding.ViewDataBinding
-
 sealed class State<out T> {
     data object Default : State<Nothing>()
     data object Loading : State<Nothing>()
@@ -12,7 +10,7 @@ sealed class State<out T> {
 class StateResolver<T>(
     private val state: State<T>,
     private val onSuccess: (T) -> Unit,
-    private val onLoading: () -> Unit = {},
+    private val onLoading: () -> Unit = { },
     private val onError: (String) -> Unit = {}
 ) {
     operator fun invoke() {

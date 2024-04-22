@@ -69,4 +69,7 @@ class CartViewModel(
             cartProductDao.add(it)
         })
     }
+
+    fun removeProduct(productId: Int, onFailure: (String) -> Unit) =
+        removeProducts(listOf(productId), onFailure)
 }

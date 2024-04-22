@@ -102,9 +102,9 @@ interface Endpoint {
         @Field("product_id") productId: Int,
         @Field("user_id") userId: Int,
         @Body review: Review
-    ): Review
+    ): Response<Review>
 
     @GET("review/{product_id}")
-    suspend fun getReviewsOf(@Path("product_id") productId: Int): List<ReviewResponse>
+    suspend fun getReviewsOf(@Path("product_id") productId: Int): Response<List<ReviewResponse>>
 
 }

@@ -51,4 +51,8 @@ class FavouriteViewModel(
                 }
             })()
         }
+
+    fun removeFromFavourite(productId: Int, onFailure: (String) -> Unit) = removeFromFavourite(
+        listOf(productId), onFailure
+    )
 }

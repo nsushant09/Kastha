@@ -48,13 +48,24 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private val favouriteViewModel: FavouriteViewModel by viewModel()
     private val reviewViewModel: ReviewViewModel by viewModel()
 
+    private var isProductInFavourites = false
+        set(value) {
+            field = value
+            onFavouritesStatusChange(value)
+        }
+    private var isProductInCart = false
+        set(value) {
+            field = value
+            onCartStatusChange(value)
+        }
+
     override fun initialize() {
         try {
             product = arguments?.getParcelable<Product>(PRODUCT_ARGUMENT)!!
         } catch (_: Exception) {
             requireActivity().finish()
         }
-//        reviewViewModel.getProductReview(product.id)
+        reviewViewModel.getProductReview(product.id)
     }
 
     override fun setupViews() {
@@ -77,21 +88,41 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             requestCameraPermission()
         }
         binding.btnAddToCart.setOnClickListener {
-            cartViewModel.addProductToCart(product.id) {
-                DialogUtils.generalDialog(
-                    requireContext(),
-                    "An error occurred while adding the product to the cart. Please try again later.",
-                    "Error Adding to Cart"
-                )
+            if (isProductInCart) {
+                cartViewModel.removeProduct(product.id) {
+                    DialogUtils.generalDialog(
+                        requireContext(),
+                        "An error occurred while removing products from cart. Please try again later.",
+                        "Error Removing from cart"
+                    )
+                }
+            } else {
+                cartViewModel.addProductToCart(product.id) {
+                    DialogUtils.generalDialog(
+                        requireContext(),
+                        "An error occurred while adding the product to the cart. Please try again later.",
+                        "Error Adding to Cart"
+                    )
+                }
             }
         }
         binding.btnFavourites.setOnClickListener {
-            favouriteViewModel.addToFavourite(product){
-                DialogUtils.generalDialog(
-                    requireContext(),
-                    "An error occurred while adding the product to your favourites. Please try again later.",
-                    "Error Adding to Favourites"
-                )
+            if (isProductInFavourites) {
+                favouriteViewModel.removeFromFavourite(product.id) {
+                    DialogUtils.generalDialog(
+                        requireContext(),
+                        "An error occurred while removing the product to your favourites. Please try again later.",
+                        "Error Removing from Favourites"
+                    )
+                }
+            } else {
+                favouriteViewModel.addToFavourite(product) {
+                    DialogUtils.generalDialog(
+                        requireContext(),
+                        "An error occurred while adding the product to your favourites. Please try again later.",
+                        "Error Adding to Favourites"
+                    )
+                }
             }
         }
     }
@@ -104,6 +135,21 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             binding.llReviewEmptyView.isVisible = reviews.isEmpty()
             setupReviews(reviews)
         }
+
+        favouriteViewModel.favouriteProducts.observe(viewLifecycleOwner) { favProducts ->
+            isProductInFavourites = favProducts.contains(product)
+        }
+
+        cartViewModel.allProducts.observe(viewLifecycleOwner) { cartProducts ->
+            for (cartProduct in cartProducts) {
+                if (cartProduct.product.equals(product)) {
+                    isProductInCart = true
+                    return@observe
+                }
+            }
+            isProductInCart = false
+        }
+
     }
 
     private fun setupCarouselView() {
@@ -210,5 +256,17 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             rvSearchView.layoutManager = LinearLayoutManager(requireContext())
             rvSearchView.adapter = ProductHorizontalCardAdapter(requireActivity(), products)
         }
+    }
+
+    private fun onCartStatusChange(isInCart: Boolean) {
+        binding.btnAddToCart.text = if (isInCart) "Remove from cart" else "Add to cart"
+    }
+
+    private fun onFavouritesStatusChange(isInFavourites: Boolean) {
+        binding.btnFavourites.icon =
+            ContextCompat.getDrawable(
+                requireContext(),
+                if (isInFavourites) R.drawable.ic_heart_filled else R.drawable.ic_heart
+            )
     }
 }
