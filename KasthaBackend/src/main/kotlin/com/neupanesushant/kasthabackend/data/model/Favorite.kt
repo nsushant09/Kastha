@@ -20,5 +20,5 @@ data class Favorite(
         joinColumns = [JoinColumn(name = "favorite_id")],
         inverseJoinColumns = [JoinColumn(name = "product_id")]
     )
-    val products : MutableCollection<Product> = mutableSetOf()
+    val products : MutableSet<Product> = mutableSetOf()
 )

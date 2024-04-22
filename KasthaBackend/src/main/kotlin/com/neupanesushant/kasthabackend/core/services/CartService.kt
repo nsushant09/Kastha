@@ -31,14 +31,12 @@ class CartService(
         val product = productRepo.findById(productId).orElse(null) ?: return null
         val cart = getCart(userId) ?: return null
 
-        // Create a new CartProduct and associate it with the Cart
-        val cartProduct = CartProduct(product = product, cart = cart)
-        val savedCartProduct = cartProductRepo.save(cartProduct)
+        if (cart.products.find { it.product.id == product.id } == null) {
+            val cartProduct = CartProduct(product = product, cart = cart)
+            val savedCartProduct = cartProductRepo.save(cartProduct)
+            cart.products.add(savedCartProduct)
+        }
 
-        // Add the saved CartProduct to the Cart
-        cart.products.add(savedCartProduct)
-
-        // Save the updated Cart
         val savedCart = cartRepo.save(cart)
 
         return savedCart.products
@@ -49,9 +47,12 @@ class CartService(
         val cart = firstCartProduct.cart
         cartProductIds.forEach { cartProductId ->
             cartProductRepo.deleteById(cartProductId)
-            cart.products.removeIf { it.id == cartProductId }
+            cart.products.removeIf {
+                it.id == cartProductId
+            }
         }
-        return cart.products
+        val savedCart = cartRepo.save(cart)
+        return savedCart.products
     }
 
     fun all(userId: Int): Collection<CartProduct>? {
