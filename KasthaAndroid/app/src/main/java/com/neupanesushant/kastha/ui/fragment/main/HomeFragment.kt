@@ -27,22 +27,18 @@ import com.neupanesushant.kastha.extra.extensions.itemSize
 import com.neupanesushant.kastha.ui.adapter.LargeProductCardAdapter
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
-import com.neupanesushant.kastha.viewmodel.CartViewModel
-import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_home
 
     private val productViewModel: ProductViewModel by sharedViewModel()
-    private val favouriteViewModel: FavouriteViewModel by viewModel()
-    private val cartViewModel: CartViewModel by viewModel()
 
     override fun setupViews() {
         setupCarouselView()
+        setupSearchView()
         setCarouselData(Constants.CAROUSEL_IMAGES.map { it.url })
     }
 
@@ -60,7 +56,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             setupRecommendedProducts(products)
             setupLatestProducts(products.sortedByDescending { it.id }.slice(0..9))
             setupAllProducts(products)
-            setupSearchView()
         }
     }
 

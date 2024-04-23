@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.Log
 import com.google.ar.core.Anchor
 import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.assets.RenderableSource
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
@@ -45,13 +46,13 @@ class ModelManager(private val context: Context) {
         fragment: ArFragment,
         anchor: Anchor,
         renderable: ModelRenderable
-    ): TransformableNode {
+    ): Node {
         val node = AnchorNode(anchor)
         val transformableNode = TransformableNode(fragment.transformationSystem)
         transformableNode.setParent(node)
         transformableNode.renderable = renderable
         fragment.arSceneView.scene.addChild(node)
         transformableNode.select()
-        return transformableNode
+        return node
     }
 }

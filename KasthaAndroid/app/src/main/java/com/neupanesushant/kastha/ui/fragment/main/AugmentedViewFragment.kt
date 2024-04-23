@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import com.google.ar.core.Session
+import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.ux.ArFragment
-import com.google.ar.sceneform.ux.TransformableNode
 import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.extra.extensions.show
@@ -37,7 +37,7 @@ class AugmentedViewFragment : ArFragment() {
             field = value
             onModelValueChange(value)
         }
-    private var transformableNode: TransformableNode? = null
+    private var node: Node? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,7 +74,7 @@ class AugmentedViewFragment : ArFragment() {
             if (isModelSet) return@setOnTapArPlaneListener
             val anchor = hitResult.createAnchor()
             modelManager.buildModel(Uri.parse(BuildConfig.BASE_URL + objectModel.url)) {
-                transformableNode = modelManager.addTransformableNodeModel(this, anchor, it)
+                node = modelManager.addTransformableNodeModel(this, anchor, it)
             }
             requireContext().show("Displaying Augmented Object")
             isModelSet = true
@@ -90,9 +90,9 @@ class AugmentedViewFragment : ArFragment() {
     }
 
     private fun removeCurrentModel() {
-        transformableNode?.let {
-            arSceneView.scene.removeChild(transformableNode)
-            transformableNode = null
+        node?.let {
+            arSceneView.scene.removeChild(it)
+            node = null
             isModelSet = false
         }
     }

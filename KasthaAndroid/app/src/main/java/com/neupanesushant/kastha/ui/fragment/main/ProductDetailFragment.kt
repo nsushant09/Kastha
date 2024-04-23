@@ -44,9 +44,9 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
     private lateinit var product: Product
     private val productViewModel: ProductViewModel by sharedViewModel()
-    private val cartViewModel: CartViewModel by viewModel()
-    private val favouriteViewModel: FavouriteViewModel by viewModel()
-    private val reviewViewModel: ReviewViewModel by viewModel()
+    private val cartViewModel: CartViewModel by sharedViewModel()
+    private val favouriteViewModel: FavouriteViewModel by sharedViewModel()
+    private val reviewViewModel: ReviewViewModel by sharedViewModel()
 
     private var isProductInFavourites = false
         set(value) {
@@ -168,7 +168,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             R.layout.item_home_carousel,
             imageUrls
         ) { mBinding, data, _ ->
-            GlideManager.load(requireContext(), data, mBinding.carouselImageView)
+            GlideManager.load(requireContext(), data, mBinding.carouselImageView, 800)
         }
         binding.rvProductImages.adapter = adapter
     }

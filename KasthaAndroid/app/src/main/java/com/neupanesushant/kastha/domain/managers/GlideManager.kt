@@ -36,9 +36,10 @@ object GlideManager {
             })
     }
 
-    fun load(context: Context, url: String, view: ImageView) {
+    fun load(context: Context, url: String, view: ImageView, size: Int = 200) {
         Glide.with(context)
             .load(BuildConfig.BASE_URL + url)
+            .apply(RequestOptions().override(size))
             .into(view)
     }
 

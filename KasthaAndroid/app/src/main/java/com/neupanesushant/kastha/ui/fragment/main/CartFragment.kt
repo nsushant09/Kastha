@@ -22,15 +22,13 @@ import com.neupanesushant.kastha.ui.adapter.LargeProductCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.ui.dialog.DialogUtils
 import com.neupanesushant.kastha.viewmodel.CartViewModel
-import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class CartFragment : BaseFragment<FragmentCartBinding>() {
 
-    private val productViewModel: ProductViewModel by viewModel()
-    private val cartViewModel: CartViewModel by viewModel()
-    private val favouriteViewModel: FavouriteViewModel by viewModel()
+    private val productViewModel: ProductViewModel by sharedViewModel()
+    private val cartViewModel: CartViewModel by sharedViewModel()
 
     private val selectionItemsIdSet = mutableSetOf<Int>()
     private var isSelectionEnabled: Boolean = false
@@ -225,5 +223,10 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
             )
         }
         isSelectionEnabled = false
+    }
+
+    override fun onStart() {
+        super.onStart()
+        cartViewModel.getAllCartProducts()
     }
 }

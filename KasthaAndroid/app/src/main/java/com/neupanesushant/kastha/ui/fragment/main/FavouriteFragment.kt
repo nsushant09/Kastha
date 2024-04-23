@@ -15,7 +15,7 @@ import com.neupanesushant.kastha.ui.activity.MainActivity
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.ui.dialog.DialogUtils
 import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
 
@@ -26,12 +26,13 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
             if (value) onSelectionEnabled() else onSelectionDisabled()
         }
 
-    private val favouriteViewModel: FavouriteViewModel by viewModel()
+    private val favouriteViewModel: FavouriteViewModel by sharedViewModel()
 
     override val layoutId: Int
         get() = R.layout.fragment_favourite
 
     override fun setupViews() {
+        favouriteViewModel.getAllFavouriteProducts()
     }
 
     override fun setupEventListener() {
