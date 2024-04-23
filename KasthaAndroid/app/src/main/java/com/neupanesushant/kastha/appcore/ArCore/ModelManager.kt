@@ -45,12 +45,13 @@ class ModelManager(private val context: Context) {
         fragment: ArFragment,
         anchor: Anchor,
         renderable: ModelRenderable
-    ) {
+    ): TransformableNode {
         val node = AnchorNode(anchor)
         val transformableNode = TransformableNode(fragment.transformationSystem)
         transformableNode.setParent(node)
         transformableNode.renderable = renderable
         fragment.arSceneView.scene.addChild(node)
         transformableNode.select()
+        return transformableNode
     }
 }

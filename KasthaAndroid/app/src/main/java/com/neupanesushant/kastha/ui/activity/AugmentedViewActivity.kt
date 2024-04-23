@@ -24,4 +24,6 @@ class AugmentedViewActivity : BaseActivity<ActivityAugmentedViewBinding>() {
 
     override fun setupObserver() {
     }
+
+    fun binding() = binding
 }

@@ -38,8 +38,6 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     protected open fun initialize() {}
     protected open fun setupExtras() {}
 
-    fun getActivityBinding(): T = binding
-
     override fun onResume() {
         super.onResume()
         registerReceiver(

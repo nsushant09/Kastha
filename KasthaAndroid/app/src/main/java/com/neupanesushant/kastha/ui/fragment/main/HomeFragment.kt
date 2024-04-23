@@ -59,7 +59,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         productViewModel.allProduct.observe(viewLifecycleOwner) { products ->
             setupRecommendedProducts(products)
             setupLatestProducts(products.sortedByDescending { it.id }.slice(0..9))
-            setupAllProducts(products.subList(0, 20))
+            setupAllProducts(products)
             setupSearchView()
         }
     }
@@ -135,7 +135,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             products
         ) { mBinding, data, _ ->
             mBinding.tvProductTitle.text = data.name
-            mBinding.tvProductPrice.text = "Rs." + data.price
+            mBinding.tvProductPrice.text = "Rs." + data.price.toInt()
             mBinding.cvArFeatured.isVisible = data.model != null
             mBinding.root.setOnClickListener {
                 RouteHelper.routeProductDetail(requireActivity(), data)

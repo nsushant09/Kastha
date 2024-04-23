@@ -35,7 +35,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/outfit_regular"
             android:lineSpacingMultiplier="0.8"
-            android:maxLines="2"
+            android:maxLines="1"
             tools:text="Wooden Sofa that is very very comfornatable" />
 
 
@@ -77,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:fontFamily="@font/titillium_regular"
+                android:textSize="12sp"
                 android:maxLines="1"
                 android:textColor="?attr/surface_grey"
                 tools:text="$124.8" />

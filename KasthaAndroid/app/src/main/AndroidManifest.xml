@@ -14,6 +14,7 @@
         android:name=".appcore.BaseApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/application_icon_dark"
         android:label="@string/app_name"
@@ -21,11 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kastha"
         android:usesCleartextTraffic="true"
-        android:enableOnBackInvokedCallback="true"
         tools:targetApi="tiramisu">
         <activity
             android:name=".ui.activity.AuthenticationActivity"
             android:exported="true"
+            android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,9 +35,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.MainActivity" />
-        <activity android:name=".ui.activity.FullScreenContainerActivity" />
-        <activity android:name=".ui.activity.AugmentedViewActivity" />
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:hardwareAccelerated="true" />
+        <activity
+            android:name=".ui.activity.FullScreenContainerActivity"
+            android:hardwareAccelerated="true" />
+        <activity
+            android:name=".ui.activity.AugmentedViewActivity"
+            android:hardwareAccelerated="true" />
 
         <meta-data
             android:name="com.google.ar.core"
