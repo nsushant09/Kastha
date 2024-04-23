@@ -15,9 +15,9 @@ object NetworkUtils {
 
     val loggingClient: OkHttpClient = OkHttpClient.Builder().apply {
         addInterceptor(loggingInterceptor)
-        connectTimeout(30, TimeUnit.SECONDS)
-        readTimeout(30, TimeUnit.SECONDS)
-        writeTimeout(30, TimeUnit.SECONDS)
+        connectTimeout(2, TimeUnit.SECONDS)
+        readTimeout(15, TimeUnit.SECONDS)
+        writeTimeout(15, TimeUnit.SECONDS)
     }.build()
 
     val authorizationClient: OkHttpClient = OkHttpClient.Builder().apply {

@@ -9,12 +9,14 @@ import com.neupanesushant.kastha.data.repo.CategoryRepo
 import com.neupanesushant.kastha.data.repo.FavoriteRepo
 import com.neupanesushant.kastha.data.repo.ProductRepo
 import com.neupanesushant.kastha.data.repo.ReviewRepo
+import com.neupanesushant.kastha.data.repo.UserRepo
 import com.neupanesushant.kastha.domain.repo_impl.remote.AlignmentRemoteImpl
 import com.neupanesushant.kastha.domain.repo_impl.remote.CartRemoteImpl
 import com.neupanesushant.kastha.domain.repo_impl.remote.CategoryRemoteImpl
 import com.neupanesushant.kastha.domain.repo_impl.remote.FavoriteRemoteImpl
 import com.neupanesushant.kastha.domain.repo_impl.remote.ProductRemoteImpl
 import com.neupanesushant.kastha.domain.repo_impl.remote.ReviewRemoteImpl
+import com.neupanesushant.kastha.domain.repo_impl.remote.UserRemoteImpl
 import com.neupanesushant.kastha.domain.usecase.AuthenticationUseCase
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
@@ -52,5 +54,9 @@ val domainModule = module {
 
     single<ReviewRepo> {
         ReviewRemoteImpl(get())
+    }
+
+    single<UserRepo> {
+        UserRemoteImpl(get())
     }
 }

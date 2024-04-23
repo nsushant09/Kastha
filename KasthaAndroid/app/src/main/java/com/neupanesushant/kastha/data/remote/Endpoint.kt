@@ -6,6 +6,7 @@ import com.neupanesushant.kastha.domain.model.Category
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.Review
 import com.neupanesushant.kastha.domain.model.ReviewResponse
+import com.neupanesushant.kastha.domain.model.User
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -106,5 +107,8 @@ interface Endpoint {
 
     @GET("review/{product_id}")
     suspend fun getReviewsOf(@Path("product_id") productId: Int): Response<List<ReviewResponse>>
+
+    @GET("user/{user_id}")
+    suspend fun getUserDetail(@Path("user_id") userId: Int): Response<User>
 
 }

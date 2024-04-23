@@ -8,16 +8,15 @@ import com.neupanesushant.kastha.databinding.FragmentProfileBinding
 import com.neupanesushant.kastha.domain.model.User
 import com.neupanesushant.kastha.extra.Preferences
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
-import org.koin.android.ext.android.inject
-import org.koin.core.qualifier.named
+import com.neupanesushant.kastha.viewmodel.UserViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_profile
 
-    private val user: User by inject(named("test_user"))
+    private val userViewModel: UserViewModel by viewModel()
     override fun setupViews() {
-        setupUserDetails(user)
     }
 
     override fun setupEventListener() {
@@ -27,6 +26,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     }
 
     override fun setupObserver() {
+        userViewModel.userDetail.observe(viewLifecycleOwner) {
+            setupUserDetails(it)
+        }
     }
 
     private fun setupUserDetails(user: User) {
