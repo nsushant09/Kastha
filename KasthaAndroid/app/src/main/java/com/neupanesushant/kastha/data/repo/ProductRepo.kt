@@ -4,7 +4,7 @@ import com.neupanesushant.kastha.core.Response
 import com.neupanesushant.kastha.domain.model.Product
 
 interface ProductRepo {
-    suspend fun add(product: Product): Product
+    suspend fun add(product: Product): Response<Product>
     suspend fun update(product: Product): Product
 
     suspend fun getProductOfId(id: Int): Product

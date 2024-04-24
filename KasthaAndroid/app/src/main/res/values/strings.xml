@@ -69,4 +69,12 @@
     <string name="there_are_no_reviews">There are no reviews</string>
     <string name="be_the_first_one_to_review_this_product">Be the first one to review this product</string>
     <string name="remove">Remove</string>
+    <string name="add_products_for_users_to_shop">Add products for users to shop</string>
+    <string name="add_product">Add Product</string>
+    <string name="price">Price</string>
+    <string name="stock_quantity">Stock Quantity</string>
+    <string name="category">Category</string>
+    <string name="select_images">Select Images</string>
+    <string name="select_3d_model">Select 3D Model</string>
+    <string name="administrator_features">Administrator Features</string>
 </resources>

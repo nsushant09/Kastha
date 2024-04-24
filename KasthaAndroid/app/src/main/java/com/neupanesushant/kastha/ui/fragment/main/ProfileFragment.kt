@@ -2,6 +2,8 @@ package com.neupanesushant.kastha.ui.fragment.main
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.neupanesushant.kastha.R
+import com.neupanesushant.kastha.appcore.RouteConfig
+import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.FragmentProfileBinding
@@ -22,6 +24,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     override fun setupEventListener() {
         binding.btnLogOut.setOnClickListener {
             showConfirmationDialog()
+        }
+
+        binding.btnAddProduct.setOnClickListener {
+            RouteHelper.routeFullScreenContainerActivity(
+                requireActivity(),
+                RouteConfig.ADD_PRODUCT_FRAGMENT
+            )
         }
     }
 

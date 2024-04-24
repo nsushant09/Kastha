@@ -1,6 +1,7 @@
 package com.neupanesushant.kastha.appcore
 
 import android.app.Activity
+import android.os.Bundle
 import androidx.core.os.bundleOf
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.Router
@@ -19,6 +20,24 @@ object RouteHelper {
             FullScreenContainerActivity.FRAGMENT_ROUTE to RouteConfig.PRODUCT_DETAIL_FRAGMENT,
             FullScreenContainerActivity.FRAGMENT_ROUTE_BUNDLE to routeBundle
         )
+        Router(
+            activity,
+            data
+        ).route(AppConfig.getActivity(RouteConfig.FULL_SCREEN_CONTAINER_ACTIVITY))
+    }
+
+    fun routeFullScreenContainerActivity(
+        activity: Activity,
+        fragmentRoute: String,
+        fragmentData: Bundle? = null
+    ) {
+        val data = bundleOf()
+        data.putString(FullScreenContainerActivity.FRAGMENT_ROUTE, fragmentRoute)
+
+        fragmentData?.let {
+            data.putBundle(FullScreenContainerActivity.FRAGMENT_ROUTE_BUNDLE, it)
+        }
+
         Router(
             activity,
             data

@@ -7,14 +7,18 @@ import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.Review
 import com.neupanesushant.kastha.domain.model.ReviewResponse
 import com.neupanesushant.kastha.domain.model.User
+import com.neupanesushant.kastha.domain.model.dto.BaseResponse
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -76,7 +80,7 @@ interface Endpoint {
     // Product
 
     @POST("product")
-    suspend fun addProduct(@Body product: Product): Product
+    suspend fun addProduct(@Body product: Product): Response<Product>
 
     @PUT("product")
     suspend fun updateProduct(@Body product: Product): Product
@@ -111,4 +115,15 @@ interface Endpoint {
     @GET("user/{user_id}")
     suspend fun getUserDetail(@Path("user_id") userId: Int): Response<User>
 
+    @Multipart
+    @POST("image/multiple")
+    suspend fun uploadImages(
+        @Part files: List<MultipartBody.Part>
+    ): Response<BaseResponse<List<String>>>
+
+    @Multipart
+    @POST("model")
+    suspend fun uploadModel(
+        @Part file: MultipartBody.Part
+    ): Response<BaseResponse<String>>
 }

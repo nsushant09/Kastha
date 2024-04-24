@@ -3,8 +3,12 @@ package com.neupanesushant.kastha.extra
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Build
+import android.provider.DocumentsContract
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
+import java.io.File
 
 
 object Utils {
@@ -44,5 +48,16 @@ object Utils {
         }
         return false
 
+    }
+
+    fun uriToFile(context: Context, uri: Uri): File? {
+        val contentResolver = context.contentResolver
+        val cursor = contentResolver.query(uri, null, null, null, null)
+        return cursor?.use { cursor ->
+            cursor.moveToFirst()
+            val filePathColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            val filePath = cursor.getString(filePathColumn)
+            File(filePath)
+        }
     }
 }

@@ -77,56 +77,84 @@
                     android:background="@drawable/dialog_bg"
 
                     android:orientation="vertical"
-                    android:paddingVertical="@dimen/dp_18"
                     android:padding="@dimen/dp_16"
-                    >
+                    android:paddingVertical="@dimen/dp_18">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/outfit_regular"
                         android:text="@string/services"
-                        android:textSize="20sp"
-                        />
+                        android:textSize="20sp" />
 
                     <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_marginTop="@dimen/dp_4"
                         android:fontFamily="@font/titillium_medium"
                         android:text="@string/policies"
                         android:textAlignment="textStart"
-                        android:textColor="?attr/surface_grey"
-                        android:layout_marginTop="@dimen/dp_4"
-                        />
+                        android:textColor="?attr/surface_grey" />
 
                     <com.google.android.material.button.MaterialButton
+                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_marginTop="@dimen/dp_4"
                         android:fontFamily="@font/titillium_medium"
                         android:text="@string/help"
                         android:textAlignment="textStart"
-                        android:textColor="?attr/surface_grey"
+                        android:textColor="?attr/surface_grey" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llAdminContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:background="@drawable/dialog_bg"
+
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_16"
+                    android:paddingVertical="@dimen/dp_18">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/outfit_regular"
+                        android:text="@string/administrator_features"
+                        android:textSize="20sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnAddProduct"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_4"
-                        />
+                        android:fontFamily="@font/titillium_medium"
+                        android:text="@string/add_product"
+                        android:textAlignment="textStart"
+                        android:textColor="?attr/surface_grey" />
+
 
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnLogOut"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:backgroundTint="#0DB00020"
                     android:fontFamily="@font/outfit_medium"
-                    android:textSize="16sp"
                     android:text="@string/logout"
                     android:textColor="?attr/colorError"
-                    app:strokeColor="?attr/colorError"
-                    android:backgroundTint="#0DB00020"
-                    android:layout_marginTop="@dimen/dp_4"
-                    android:layout_marginHorizontal="@dimen/dp_16"
-                    />
+                    android:textSize="16sp"
+                    app:strokeColor="?attr/colorError" />
 
             </LinearLayout>
 
@@ -137,8 +165,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@android:color/transparent"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

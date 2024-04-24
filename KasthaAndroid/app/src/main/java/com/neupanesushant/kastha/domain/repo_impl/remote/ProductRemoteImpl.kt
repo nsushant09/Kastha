@@ -12,8 +12,8 @@ class ProductRemoteImpl(
 ) : ProductRepo {
 
     private var allProducts: List<Product> = emptyList()
-    override suspend fun add(product: Product): Product =
-        Mapper.toBaseUrl(endpoint.addProduct(product))
+    override suspend fun add(product: Product) =
+        requestHandler { endpoint.addProduct(product) }
 
     override suspend fun update(product: Product): Product =
         Mapper.toBaseUrl(endpoint.updateProduct(product))

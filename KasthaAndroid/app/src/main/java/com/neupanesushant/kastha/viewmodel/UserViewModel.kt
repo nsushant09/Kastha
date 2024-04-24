@@ -29,7 +29,6 @@ class UserViewModel(
 
         }, onSuccess = {
             _userDetail.value = it
-            userFileManager.storeUser(it)
         })()
     }
 }
