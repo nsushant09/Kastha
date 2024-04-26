@@ -14,6 +14,7 @@ import com.neupanesushant.kastha.domain.usecase.AuthenticationUseCase
 import com.neupanesushant.kastha.viewmodel.AuthenticationViewModel
 import com.neupanesushant.kastha.viewmodel.CartViewModel
 import com.neupanesushant.kastha.viewmodel.CategoryViewModel
+import com.neupanesushant.kastha.viewmodel.ChatMessagingViewModel
 import com.neupanesushant.kastha.viewmodel.ChatViewModel
 import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import com.neupanesushant.kastha.viewmodel.ProductCRUDViewModel
@@ -59,5 +60,9 @@ val vmModule = module {
 
     viewModel {
         ChatViewModel(get())
+    }
+
+    viewModel { (fromId: Int, toId: Int) ->
+        ChatMessagingViewModel(fromId, toId)
     }
 }

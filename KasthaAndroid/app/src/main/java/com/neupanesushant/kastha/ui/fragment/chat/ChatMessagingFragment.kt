@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import com.neupanesushant.kastha.R
@@ -17,8 +18,11 @@ import com.neupanesushant.kastha.databinding.FragmentChatMessagingBinding
 import com.neupanesushant.kastha.domain.model.User
 import com.neupanesushant.kastha.domain.usecase.CameraUseCase
 import com.neupanesushant.kastha.extra.Utils.getParcelable
+import com.neupanesushant.kastha.viewmodel.ChatMessagingViewModel
 import com.neupanesushant.kurakani.domain.usecase.audiorecorder.AndroidAudioRecorder
 import com.neupanesushant.kurakani.domain.usecase.audiorecorder.AutoRunningTimer
+import org.koin.android.ext.android.get
+import org.koin.core.parameter.parametersOf
 import java.io.File
 
 class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
@@ -36,6 +40,7 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
 
     private var currentUserId: Int = 0
     private var otherUser: User? = null
+    private lateinit var chatMessagingViewModel: ChatMessagingViewModel
     override fun initialize() {
         if (arguments == null) {
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -48,6 +53,9 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
         cameraUseCase = CameraUseCase(requireContext())
         audioRecorder = AndroidAudioRecorder(requireContext())
         autoRunningTimer = AutoRunningTimer()
+
+        val otherUserId = if (otherUser == null) 1 else otherUser!!.id
+        chatMessagingViewModel = get { parametersOf(currentUserId, otherUserId) }
     }
 
     override fun setupViews() {
@@ -66,8 +74,7 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
         }
         binding.btnSend.setOnClickListener {
             if (binding.etWriteMessage.text.isNotEmpty()) {
-                // TODO : SEND TEXT MESSAGE
-//                viewModel.sendTextMessage(binding.etWriteMessage.text.toString())
+                chatMessagingViewModel.sendTextMessage(binding.etWriteMessage.text.toString())
                 binding.etWriteMessage.text.clear()
             }
         }
@@ -93,9 +100,7 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
             for (i in 0 until data.clipData!!.itemCount) {
                 tempImages.add(data.clipData!!.getItemAt(i).uri)
             }
-
-            // TODO : SEND IMAGE MESSAGE
-//            viewModel.sendImagesMessage(tempImages)
+            chatMessagingViewModel.sendImageMessage(tempImages)
         }
     }
 
@@ -110,9 +115,7 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
         )
         val tempImages: ArrayList<Uri> = arrayListOf()
         tempImages.add(uri)
-
-        // TODO : SEND IMAGE MESSAGE
-//        viewModel.sendImagesMessage(tempImages)
+        chatMessagingViewModel.sendImageMessage(tempImages)
     }
 
     private fun requestCameraPermission() {
@@ -157,8 +160,7 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
 
         if (event.action == MotionEvent.ACTION_UP)
             audioRecorder.onMotionEventUp {
-                // TODO : SEND AUDIO MESSAGE
-//                viewModel.sendAudioMessage(it.toUri())
+                chatMessagingViewModel.sendAudioMessage(it.toUri())
                 displayAudioRecording(false)
             }
 
