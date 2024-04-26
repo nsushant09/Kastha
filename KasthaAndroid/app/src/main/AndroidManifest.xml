@@ -50,7 +50,7 @@
             android:value="required" />
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.neupanesushant.kurakani.provider"
+            android:authorities="com.neupanesushant.kastha.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

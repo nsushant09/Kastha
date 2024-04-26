@@ -130,4 +130,9 @@
         <item name="cornerSize">@dimen/dp_24</item>
     </style>
 
+    <style name="BottomSheetDialogThemeNoFloating" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateVisible</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.Medium</item>
+    </style>
 </resources>

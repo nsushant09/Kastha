@@ -89,4 +89,8 @@
     <string name="select_image">Select Image</string>
     <string name="audio_record">Audio Record</string>
     <string name="chatimage">ChatImage</string>
+    <string name="action_save">Save</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_share">Share</string>
+    <string name="action_cancel">Cancel</string>
 </resources>

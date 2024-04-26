@@ -25,6 +25,7 @@ import com.neupanesushant.kastha.domain.usecase.audiorecorder.AndroidAudioRecord
 import com.neupanesushant.kastha.domain.usecase.audiorecorder.AutoRunningTimer
 import com.neupanesushant.kastha.extra.Preferences
 import com.neupanesushant.kastha.extra.Utils.getParcelable
+import com.neupanesushant.kastha.ui.dialog.LongActionsFragment
 import com.neupanesushant.kastha.ui.fragment.chat.chatmessageadapter.ChatMessageAdapter
 import com.neupanesushant.kastha.viewmodel.ChatMessagingViewModel
 import org.koin.android.ext.android.get
@@ -110,7 +111,12 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
             )
     }
 
-    private val onLongClickAction: (Message) -> Unit = {}
+    private val onLongClickAction: (Message) -> Unit = { message ->
+        LongActionsFragment.getInstance(message) { timeStamp ->
+            chatMessagingViewModel.deleteMessage(timeStamp)
+        }.show(parentFragmentManager, LongActionsFragment::class.java.name)
+    }
+
     private fun chooseImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
