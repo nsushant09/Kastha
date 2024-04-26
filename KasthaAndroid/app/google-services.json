@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "402594069518",
+    "project_id": "kastha-4bbac",
+    "storage_bucket": "kastha-4bbac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402594069518:android:59bcd5759982f647f6105f",
+        "android_client_info": {
+          "package_name": "com.neupanesushant.kastha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEJ-w7YcUEB7Vm2GgDl8wVKxvR9IFXTFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

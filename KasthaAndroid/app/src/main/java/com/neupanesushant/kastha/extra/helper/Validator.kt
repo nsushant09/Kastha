@@ -55,4 +55,11 @@ object Validator {
             Pair(false, "Input should not contain numeric characters.")
         }
     }
+
+    fun numeric(value: String): Pair<Boolean, String> {
+        if (value.isBlank()) {
+            return Pair(false, "Input cannot be empty.")
+        }
+        return Pair(true, "Valid number")
+    }
 }

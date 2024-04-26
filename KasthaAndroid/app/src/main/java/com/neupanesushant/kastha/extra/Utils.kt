@@ -1,14 +1,16 @@
 package com.neupanesushant.kastha.extra
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.net.Uri
 import android.os.Build
-import android.provider.DocumentsContract
-import android.provider.MediaStore
 import androidx.fragment.app.Fragment
-import java.io.File
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.ByteArrayOutputStream
+import java.util.UUID
 
 
 object Utils {
@@ -50,14 +52,20 @@ object Utils {
 
     }
 
-    fun uriToFile(context: Context, uri: Uri): File? {
-        val contentResolver = context.contentResolver
-        val cursor = contentResolver.query(uri, null, null, null, null)
-        return cursor?.use { cursor ->
-            cursor.moveToFirst()
-            val filePathColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            val filePath = cursor.getString(filePathColumn)
-            File(filePath)
-        }
+    fun Bitmap.toMultipart(): MultipartBody.Part {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        this.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+
+        // Create RequestBody from ByteArray
+        val requestBody = RequestBody.create(MediaType.get("image/jpeg"), byteArray)
+        val uuid = UUID.nameUUIDFromBytes(byteArray)
+
+        // Create MultipartBody.Part from RequestBody
+        return MultipartBody.Part.createFormData(
+            uuid.toString(),
+            "$uuid.jpg",
+            requestBody
+        )
     }
 }

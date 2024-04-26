@@ -16,6 +16,7 @@ import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.core.Router
+import com.neupanesushant.kastha.core.StateResolver
 import com.neupanesushant.kastha.databinding.FragmentHomeBinding
 import com.neupanesushant.kastha.databinding.ItemHomeCarouselBinding
 import com.neupanesushant.kastha.databinding.ItemMiniProductCardBinding
