@@ -143,18 +143,27 @@
 
             </androidx.cardview.widget.CardView>
 
-            <EditText
-                android:id="@+id/etWriteMessage"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="240dp"
-                android:layout_height="@dimen/dp_48"
-                android:layout_marginHorizontal="8dp"
+                android:layout_height="52dp"
                 android:layout_toEndOf="@id/cardViewAddImageIcon"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/ubunturegular"
-                android:hint="@string/message"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:textSize="12sp" />
+                app:boxStrokeWidthFocused="@dimen/dp_0"
+                app:hintAnimationEnabled="false"
+                app:boxStrokeWidth="0dp"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etWriteMessage"
+                    style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/titillium_regular"
+                    android:hint="@string/message"
+                    android:textSize="14sp">
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:id="@+id/llAudioAndImageSendIcon"

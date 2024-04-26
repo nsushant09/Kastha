@@ -82,9 +82,9 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
             recordAudioMessageEventHandler(event)
         }
         binding.btnSend.setOnClickListener {
-            if (binding.etWriteMessage.text.isNotEmpty()) {
+            if (binding.etWriteMessage.text.isNullOrEmpty()) {
                 chatMessagingViewModel.sendTextMessage(binding.etWriteMessage.text.toString())
-                binding.etWriteMessage.text.clear()
+                binding.etWriteMessage.text?.clear()
             }
         }
     }

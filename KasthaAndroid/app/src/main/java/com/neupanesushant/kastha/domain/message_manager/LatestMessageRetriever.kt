@@ -3,14 +3,12 @@ package com.neupanesushant.kastha.domain.message_manager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.getValue
+import com.google.firebase.database.ktx.getValue
+import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.domain.managers.FirebaseManager
 import com.neupanesushant.kastha.domain.model.chat.Message
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 
 class LatestMessageRetriever() : ValueEventListener {
 
@@ -18,22 +16,16 @@ class LatestMessageRetriever() : ValueEventListener {
 
     suspend fun fetch() = coroutineScope {
         FirebaseManager.firebaseDatabase.reference.child("latest-messages")
-            .child("0")
+            .child(BuildConfig.ADMIN_ID.toString())
             .addValueEventListener(this@LatestMessageRetriever)
     }
 
     override fun onDataChange(snapshot: DataSnapshot) {
-        val tempList =
-            snapshot.getValue<HashMap<String, Message>>()
-                ?.values
-                ?.sortedByDescending { it.timeStamp }
-                ?: return
-
-        CoroutineScope(Dispatchers.IO).launch {
-            latestMessages.emit(
-                tempList
-            )
-        }
+        val data = snapshot.getValue<HashMap<String, HashMap<String, Message>>>()
+//
+//        CoroutineScope(Dispatchers.IO).launch {
+//            latestMessages.emit(tempList)
+//        }
     }
 
     override fun onCancelled(error: DatabaseError) {

@@ -26,11 +26,8 @@ class ChatViewModel(
     init {
         viewModelScope.launch {
             getLatestMessages()
-            latestMessageRetriever.latestMessages.collectLatest {
-                val sortedMessage = it.sortedByDescending {
-                    it.timeStamp
-                }
-                getChatUsers(sortedMessage)
+            latestMessageRetriever.latestMessages.collectLatest { messages ->
+                getChatUsers(messages)
             }
         }
     }
@@ -63,7 +60,7 @@ class ChatViewModel(
             for (i in users.indices) {
                 temp.add(Pair(users[i], messages[i]))
             }
-            _messageAndUsers.value = State.Success(temp)
+            _messageAndUsers.postValue(State.Success(temp))
         })()
     }
 }
