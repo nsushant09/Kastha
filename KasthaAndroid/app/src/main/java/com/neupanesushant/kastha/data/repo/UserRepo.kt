@@ -5,4 +5,5 @@ import com.neupanesushant.kastha.domain.model.User
 
 interface UserRepo {
     suspend fun getUserDetail(userId: Int): Response<User>
+    suspend fun getChatUsers(userIds: List<Int>): Response<List<User>>
 }

@@ -13,4 +13,9 @@ class UserRemoteImpl(
         endpoint.getUserDetail(userId)
     }
 
+    override suspend fun getChatUsers(userIds: List<Int>): Response<List<User>> = requestHandler {
+        endpoint.getChatUsers(userIds)
+    }
+
+
 }

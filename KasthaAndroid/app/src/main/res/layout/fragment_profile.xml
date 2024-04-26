@@ -88,6 +88,18 @@
                         android:textSize="20sp" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnChatWithAdmin"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:fontFamily="@font/titillium_medium"
+                        android:text="@string/chat_with_us"
+                        android:textAlignment="textStart"
+                        android:textColor="?attr/surface_grey" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPolicy"
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -98,6 +110,7 @@
                         android:textColor="?attr/surface_grey" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnHelp"
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -136,6 +149,17 @@
                         android:layout_marginTop="@dimen/dp_4"
                         android:fontFamily="@font/titillium_medium"
                         android:text="@string/add_product"
+                        android:textAlignment="textStart"
+                        android:textColor="?attr/surface_grey" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnChatWithCustomers"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:fontFamily="@font/titillium_medium"
+                        android:text="@string/chat_with_customers"
                         android:textAlignment="textStart"
                         android:textColor="?attr/surface_grey" />
 

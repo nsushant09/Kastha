@@ -126,4 +126,11 @@ interface Endpoint {
     suspend fun uploadModel(
         @Part file: MultipartBody.Part
     ): Response<BaseResponse<String>>
+
+
+    // Chat
+    @GET
+    suspend fun getChatUsers(
+        @Query("user_ids") userIds: List<Int>
+    ): Response<List<User>>
 }

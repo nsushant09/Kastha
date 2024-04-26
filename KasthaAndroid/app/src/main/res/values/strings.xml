@@ -77,4 +77,8 @@
     <string name="select_images">Select Images</string>
     <string name="select_3d_model">Select 3D Model</string>
     <string name="administrator_features">Administrator Features</string>
+    <string name="chat_with_customers">Chat with Customers</string>
+    <string name="chat_with_us">Chat with Us</string>
+    <string name="chat">Chat</string>
+    <string name="profile_image">Profile Image</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.neupanesushant.kastha.ui.fragment.main
 
+import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.appcore.RouteConfig
@@ -10,6 +12,7 @@ import com.neupanesushant.kastha.databinding.FragmentProfileBinding
 import com.neupanesushant.kastha.domain.model.User
 import com.neupanesushant.kastha.extra.Preferences
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
+import com.neupanesushant.kastha.ui.fragment.chat.ChatMessagingFragment
 import com.neupanesushant.kastha.viewmodel.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,11 +35,30 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 RouteConfig.ADD_PRODUCT_FRAGMENT
             )
         }
+
+        binding.btnChatWithCustomers.setOnClickListener {
+            RouteHelper.routeFullScreenContainerActivity(
+                requireActivity(),
+                RouteConfig.CHAT_FRAGMENT
+            )
+        }
+
+        binding.btnChatWithAdmin.setOnClickListener {
+            val data = bundleOf(
+                ChatMessagingFragment.CURRENT_USER_ID to Preferences.getUserId()
+            )
+            RouteHelper.routeFullScreenContainerActivity(
+                requireActivity(),
+                RouteConfig.CHAT_MESSAGING_FRAGMENT,
+                data
+            )
+        }
     }
 
     override fun setupObserver() {
         userViewModel.userDetail.observe(viewLifecycleOwner) {
             setupUserDetails(it)
+            setupViewBasedOnRole(it)
         }
     }
 
@@ -68,5 +90,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun setupViewBasedOnRole(user: User) {
+        val roles = user.roles
+        val isAdmin = roles.filter { it.name.equals("ADMIN") }.isNotEmpty()
+
+        binding.btnChatWithAdmin.isVisible = !isAdmin
+        binding.btnChatWithCustomers.isVisible = isAdmin
+
     }
 }
