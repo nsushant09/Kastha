@@ -3,10 +3,9 @@ package com.neupanesushant.kastha.domain.message_manager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
+import com.google.firebase.database.getValue
 import com.neupanesushant.kastha.domain.managers.FirebaseManager
 import com.neupanesushant.kastha.domain.model.chat.Message
-import com.neupanesushant.kastha.extra.Preferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -19,7 +18,7 @@ class LatestMessageRetriever() : ValueEventListener {
 
     suspend fun fetch() = coroutineScope {
         FirebaseManager.firebaseDatabase.reference.child("latest-messages")
-            .child(Preferences.getUserId().toString())
+            .child("0")
             .addValueEventListener(this@LatestMessageRetriever)
     }
 

@@ -9,8 +9,9 @@ import kotlinx.coroutines.coroutineScope
 class DatabaseImagePersistence : DatabasePersistence {
     override suspend fun invoke(fromId: Int, uri: Uri): String = coroutineScope {
         val timeStamp = System.currentTimeMillis() / 100
-        val ref =
-            FirebaseStorage.getInstance().getReference("/images/$fromId$timeStamp")
+        val storageRef =
+            FirebaseStorage.getInstance().getReferenceFromUrl("gs://kastha-4bbac.appspot.com")
+        val ref = storageRef.child("/images/$fromId$timeStamp")
         val deferred = CompletableDeferred<String>()
         ref.putFile(uri).addOnSuccessListener {
             ref.downloadUrl.addOnSuccessListener { downloadUrl ->

@@ -33,8 +33,8 @@ val domainModule = module {
         androidApplication().getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE)
     }
 
-    factory {
-        WorkManager.getInstance(androidContext())
+    single {
+        WorkManager.getInstance(androidApplication().applicationContext)
     }
 
     single {

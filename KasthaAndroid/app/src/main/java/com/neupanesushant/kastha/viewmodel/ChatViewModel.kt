@@ -7,10 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.neupanesushant.kastha.core.ResponseResolver
 import com.neupanesushant.kastha.core.State
 import com.neupanesushant.kastha.data.repo.UserRepo
+import com.neupanesushant.kastha.domain.message_manager.LatestMessageRetriever
 import com.neupanesushant.kastha.domain.model.User
 import com.neupanesushant.kastha.domain.model.chat.Message
 import com.neupanesushant.kastha.extra.Preferences
-import com.neupanesushant.kastha.domain.message_manager.LatestMessageRetriever
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -27,7 +27,9 @@ class ChatViewModel(
         viewModelScope.launch {
             getLatestMessages()
             latestMessageRetriever.latestMessages.collectLatest {
-                val sortedMessage = it.sortedByDescending { it.timeStamp }
+                val sortedMessage = it.sortedByDescending {
+                    it.timeStamp
+                }
                 getChatUsers(sortedMessage)
             }
         }
