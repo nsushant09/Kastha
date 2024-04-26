@@ -10,7 +10,7 @@ import com.neupanesushant.kastha.data.repo.UserRepo
 import com.neupanesushant.kastha.domain.model.User
 import com.neupanesushant.kastha.domain.model.chat.Message
 import com.neupanesushant.kastha.extra.Preferences
-import com.neupanesushant.kurakani.domain.usecase.message_manager.LatestMessageRetriever
+import com.neupanesushant.kastha.domain.message_manager.LatestMessageRetriever
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

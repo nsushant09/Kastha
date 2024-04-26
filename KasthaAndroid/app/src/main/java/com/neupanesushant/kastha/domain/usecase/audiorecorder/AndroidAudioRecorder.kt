@@ -1,4 +1,4 @@
-package com.neupanesushant.kurakani.domain.usecase.audiorecorder
+package com.neupanesushant.kastha.domain.usecase.audiorecorder
 
 import android.content.Context
 import android.media.MediaRecorder

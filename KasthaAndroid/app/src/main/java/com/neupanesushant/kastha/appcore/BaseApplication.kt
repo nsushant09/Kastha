@@ -24,6 +24,8 @@ import com.neupanesushant.kastha.ui.fragment.authentication.LoginFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.OTPFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.OnboardingFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.SignUpFragment
+import com.neupanesushant.kastha.ui.fragment.chat.ChatFragment
+import com.neupanesushant.kastha.ui.fragment.chat.ChatMessagingFragment
 import com.neupanesushant.kastha.ui.fragment.main.AugmentedViewFragment
 import com.neupanesushant.kastha.ui.fragment.main.CartFragment
 import com.neupanesushant.kastha.ui.fragment.main.CategoriesFragment
@@ -81,6 +83,8 @@ class BaseApplication : Application() {
             put(RouteConfig.FAVOURITES_FRAGMENT, FavouriteFragment::class.java)
             put(RouteConfig.PRODUCT_DETAIL_FRAGMENT, ProductDetailFragment::class.java)
             put(RouteConfig.AUGMENTED_VIEW_FRAGMENT, AugmentedViewFragment::class.java)
+            put(RouteConfig.CHAT_FRAGMENT, ChatFragment::class.java)
+            put(RouteConfig.CHAT_MESSAGING_FRAGMENT, ChatMessagingFragment::class.java)
 
             // Admin
             put(RouteConfig.ADD_PRODUCT_FRAGMENT, AddProductFragment::class.java)

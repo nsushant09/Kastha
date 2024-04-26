@@ -58,7 +58,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     override fun setupObserver() {
         userViewModel.userDetail.observe(viewLifecycleOwner) {
             setupUserDetails(it)
-            setupViewBasedOnRole(it)
+//            setupViewBasedOnRole(it)
         }
     }
 

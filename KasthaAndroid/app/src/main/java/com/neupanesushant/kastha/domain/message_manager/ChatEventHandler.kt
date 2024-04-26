@@ -1,4 +1,4 @@
-package com.neupanesushant.kurakani.domain.usecase.message_manager
+package com.neupanesushant.kastha.domain.message_manager
 
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot

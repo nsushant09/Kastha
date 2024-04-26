@@ -1,4 +1,4 @@
-package com.neupanesushant.kurakani.domain.usecase.messagedeliverpolicy
+package com.neupanesushant.kastha.domain.messagedeliverpolicy
 
 import android.content.Context
 import androidx.work.CoroutineWorker

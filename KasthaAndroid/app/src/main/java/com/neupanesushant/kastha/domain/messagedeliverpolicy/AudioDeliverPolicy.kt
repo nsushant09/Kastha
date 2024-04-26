@@ -1,4 +1,4 @@
-package com.neupanesushant.kurakani.domain.usecase.messagedeliverpolicy
+package com.neupanesushant.kastha.domain.messagedeliverpolicy
 
 import android.content.Context
 import android.net.Uri
@@ -9,7 +9,7 @@ import com.google.gson.Gson
 import com.neupanesushant.kastha.domain.model.chat.Message
 import com.neupanesushant.kastha.domain.model.chat.MessageType
 import com.neupanesushant.kastha.extra.WorkerCodes
-import com.neupanesushant.kurakani.domain.usecase.databasepersistence.DatabaseAudioPersistence
+import com.neupanesushant.kastha.domain.databasepersistence.DatabaseAudioPersistence
 
 class AudioDeliverPolicy(
     context: Context,
@@ -19,7 +19,7 @@ class AudioDeliverPolicy(
     private val audioPersistence = DatabaseAudioPersistence()
     private suspend fun getMessageObject(message: String, fromId: String, toId: String): Message {
         val timeStamp = System.currentTimeMillis() / 100;
-        val audioUrl = audioPersistence(Uri.parse(message))
+        val audioUrl = audioPersistence(fromId.toInt(), Uri.parse(message))
         return Message(
             fromId,
             toId,

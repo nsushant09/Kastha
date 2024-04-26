@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.neupanesushant.kastha.domain.message_manager.ChatEventHandler
+import com.neupanesushant.kastha.domain.message_manager.MessageDeleter
+import com.neupanesushant.kastha.domain.message_manager.MessageSender
 import com.neupanesushant.kastha.domain.model.chat.Message
 import com.neupanesushant.kastha.domain.model.chat.MessageType
-import com.neupanesushant.kurakani.domain.usecase.message_manager.ChatEventHandler
-import com.neupanesushant.kurakani.domain.usecase.message_manager.MessageDeleter
-import com.neupanesushant.kurakani.domain.usecase.message_manager.MessageSender
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -24,13 +24,15 @@ class ChatMessagingViewModel(
     private val messageDeleter = MessageDeleter(fromId, toId)
     private val chatEventHandler = ChatEventHandler(fromId, toId)
 
+    private val tempChatLog: ArrayList<Message> = arrayListOf()
+
     init {
         viewModelScope.launch {
             chatEventHandler.messageWithAction.collectLatest {
                 if (it == null) return@collectLatest
-                if (it.second == ChatEventHandler.ACTION.ADD) _messages.value?.add(it.first)
-                if (it.second == ChatEventHandler.ACTION.DELETE) _messages.value?.remove(it.first)
-                _messages.value = _messages.value
+                if (it.second == ChatEventHandler.ACTION.ADD) tempChatLog.add(it.first)
+                if (it.second == ChatEventHandler.ACTION.DELETE) tempChatLog.remove(it.first)
+                _messages.value = tempChatLog
             }
         }
     }

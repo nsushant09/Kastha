@@ -1,4 +1,4 @@
-package com.neupanesushant.kurakani.domain.usecase.message_manager
+package com.neupanesushant.kastha.domain.message_manager
 
 import androidx.work.Constraints
 import androidx.work.Data
@@ -9,10 +9,10 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.neupanesushant.kastha.domain.model.chat.MessageType
 import com.neupanesushant.kastha.extra.WorkerCodes
-import com.neupanesushant.kurakani.domain.usecase.messagedeliverpolicy.AudioDeliverPolicy
-import com.neupanesushant.kurakani.domain.usecase.messagedeliverpolicy.ImageDeliverPolicy
-import com.neupanesushant.kurakani.domain.usecase.messagedeliverpolicy.MessageUpdateWorker
-import com.neupanesushant.kurakani.domain.usecase.messagedeliverpolicy.TextDeliverPolicy
+import com.neupanesushant.kastha.domain.messagedeliverpolicy.AudioDeliverPolicy
+import com.neupanesushant.kastha.domain.messagedeliverpolicy.ImageDeliverPolicy
+import com.neupanesushant.kastha.domain.messagedeliverpolicy.MessageUpdateWorker
+import com.neupanesushant.kastha.domain.messagedeliverpolicy.TextDeliverPolicy
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

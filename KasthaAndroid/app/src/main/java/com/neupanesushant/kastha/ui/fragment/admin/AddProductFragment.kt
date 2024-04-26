@@ -30,6 +30,7 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
     }
 
     override fun setupEventListener() {
+        binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
         binding.btnSelectImages.setOnClickListener { chooseImage() }
         binding.btnSelectModel.setOnClickListener { chooseModel() }
         binding.btnAddProduct.setOnClickListener {

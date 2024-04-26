@@ -27,6 +27,7 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
+            buildConfigField("int", "ADMIN_ID", "0")
 //            buildConfigField("String", "BASE_URL", "\"http://192.168.1.76:8080/api/\"")
         }
 
@@ -38,7 +39,7 @@ android {
             )
 //            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
             buildConfigField("String", "BASE_URL", "\"http://192.168.1.76:8080/api/\"")
-
+            buildConfigField("int", "ADMIN_ID", "0")
         }
     }
 
@@ -109,5 +110,8 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-messaging:23.4.1")
+    implementation("com.google.firebase:firebase-core:21.1.1")
+    implementation("com.google.firebase:firebase-database-ktx:20.3.1")
+    implementation("com.google.firebase:firebase-storage:20.3.0")
+//    implementation("com.google.firebase:firebase-messaging:23.4.1")
 }

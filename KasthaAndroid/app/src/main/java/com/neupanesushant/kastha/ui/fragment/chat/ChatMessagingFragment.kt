@@ -12,15 +12,21 @@ import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentChatMessagingBinding
 import com.neupanesushant.kastha.domain.model.User
+import com.neupanesushant.kastha.domain.model.chat.Message
 import com.neupanesushant.kastha.domain.usecase.CameraUseCase
+import com.neupanesushant.kastha.domain.usecase.audiorecorder.AndroidAudioRecorder
+import com.neupanesushant.kastha.domain.usecase.audiorecorder.AutoRunningTimer
+import com.neupanesushant.kastha.extra.Preferences
 import com.neupanesushant.kastha.extra.Utils.getParcelable
+import com.neupanesushant.kastha.ui.fragment.chat.chatmessageadapter.ChatMessageAdapter
 import com.neupanesushant.kastha.viewmodel.ChatMessagingViewModel
-import com.neupanesushant.kurakani.domain.usecase.audiorecorder.AndroidAudioRecorder
-import com.neupanesushant.kurakani.domain.usecase.audiorecorder.AutoRunningTimer
 import org.koin.android.ext.android.get
 import org.koin.core.parameter.parametersOf
 import java.io.File
@@ -54,11 +60,12 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
         audioRecorder = AndroidAudioRecorder(requireContext())
         autoRunningTimer = AutoRunningTimer()
 
-        val otherUserId = if (otherUser == null) 1 else otherUser!!.id
+        val otherUserId = if (otherUser == null) BuildConfig.ADMIN_ID else otherUser!!.id
         chatMessagingViewModel = get { parametersOf(currentUserId, otherUserId) }
     }
 
     override fun setupViews() {
+        setOtherUserDetail(otherUser)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -70,6 +77,8 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
             isMessageWritten(!it.isNullOrEmpty())
         }
         binding.ivRecordAudioMessage.setOnTouchListener { _, event ->
+            toast("This feature will be added soon")
+            return@setOnTouchListener true
             recordAudioMessageEventHandler(event)
         }
         binding.btnSend.setOnClickListener {
@@ -81,8 +90,27 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
     }
 
     override fun setupObserver() {
+        chatMessagingViewModel.messages.observe(viewLifecycleOwner) {
+            if (it.isNullOrEmpty()) {
+                return@observe
+            }
+            setChatData(it)
+        }
     }
 
+    private fun setChatData(messages: List<Message>) {
+        binding.rvChatContent.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
+        binding.rvChatContent.adapter =
+            ChatMessageAdapter(
+                requireContext(),
+                Preferences.getUserId(),
+                messages,
+                onLongClickAction
+            )
+    }
+
+    private val onLongClickAction: (Message) -> Unit = {}
     private fun chooseImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -109,9 +137,7 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
     ) {
         val file = File(requireContext().cacheDir, cameraUseCase.getLastCapturedFileName())
         val uri = FileProvider.getUriForFile(
-            requireContext(),
-            requireContext().applicationContext.packageName + ".provider",
-            file
+            requireContext(), requireContext().applicationContext.packageName + ".provider", file
         )
         val tempImages: ArrayList<Uri> = arrayListOf()
         tempImages.add(uri)
@@ -119,8 +145,10 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
     }
 
     private fun requestCameraPermission() {
-        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA)
-            == PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
             onCameraPermissionGranted()
         } else {
@@ -149,23 +177,23 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
     private fun recordAudioMessageEventHandler(event: MotionEvent): Boolean {
 
         if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                android.Manifest.permission.RECORD_AUDIO
-            )
-            != PackageManager.PERMISSION_GRANTED
+                requireContext(), android.Manifest.permission.RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
             audioPermissionLauncher(event).launch(android.Manifest.permission.RECORD_AUDIO)
             return false
         }
 
-        if (event.action == MotionEvent.ACTION_UP)
-            audioRecorder.onMotionEventUp {
-                chatMessagingViewModel.sendAudioMessage(it.toUri())
-                displayAudioRecording(false)
-            }
+        if (event.action == MotionEvent.ACTION_UP) audioRecorder.onMotionEventUp {
+            chatMessagingViewModel.sendAudioMessage(it.toUri())
+            displayAudioRecording(false)
+        }
 
-        if (event.action == MotionEvent.ACTION_DOWN)
-            audioRecorder.onMotionEventDown { displayAudioRecording(true) }
+        if (event.action == MotionEvent.ACTION_DOWN) audioRecorder.onMotionEventDown {
+            displayAudioRecording(
+                true
+            )
+        }
 
         return true
     }
@@ -192,6 +220,17 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
             btnSend.isVisible = boolean
             ivSelectImage.isVisible = !boolean
             ivRecordAudioMessage.isVisible = !boolean
+        }
+    }
+
+    private fun setOtherUserDetail(user: User? = null) {
+        if (user == null) {
+            binding.tvFriendFirstName.text =
+                ContextCompat.getString(requireContext(), R.string.app_name)
+            Glide.with(requireContext()).load(R.drawable.application_icon_dark)
+                .into(binding.ivFriendProfileImage)
+        } else {
+            binding.tvFriendFirstName.text = user.firstName
         }
     }
 }

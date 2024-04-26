@@ -1,17 +1,14 @@
-package com.neupanesushant.kurakani.domain.usecase.databasepersistence
+package com.neupanesushant.kastha.domain.databasepersistence
 
 import android.net.Uri
-import com.neupanesushant.kurakani.data.datasource.FirebaseInstance
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
 
 class DatabaseAudioPersistence : DatabasePersistence {
-    override suspend fun invoke(uri: Uri): String = coroutineScope {
+    override suspend fun invoke(fromId: Int, uri: Uri): String = coroutineScope {
         val timeStamp = System.currentTimeMillis() / 100
-        val ref =
-            FirebaseInstance.firebaseStorage.getReference("/audio/${FirebaseInstance.fromId}$timeStamp")
+        val ref = FirebaseStorage.getInstance().getReference("/audio/$fromId$timeStamp")
         val deferred = CompletableDeferred<String>()
         ref.putFile(uri).addOnSuccessListener {
             ref.downloadUrl.addOnSuccessListener { downloadUrl ->

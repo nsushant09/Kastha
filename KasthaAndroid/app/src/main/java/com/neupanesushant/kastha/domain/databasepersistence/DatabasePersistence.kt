@@ -1,7 +1,7 @@
-package com.neupanesushant.kurakani.domain.usecase.databasepersistence
+package com.neupanesushant.kastha.domain.databasepersistence
 
 import android.net.Uri
 
 interface DatabasePersistence {
-    suspend operator fun invoke(uri : Uri) : String
+    suspend operator fun invoke(fromId : Int, uri : Uri) : String
 }
