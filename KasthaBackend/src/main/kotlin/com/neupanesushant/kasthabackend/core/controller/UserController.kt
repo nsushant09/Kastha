@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -21,5 +22,16 @@ class UserController(
     fun getUser(@PathVariable("user_id") userId: Int): ResponseEntity<UserDTO> {
         val user = userService.getUser(userId) ?: return ResponseEntity.notFound().build()
         return ResponseEntity.ok(Mapper.toDto(user))
+    }
+
+    @GetMapping("/latest-chat")
+    fun getUsers(@RequestParam("user_ids") userIds: List<Int>): ResponseEntity<List<UserDTO>> {
+        val users = mutableListOf<UserDTO>()
+        for (userId in userIds) {
+            userService.getUser(userId)?.let {
+                users.add(Mapper.toDto(it))
+            }
+        }
+        return ResponseEntity.ok(users)
     }
 }

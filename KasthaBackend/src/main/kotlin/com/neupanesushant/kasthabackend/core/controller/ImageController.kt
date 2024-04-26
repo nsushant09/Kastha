@@ -28,6 +28,19 @@ class ImageController(
         return ResponseEntity.ok(BaseResponse(true, fileUrl(fileName)))
     }
 
+    @PostMapping("/multiple")
+    fun upload(
+        request: HttpServletRequest,
+        @RequestParam("files") files: List<MultipartFile>
+    ): ResponseEntity<BaseResponse<List<String>>> {
+        val uploadedFileNames = mutableListOf<String>()
+        for (file in files) {
+            val fileName = fileService.upload(uploadDirectory, file)
+            uploadedFileNames.add(fileUrl(fileName))
+        }
+        return ResponseEntity.ok(BaseResponse(true, uploadedFileNames))
+    }
+
     @GetMapping("/{fileName}")
     fun get(@PathVariable("fileName") fileName: String): ResponseEntity<FileSystemResource> {
         return fileService.get(uploadDirectory, MediaType.IMAGE_JPEG, fileName)
