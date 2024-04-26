@@ -1,8 +1,8 @@
 package com.neupanesushant.kastha.appcore.koin_module
 
-import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.work.WorkManager
 import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.data.repo.AlignmentRepo
 import com.neupanesushant.kastha.data.repo.CartRepo
@@ -31,6 +31,10 @@ val domainModule = module {
 
     single<SharedPreferences> {
         androidApplication().getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE)
+    }
+
+    factory {
+        WorkManager.getInstance(androidContext())
     }
 
     single {

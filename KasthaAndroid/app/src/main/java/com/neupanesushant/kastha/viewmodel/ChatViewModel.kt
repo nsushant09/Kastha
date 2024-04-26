@@ -9,8 +9,8 @@ import com.neupanesushant.kastha.core.State
 import com.neupanesushant.kastha.data.repo.UserRepo
 import com.neupanesushant.kastha.domain.model.User
 import com.neupanesushant.kastha.domain.model.chat.Message
-import com.neupanesushant.kastha.domain.usecase.LatestMessageRetriever
 import com.neupanesushant.kastha.extra.Preferences
+import com.neupanesushant.kurakani.domain.usecase.message_manager.LatestMessageRetriever
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -21,7 +21,7 @@ class ChatViewModel(
     private val _messageAndUsers = MutableLiveData<State<List<Pair<User, Message>>>>()
     val messageAndUsers: LiveData<State<List<Pair<User, Message>>>> get() = _messageAndUsers
     private val latestMessageRetriever = LatestMessageRetriever()
-    private val userId = Preferences.getUserId()
+    private val fromId = Preferences.getUserId()
 
     init {
         viewModelScope.launch {
@@ -41,7 +41,7 @@ class ChatViewModel(
     private fun getChatUserIds(messages: List<Message>): List<Int> {
         val userIds = mutableListOf<Int>()
         for (message in messages) {
-            if (message.fromUid == userId.toString()) {
+            if (message.fromUid == fromId.toString()) {
                 message.toUid?.toIntOrNull()?.let { userIds.add(it) }
             } else {
                 message.fromUid?.toIntOrNull()?.let { userIds.add(it) }

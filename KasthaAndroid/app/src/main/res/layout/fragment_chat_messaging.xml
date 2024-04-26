@@ -1,9 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".ui.main.fragments.chatmessaging.ChatMessagingFragment">
+
+        <RelativeLayout
+            android:id="@+id/rlToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:clipToPadding="false"
+            android:elevation="1dp"
+            android:isScrollContainer="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/back"
+                android:padding="4dp"
+                android:src="@drawable/ic_back"
+                app:tint="?attr/colorPrimaryVariant" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewFriendProfileImage"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="8dp"
+                android:layout_toEndOf="@id/btnBack"
+                app:cardBackgroundColor="?attr/colorOnPrimary"
+                app:cardCornerRadius="32dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:id="@+id/ivFriendProfileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/profile_image"
+                    android:src="@drawable/ic_user_filled" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvFriendFirstName"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/cardViewFriendProfileImage"
+                android:fontFamily="@font/outfit_regular"
+                android:maxWidth="200dp"
+                android:maxLines="1"
+                tools:text="Sushant Neupane" />
+
+
+            <ImageView
+                android:id="@+id/ivInfo"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/information"
+                android:padding="4dp"
+                android:src="@drawable/ic_baseline_info_24"
+                app:tint="?attr/colorPrimaryVariant" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvNoInternet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/no_internet_connection"
+            android:textAlignment="center"
+            android:textColor="?attr/colorError"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rlToolBar" />
+
+        <View
+            android:id="@+id/viewElevate"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="14dp"
+            android:background="?attr/colorOnPrimary"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNoInternet" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChatContent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toTopOf="@id/rlTextContainer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewElevate" />
+
+        <RelativeLayout
+            android:id="@+id/rlTextContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_32_on_primary"
+            android:paddingHorizontal="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewAddImageIcon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="1dp"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant"
+                app:cardCornerRadius="128dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:id="@+id/ivAddImageIcon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/add_image"
+                    android:src="@drawable/ic_baseline_camera_alt_24"
+                    app:tint="@color/white" />
+
+            </androidx.cardview.widget.CardView>
+
+            <EditText
+                android:id="@+id/etWriteMessage"
+                android:layout_width="240dp"
+                android:layout_height="@dimen/dp_48"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="8dp"
+                android:layout_toEndOf="@id/cardViewAddImageIcon"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/ubunturegular"
+                android:hint="@string/message"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/llAudioAndImageSendIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:foregroundGravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ivRecordAudioMessage"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:contentDescription="@string/audio_record"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_mic"
+                    app:tint="?attr/colorOnSurface" />
+
+
+                <ImageView
+                    android:id="@+id/ivSelectImage"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:contentDescription="@string/select_image"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_image"
+                    app:tint="?attr/colorOnSurface" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btnSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/outfit_regular"
+                android:paddingHorizontal="8dp"
+                android:text="@string/send"
+                android:textColor="?attr/colorPrimaryVariant"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

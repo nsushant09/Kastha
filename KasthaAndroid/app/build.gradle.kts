@@ -67,6 +67,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.databinding:databinding-runtime:8.3.2")
     implementation("com.google.firebase:firebase-database-ktx:20.3.1")
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

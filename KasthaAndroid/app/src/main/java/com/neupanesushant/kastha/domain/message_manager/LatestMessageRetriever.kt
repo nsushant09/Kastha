@@ -1,9 +1,9 @@
-package com.neupanesushant.kastha.domain.usecase
+package com.neupanesushant.kurakani.domain.usecase.message_manager
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.getValue
+import com.google.firebase.database.ktx.getValue
 import com.neupanesushant.kastha.domain.managers.FirebaseManager
 import com.neupanesushant.kastha.domain.model.chat.Message
 import com.neupanesushant.kastha.extra.Preferences
