@@ -38,6 +38,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val productViewModel: ProductViewModel by sharedViewModel()
 
     override fun setupViews() {
+        showLoading()
         setupCarouselView()
         setupSearchView()
         setCarouselData(Constants.CAROUSEL_IMAGES.map { it.url })
@@ -54,6 +55,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun setupObserver() {
         productViewModel.allProduct.observe(viewLifecycleOwner) { products ->
+            hideLoading()
             setupRecommendedProducts(products)
             setupLatestProducts(products.sortedByDescending { it.id }.slice(0..9))
             setupAllProducts(products)

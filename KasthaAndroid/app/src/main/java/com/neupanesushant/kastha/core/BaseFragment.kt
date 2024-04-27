@@ -67,10 +67,10 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     }
 
     fun showLoading() {
-        LoadingDialog.instance.show(childFragmentManager, LoadingDialog::class.java.name)
+        LoadingDialog.instance.show(childFragmentManager)
     }
 
     fun hideLoading() {
-        LoadingDialog.instance.dismiss()
+        LoadingDialog.instance.remove()
     }
 }

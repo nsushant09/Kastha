@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.core.ResponseResolver
 import com.neupanesushant.kastha.core.State
 import com.neupanesushant.kastha.data.repo.UserRepo
 import com.neupanesushant.kastha.domain.message_manager.LatestMessageRetriever
 import com.neupanesushant.kastha.domain.model.User
 import com.neupanesushant.kastha.domain.model.chat.Message
-import com.neupanesushant.kastha.extra.Preferences
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -21,13 +21,13 @@ class ChatViewModel(
     private val _messageAndUsers = MutableLiveData<State<List<Pair<User, Message>>>>()
     val messageAndUsers: LiveData<State<List<Pair<User, Message>>>> get() = _messageAndUsers
     private val latestMessageRetriever = LatestMessageRetriever()
-    private val fromId = Preferences.getUserId()
+    private val fromId = BuildConfig.ADMIN_ID
 
     init {
         viewModelScope.launch {
             getLatestMessages()
             latestMessageRetriever.latestMessages.collectLatest { messages ->
-                getChatUsers(messages)
+                if (messages.isNotEmpty()) getChatUsers(messages)
             }
         }
     }

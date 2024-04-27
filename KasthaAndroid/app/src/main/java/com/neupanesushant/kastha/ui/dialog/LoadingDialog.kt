@@ -1,14 +1,18 @@
 package com.neupanesushant.kastha.ui.dialog
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.databinding.DialogLoadingBinding
 
@@ -19,6 +23,18 @@ class LoadingDialog private constructor(
 
 ) : DialogFragment() {
     private lateinit var binding: DialogLoadingBinding
+
+    private val dismissHandler = Handler(Looper.getMainLooper())
+    private val dismissRunnable: Runnable by lazy {
+        Runnable {
+            try {
+                instance.dismiss()
+            } catch (e: Exception) {
+                dismissHandler.postDelayed(dismissRunnable, 500)
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,6 +49,7 @@ class LoadingDialog private constructor(
         return binding.root
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.isCancelable = false
@@ -44,12 +61,16 @@ class LoadingDialog private constructor(
         }
     }
 
-    override fun dismiss() {
-        if(this.isAdded)
-            super.dismiss()
+    fun show(fragmentManager: FragmentManager) {
+        this.show(fragmentManager, this::class.java.name)
     }
+
+    fun remove() {
+        dismissHandler.post(dismissRunnable)
+    }
+
     companion object {
-        val instance: LoadingDialog get() = LoadingDialog()
+        val instance: LoadingDialog = LoadingDialog()
     }
 
 }

@@ -129,7 +129,7 @@ interface Endpoint {
 
 
     // Chat
-    @GET
+    @GET("user/latest-chat")
     suspend fun getChatUsers(
         @Query("user_ids") userIds: List<Int>
     ): Response<List<User>>

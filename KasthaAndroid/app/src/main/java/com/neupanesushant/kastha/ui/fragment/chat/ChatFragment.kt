@@ -31,21 +31,25 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
     }
 
     override fun setupEventListener() {
+        binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
     }
 
     override fun setupObserver() {
         chatViewModel.messageAndUsers.observe(viewLifecycleOwner) {
             StateResolver(
                 it,
-                onLoading = { showLoading() },
+                onLoading = {
+                    showLoading()
+                },
                 onSuccess = {
                     hideLoading()
                     binding.rvLatestMessages.adapter = getLatestMessageAdapter(it)
                 },
                 onError = {
+                    hideLoading()
                     DialogUtils.generalDialog(requireContext(), it, "Error loading Chat")
                 }
-            )
+            )()
         }
     }
 
@@ -88,7 +92,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
                 ChatMessagingFragment.USER_ARGUMENT to otherUser
             )
             Router(requireActivity(), data).route(
-                R.id.main_fragment_container,
+                R.id.fullscreen_fragment_container,
                 AppConfig.getFragment(RouteConfig.CHAT_MESSAGING_FRAGMENT)
             )
         }
