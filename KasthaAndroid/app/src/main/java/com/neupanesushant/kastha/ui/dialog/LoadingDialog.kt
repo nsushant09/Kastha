@@ -23,14 +23,16 @@ class LoadingDialog private constructor(
 
 ) : DialogFragment() {
     private lateinit var binding: DialogLoadingBinding
-
-    private val dismissHandler = Handler(Looper.getMainLooper())
+    private var showRequested = false
+    private val handler = Handler(Looper.getMainLooper())
     private val dismissRunnable: Runnable by lazy {
         Runnable {
             try {
                 instance.dismiss()
+                showRequested = false
+                handler.removeCallbacksAndMessages(null)
             } catch (e: Exception) {
-                dismissHandler.postDelayed(dismissRunnable, 500)
+                handler.postDelayed(dismissRunnable, 200)
             }
         }
     }
@@ -62,11 +64,17 @@ class LoadingDialog private constructor(
     }
 
     fun show(fragmentManager: FragmentManager) {
-        this.show(fragmentManager, this::class.java.name)
+        showRequested = true
+        handler.postDelayed({
+            if (showRequested) {
+                super.show(fragmentManager, this::class.java.name)
+            }
+        }, 200)
     }
 
     fun remove() {
-        dismissHandler.post(dismissRunnable)
+        handler.removeCallbacksAndMessages(null)
+        handler.post(dismissRunnable)
     }
 
     companion object {
