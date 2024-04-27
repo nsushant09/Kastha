@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.MotionEvent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
@@ -78,9 +79,10 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
             isMessageWritten(!it.isNullOrEmpty())
         }
         binding.ivRecordAudioMessage.setOnTouchListener { _, event ->
-            toast("This feature will be added soon")
-            return@setOnTouchListener true
-            recordAudioMessageEventHandler(event)
+//            toast("This feature will be added soon")
+//            return@setOnTouchListener true
+            requestAudioPermission(event)
+            true
         }
         binding.btnSend.setOnClickListener {
             if (binding.etWriteMessage.text.isNullOrEmpty()) {
@@ -173,23 +175,24 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
         cameraActivityLauncher.launch(cameraUseCase.getCaptureImageIntent())
     }
 
-    private fun audioPermissionLauncher(event: MotionEvent) =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                recordAudioMessageEventHandler(event)
-            }
-        }
-
-    private fun recordAudioMessageEventHandler(event: MotionEvent): Boolean {
+    private fun requestAudioPermission(event: MotionEvent) {
 
         if (ContextCompat.checkSelfPermission(
                 requireContext(), android.Manifest.permission.RECORD_AUDIO
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            audioPermissionLauncher(event).launch(android.Manifest.permission.RECORD_AUDIO)
-            return false
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(android.Manifest.permission.RECORD_AUDIO),
+                100110342
+            )
+        } else {
+            onAudioPermissionGranted(event)
         }
+    }
 
+
+    private fun onAudioPermissionGranted(event: MotionEvent) {
         if (event.action == MotionEvent.ACTION_UP) audioRecorder.onMotionEventUp {
             chatMessagingViewModel.sendAudioMessage(it.toUri())
             displayAudioRecording(false)
@@ -200,15 +203,13 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
                 true
             )
         }
-
-        return true
     }
 
     private fun displayAudioRecording(isRecording: Boolean) {
 
         binding.etWriteMessage.isCursorVisible = !isRecording
         val color =
-            if (isRecording) com.google.android.material.R.attr.colorPrimaryVariant else R.color.dark_grey
+            if (isRecording) R.color.green_30 else R.color.dark_grey
         binding.etWriteMessage.setHintTextColor(ContextCompat.getColor(requireContext(), color))
 
         if (isRecording) {
