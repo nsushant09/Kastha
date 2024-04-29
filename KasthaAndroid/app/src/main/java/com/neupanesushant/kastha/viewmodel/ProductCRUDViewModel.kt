@@ -1,5 +1,6 @@
 package com.neupanesushant.kastha.viewmodel
 
+import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -19,8 +20,8 @@ class ProductCRUDViewModel(
     private val productRepo: ProductRepo
 ) : ViewModel() {
 
-    private val _productImages = MutableLiveData<List<MultipartBody.Part>>()
-    val productImages get() : LiveData<List<MultipartBody.Part>> = _productImages
+    private val _productImages = MutableLiveData<List<Bitmap>>()
+    val productImages get() : LiveData<List<Bitmap>> = _productImages
 
     private val _productModel = MutableLiveData<Uri>()
     val productModel get() : LiveData<Uri> = _productModel
@@ -28,12 +29,14 @@ class ProductCRUDViewModel(
     fun addImages() = viewModelScope.launch {
         if (productImages.value == null) return@launch
         val response = imageRepo.uploadImages(productImages.value!!)
-        ResponseResolver(response, onFailure = {}, onSuccess = {
+        ResponseResolver(response, onFailure = {
+            Log.d("IMAGE_TAG", "Could not upload Image")
+        }, onSuccess = {
             Log.d("IMAGE_TAG", it.data.toString())
-        })
+        })()
     }
 
-    fun setProductImages(images: List<MultipartBody.Part>) {
+    fun setProductImages(images: List<Bitmap>) {
         _productImages.value = images
     }
 }

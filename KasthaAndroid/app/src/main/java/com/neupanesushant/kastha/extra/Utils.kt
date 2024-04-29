@@ -52,7 +52,7 @@ object Utils {
 
     }
 
-    fun Bitmap.toMultipart(): MultipartBody.Part {
+    fun Bitmap.toMultipart(formDataName: String): MultipartBody.Part {
         val byteArrayOutputStream = ByteArrayOutputStream()
         this.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
         val byteArray = byteArrayOutputStream.toByteArray()
@@ -63,7 +63,7 @@ object Utils {
 
         // Create MultipartBody.Part from RequestBody
         return MultipartBody.Part.createFormData(
-            uuid.toString(),
+            formDataName,
             "$uuid.jpg",
             requestBody
         )

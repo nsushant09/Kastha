@@ -12,12 +12,10 @@ import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentAddProductBinding
 import com.neupanesushant.kastha.databinding.ItemImageBinding
-import com.neupanesushant.kastha.extra.Utils.toMultipart
 import com.neupanesushant.kastha.extra.helper.Validator
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.viewmodel.CategoryViewModel
 import com.neupanesushant.kastha.viewmodel.ProductCRUDViewModel
-import okhttp3.MultipartBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
@@ -58,7 +56,7 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
         val data = result.data ?: return@registerForActivityResult
 
         val selectedImagesUri: ArrayList<Uri> = arrayListOf()
-        val selectedImages: ArrayList<MultipartBody.Part> = arrayListOf()
+        val selectedImages: ArrayList<Bitmap> = arrayListOf()
 
         data.clipData?.let { clipData ->
             for (index in 0 until clipData.itemCount) {
@@ -67,10 +65,8 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
                 val bitmap: Bitmap =
                     BitmapFactory.decodeStream(requireActivity().contentResolver.openInputStream(uri))
 
-                val multipart = bitmap.toMultipart()
-
                 selectedImagesUri.add(uri)
-                selectedImages.add(multipart)
+                selectedImages.add(bitmap)
                 productCRUDViewModel.setProductImages(selectedImages)
             }
         }
