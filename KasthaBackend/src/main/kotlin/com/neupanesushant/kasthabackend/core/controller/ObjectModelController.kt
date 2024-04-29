@@ -28,13 +28,13 @@ class ObjectModelController(
         request: HttpServletRequest,
         @RequestParam("file") file: MultipartFile
     ): ResponseEntity<BaseResponse<String>> {
-        val fileName = fileService.upload(uploadDirectory, file)
+        val fileName = fileService.upload(uploadDirectory, file, ".glb")
         return ResponseEntity.ok(BaseResponse(true, fileUrl(fileName)))
     }
 
     @GetMapping("/{fileName}")
     fun get(@PathVariable("fileName") fileName: String): ResponseEntity<FileSystemResource> {
-        return fileService.get(uploadDirectory,MediaType.parseMediaType("model/gltf-binary"), fileName)
+        return fileService.get(uploadDirectory, MediaType.parseMediaType("model/gltf-binary"), fileName)
     }
 
     private fun fileUrl(fileName: String) = "api/model/$fileName"

@@ -12,12 +12,12 @@ import java.util.*
 
 @Service
 class FileService {
-    fun upload(uploadDirectory: String, file: MultipartFile): String {
+    fun upload(uploadDirectory: String, file: MultipartFile, extension: String = ""): String {
         if (file.isEmpty) {
             return "Please select a file to upload."
         }
         val uuid = UUID.randomUUID()
-        val fileName = StringUtils.cleanPath(file.originalFilename ?: uuid.toString())
+        val fileName = StringUtils.cleanPath(file.originalFilename ?: uuid.toString()) + extension
         val filePath = "$uploadDirectory/$fileName"
         FileOutputStream(filePath).use { outputStream ->
             outputStream.write(file.bytes)
@@ -25,7 +25,7 @@ class FileService {
         return fileName
     }
 
-    fun get(uploadDirectory: String,mediaType: MediaType, fileName: String): ResponseEntity<FileSystemResource> {
+    fun get(uploadDirectory: String, mediaType: MediaType, fileName: String): ResponseEntity<FileSystemResource> {
         val filePath = "$uploadDirectory/$fileName"
         val imageFile = File(filePath)
         if (!imageFile.exists()) {
