@@ -6,6 +6,8 @@ import com.neupanesushant.kasthabackend.data.model.Product
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
+import kotlin.collections.HashMap
+import kotlin.math.min
 
 @Service
 class ProductService(
@@ -37,29 +39,32 @@ class ProductService(
     }
 
     fun recommended(
-        category1: Optional<Category>,
-        category2: Optional<Category>,
-        category3: Optional<Category>
+        categories: List<Category>
     ): Collection<Product> {
         val products = mutableSetOf<Product>()
 
-        if (category1.isPresent) {
-            val productsFromCategory1 = productRepo.findByCategory(category1.get())
-            products.addAll(productsFromCategory1)
+        categories.forEach {
+            val categoryProducts = productRepo.findByCategory(it)
+            products.addAll(categoryProducts.subList(0, min(categoryProducts.size, 4)))
         }
 
-        if (category2.isPresent) {
-            val productsFromCategory2 = productRepo.findByCategory(category2.get())
-            products.addAll(productsFromCategory2)
-        }
+        if (products.isEmpty()) {
+            val categoryIdWithCountMap = HashMap<Int, Int>()
 
-        if (category3.isPresent) {
-            val productsFromCategory3 = productRepo.findByCategory(category3.get())
-            products.addAll(productsFromCategory3)
-        }
-
-        if (category1.isEmpty && category2.isEmpty && category3.isEmpty) {
-            // TODO : Randomise and show the products
+            val filteredProducts = mutableSetOf<Product>()
+            all.forEach { product ->
+                if (categoryIdWithCountMap.containsKey(product.category.id)) {
+                    if (categoryIdWithCountMap[product.category.id]!! < 2) {
+                        filteredProducts.add(product)
+                        categoryIdWithCountMap[product.category.id] =
+                            categoryIdWithCountMap[product.category.id]!! + 1
+                    }
+                } else {
+                    filteredProducts.add(product)
+                    categoryIdWithCountMap[product.category.id] = 1
+                }
+            }
+            products.addAll(filteredProducts)
         }
 
         return products

@@ -56,17 +56,12 @@ class ProductController(
 
     @GetMapping("/recommended")
     fun recommended(
-        @RequestParam("category_one_id") categoryOneId: Int,
-        @RequestParam("category_two_id") categoryTwoId: Int,
-        @RequestParam("category_three_id") categoryThreeId: Int
+        @RequestParam("category_ids") categoryIds: List<Int>
     ): ResponseEntity<Collection<Product>> {
-        return ResponseEntity.ok(
-            productService.recommended(
-                categoryService.ofId(categoryOneId),
-                categoryService.ofId(categoryTwoId),
-                categoryService.ofId(categoryThreeId),
-            )
-        )
+        val categories = categoryIds.map {
+            categoryService.ofId(it).getOrNull()
+        }.filterNotNull()
+        return ResponseEntity.ok(productService.recommended(categories))
     }
 
     @GetMapping
