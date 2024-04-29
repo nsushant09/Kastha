@@ -10,6 +10,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.util.UUID
 
 
@@ -57,15 +58,24 @@ object Utils {
         this.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
         val byteArray = byteArrayOutputStream.toByteArray()
 
-        // Create RequestBody from ByteArray
         val requestBody = RequestBody.create(MediaType.get("image/jpeg"), byteArray)
         val uuid = UUID.nameUUIDFromBytes(byteArray)
 
-        // Create MultipartBody.Part from RequestBody
         return MultipartBody.Part.createFormData(
             formDataName,
             "$uuid.jpg",
             requestBody
         )
+    }
+
+    fun File.toMultipart(formDataName: String): MultipartBody.Part {
+        val requestFile = RequestBody.create(MediaType.parse("model/gltf-binary"), this)
+        val filePart =
+            MultipartBody.Part.createFormData(
+                formDataName,
+                this.name,
+                requestFile
+            )
+        return filePart
     }
 }

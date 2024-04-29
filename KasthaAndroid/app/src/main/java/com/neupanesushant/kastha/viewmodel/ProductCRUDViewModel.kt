@@ -1,7 +1,6 @@
 package com.neupanesushant.kastha.viewmodel
 
 import android.graphics.Bitmap
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,6 +12,7 @@ import com.neupanesushant.kastha.data.repo.ModelRepo
 import com.neupanesushant.kastha.data.repo.ProductRepo
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
+import java.io.File
 
 class ProductCRUDViewModel(
     private val imageRepo: ImageRepo,
@@ -23,8 +23,8 @@ class ProductCRUDViewModel(
     private val _productImages = MutableLiveData<List<Bitmap>>()
     val productImages get() : LiveData<List<Bitmap>> = _productImages
 
-    private val _productModel = MutableLiveData<Uri>()
-    val productModel get() : LiveData<Uri> = _productModel
+    private val _productModel = MutableLiveData<MultipartBody.Part>()
+    val productModel get() : LiveData<MultipartBody.Part> = _productModel
 
     fun addImages() = viewModelScope.launch {
         if (productImages.value == null) return@launch
@@ -38,5 +38,19 @@ class ProductCRUDViewModel(
 
     fun setProductImages(images: List<Bitmap>) {
         _productImages.value = images
+    }
+
+    fun addModel() = viewModelScope.launch {
+        if (productModel.value == null) return@launch
+        val response = modelRepo.uploadModel(productModel.value!!)
+        ResponseResolver(response, onFailure = {
+            Log.d("IMAGE_TAG", it)
+        }, onSuccess = {
+            Log.d("IMAGE_TAG", it.data.toString())
+        })()
+    }
+
+    fun setProductModel(file: MultipartBody.Part) {
+        _productModel.value = file
     }
 }

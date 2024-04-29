@@ -31,9 +31,9 @@ suspend fun <T> requestHandler(
         }
     } catch (throwable: Throwable) {
         when (throwable) {
-            is IOException -> Response.Failure("Network Error")
+            is IOException -> Response.Failure(throwable.message ?: "Network Error")
             is HttpException -> Response.Failure("HTTP Error: ${throwable.message()}")
-            else -> Response.Failure("Unknown Error")
+            else -> Response.Failure(throwable.message ?: "Unknown error")
         }
     }
 }

@@ -16,7 +16,11 @@ import com.neupanesushant.kastha.extra.helper.Validator
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.viewmodel.CategoryViewModel
 import com.neupanesushant.kastha.viewmodel.ProductCRUDViewModel
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.UUID
 
 class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
     override val layoutId: Int
@@ -75,8 +79,8 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
     }
 
     private fun chooseModel() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.type = "model/gltf-binary"
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "*/*"
         modelSelectorRequestLauncher.launch(Intent.createChooser(intent, "Select model"))
     }
 
@@ -84,18 +88,28 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
-        val data = result.data?.clipData?.getItemAt(0) ?: return@registerForActivityResult
+        val data = result.data ?: return@registerForActivityResult
+        data.data?.let {
+            val inputStream = requireContext().contentResolver.openInputStream(it)
+            inputStream?.use {
+                val byteArray = it.readBytes()
+                val requestBody =
+                    RequestBody.create(MediaType.get("model/gltf-binary"), byteArray)
+                val part = MultipartBody.Part.createFormData(
+                    "file",
+                    UUID.nameUUIDFromBytes(byteArray).toString(),
+                    requestBody
+                )
+                productCRUDViewModel.setProductModel(part)
+            }
+        }
     }
 
-    private fun getImageAdapter(files: List<Uri>) =
-        RVAdapter<Uri, ItemImageBinding>(
-            R.layout.item_image,
-            files
-        ) { mBinding, data, _ ->
-            Glide.with(mBinding.root.context)
-                .load(data)
-                .into(mBinding.ivProductImage)
-        }
+    private fun getImageAdapter(files: List<Uri>) = RVAdapter<Uri, ItemImageBinding>(
+        R.layout.item_image, files
+    ) { mBinding, data, _ ->
+        Glide.with(mBinding.root.context).load(data).into(mBinding.ivProductImage)
+    }
 
     private fun setupCategoryAutoCompleteView(options: Array<String>) {
         val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, options)
@@ -103,6 +117,7 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
     }
 
     private fun addProduct() {
+        productCRUDViewModel.addModel()
         productCRUDViewModel.addImages()
     }
 
@@ -148,6 +163,11 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
             allValid = false
         }
 
+        val descriptionValidation = Validator.generalString(description)
+        if (!descriptionValidation.first) {
+            binding.tilDescription.error = descriptionValidation.second
+            allValid = false
+        }
         return allValid
     }
 }

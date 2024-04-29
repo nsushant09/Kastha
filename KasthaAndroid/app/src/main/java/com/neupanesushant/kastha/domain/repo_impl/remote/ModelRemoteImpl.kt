@@ -10,8 +10,8 @@ import okhttp3.MultipartBody
 class ModelRemoteImpl(
     private val endpoint: Endpoint
 ) : ModelRepo {
-    override suspend fun uploadModel(multipart: MultipartBody.Part): Response<BaseResponse<String>> =
+    override suspend fun uploadModel(file: MultipartBody.Part): Response<BaseResponse<String>> =
         requestHandler {
-            endpoint.uploadModel(multipart)
+            endpoint.uploadModel(file)
         }
 }

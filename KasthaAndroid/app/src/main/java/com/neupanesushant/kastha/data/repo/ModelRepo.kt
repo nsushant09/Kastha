@@ -6,5 +6,5 @@ import okhttp3.MultipartBody
 import java.io.File
 
 interface ModelRepo {
-    suspend fun uploadModel(multipart: MultipartBody.Part): Response<BaseResponse<String>>
+    suspend fun uploadModel(file: MultipartBody.Part): Response<BaseResponse<String>>
 }
