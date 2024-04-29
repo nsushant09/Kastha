@@ -10,6 +10,10 @@ object Preferences : KoinComponent {
     private const val KEY_AUTHENTICATION_TOKEN = "AUTHENTICATION_TOKEN"
     private const val KEY_LOGGED_IN = "LOGGED_IN"
 
+    private const val KEY_RECOMMENDED_CAT_1 = "RECOMMENDED_CAT_1"
+    private const val KEY_RECOMMENDED_CAT_2 = "RECOMMENDED_CAT_2"
+    private const val KEY_RECOMMENDED_CAT_3 = "RECOMMENDED_CAT_3"
+
 
     private val preferences: SharedPreferences by inject()
     private val editor = preferences.edit()
@@ -29,8 +33,7 @@ object Preferences : KoinComponent {
     }
 
     fun getUserId(): Int {
-        val value = preferences.getInt(KEY_USER_ID, -1)
-        return value
+        return preferences.getInt(KEY_USER_ID, -1)
     }
 
     fun getAuthenticationToken(): String? {
@@ -38,4 +41,24 @@ object Preferences : KoinComponent {
     }
 
     fun isUserLoggedIn() = preferences.getBoolean(KEY_LOGGED_IN, false)
+
+    fun getRecommendedCategories(): List<Int> {
+        val cat1 = preferences.getInt(KEY_RECOMMENDED_CAT_1, -1)
+        val cat2 = preferences.getInt(KEY_RECOMMENDED_CAT_2, -1)
+        val cat3 = preferences.getInt(KEY_RECOMMENDED_CAT_3, -1)
+        return listOf(cat1, cat2, cat3)
+    }
+
+    fun saveRecommendedCategories(categoryIds: List<Int>) {
+        if (categoryIds.size >= 3) {
+            editor.putInt(KEY_RECOMMENDED_CAT_3, categoryIds[2])
+        }
+        if (categoryIds.size >= 2) {
+            editor.putInt(KEY_RECOMMENDED_CAT_2, categoryIds[1])
+        }
+        if (categoryIds.isNotEmpty()) {
+            editor.putInt(KEY_RECOMMENDED_CAT_1, categoryIds[0])
+        }
+        editor.apply()
+    }
 }

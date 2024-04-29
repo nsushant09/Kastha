@@ -10,5 +10,6 @@ interface ProductRepo {
     suspend fun getProductOfId(id: Int): Product
     suspend fun getProductsOfCategory(categoryId: Int): List<Product>
     suspend fun getProductsBySearch(value: String): List<Product>
+    suspend fun getProductByRecommended(categoryIds: List<Int>): Response<List<Product>>
     suspend fun all(): Response<List<Product>>
 }

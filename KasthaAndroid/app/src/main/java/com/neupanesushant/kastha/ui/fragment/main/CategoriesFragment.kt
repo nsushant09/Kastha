@@ -18,6 +18,7 @@ class CategoriesFragment : BaseFragment<FragmentCategoriesBinding>() {
     private val categoryViewModel: CategoryViewModel by sharedViewModel()
 
     override fun setupViews() {
+        showLoading()
     }
 
     override fun setupEventListener() {
@@ -25,6 +26,7 @@ class CategoriesFragment : BaseFragment<FragmentCategoriesBinding>() {
 
     override fun setupObserver() {
         categoryViewModel.categories.observe(viewLifecycleOwner) {
+            hideLoading()
             setupViewPager(it)
             setupTabLayout(it)
         }

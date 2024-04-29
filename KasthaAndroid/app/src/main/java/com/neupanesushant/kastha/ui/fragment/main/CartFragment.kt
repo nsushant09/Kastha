@@ -41,6 +41,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         get() = R.layout.fragment_cart
 
     override fun setupViews() {
+        showLoading()
     }
 
     override fun setupEventListener() {
@@ -57,6 +58,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
 
     override fun setupObserver() {
         cartViewModel.allProducts.observe(viewLifecycleOwner) { cartProducts ->
+            hideLoading()
             binding.llEmptyView.isVisible = cartProducts.isEmpty()
             binding.rvCartProducts.isVisible = cartProducts.isNotEmpty()
 

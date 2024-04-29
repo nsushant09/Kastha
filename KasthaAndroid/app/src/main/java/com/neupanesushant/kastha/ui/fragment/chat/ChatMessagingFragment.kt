@@ -67,6 +67,7 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
     }
 
     override fun setupViews() {
+        showLoading()
         setOtherUserDetail(otherUser)
     }
 
@@ -94,6 +95,7 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
 
     override fun setupObserver() {
         chatMessagingViewModel.messages.observe(viewLifecycleOwner) {
+            hideLoading()
             if (it.isNullOrEmpty()) {
                 return@observe
             }

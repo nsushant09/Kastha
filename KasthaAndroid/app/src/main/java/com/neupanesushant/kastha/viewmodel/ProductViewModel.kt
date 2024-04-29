@@ -8,6 +8,7 @@ import com.neupanesushant.kastha.core.ResponseResolver
 import com.neupanesushant.kastha.data.local.ProductDao
 import com.neupanesushant.kastha.data.repo.ProductRepo
 import com.neupanesushant.kastha.domain.model.Product
+import com.neupanesushant.kastha.extra.RecommendedDataManager
 import com.neupanesushant.kastha.extra.Utils
 import kotlinx.coroutines.launch
 
@@ -18,6 +19,9 @@ class ProductViewModel(
 
     private val _allProducts: MutableLiveData<List<Product>> = MutableLiveData()
     val allProduct: LiveData<List<Product>> get() = _allProducts
+
+    private val _recommendedProducts: MutableLiveData<List<Product>> = MutableLiveData()
+    val recommendedProducts: LiveData<List<Product>> get() = _recommendedProducts
 
     init {
         getAllProducts()
@@ -31,6 +35,16 @@ class ProductViewModel(
         }) { products ->
             _allProducts.value = products
             products.forEach { productDao.insert(it) }
+        }()
+    }
+
+    fun getRecommendedProducts() = viewModelScope.launch {
+        val categoryIds = RecommendedDataManager.recommendedCategories
+        val response = productRepo.getProductByRecommended(categoryIds)
+        ResponseResolver(response, onFailure = {
+            _recommendedProducts.value = productDao.getRecommendedProducts(categoryIds)
+        }) { products ->
+            _recommendedProducts.value = products
         }()
     }
 

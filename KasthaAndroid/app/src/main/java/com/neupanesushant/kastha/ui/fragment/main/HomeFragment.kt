@@ -38,6 +38,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun setupViews() {
         showLoading()
+        productViewModel.getRecommendedProducts()
         setupCarouselView()
         setupSearchView()
         setCarouselData(Constants.CAROUSEL_IMAGES.map { it.url })
@@ -54,10 +55,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun setupObserver() {
         productViewModel.allProduct.observe(viewLifecycleOwner) { products ->
-            setupRecommendedProducts(products)
             setupLatestProducts(products.sortedByDescending { it.id }.slice(0..9))
             setupAllProducts(products)
             hideLoading()
+        }
+
+        productViewModel.recommendedProducts.observe(viewLifecycleOwner) { products ->
+            setupRecommendedProducts(products)
         }
     }
 

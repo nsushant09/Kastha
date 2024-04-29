@@ -8,6 +8,8 @@ import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.BaseActivity
 import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.ActivityMainBinding
+import com.neupanesushant.kastha.extra.Preferences
+import com.neupanesushant.kastha.extra.RecommendedDataManager
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override val layoutId: Int
@@ -70,5 +72,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     fun setSelectedItem(@IdRes itemId: Int) {
         binding.bnvMain.selectedItemId = itemId
+    }
+
+    override fun onDestroy() {
+        Preferences.saveRecommendedCategories(RecommendedDataManager.recommendedCategories)
+        super.onDestroy()
     }
 }

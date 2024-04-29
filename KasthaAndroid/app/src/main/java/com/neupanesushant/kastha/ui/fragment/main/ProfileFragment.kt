@@ -22,6 +22,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private val userViewModel: UserViewModel by viewModel()
     override fun setupViews() {
+        showLoading()
     }
 
     override fun setupEventListener() {
@@ -57,6 +58,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     override fun setupObserver() {
         userViewModel.userDetail.observe(viewLifecycleOwner) {
+            hideLoading()
             setupUserDetails(it)
 //            setupViewBasedOnRole(it)
         }

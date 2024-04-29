@@ -12,6 +12,7 @@ import com.neupanesushant.kastha.appcore.koin_module.vmModule
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.extra.AppContext
 import com.neupanesushant.kastha.extra.Preferences
+import com.neupanesushant.kastha.extra.RecommendedDataManager
 import com.neupanesushant.kastha.extra.Utils
 import com.neupanesushant.kastha.ui.activity.AugmentedViewActivity
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity

@@ -27,6 +27,10 @@ class ProductRemoteImpl(
     override suspend fun getProductsBySearch(value: String): List<Product> =
         endpoint.getProductBySearch(value)
 
+    override suspend fun getProductByRecommended(categoryIds: List<Int>) = requestHandler {
+        endpoint.getProductByRecommended(categoryIds)
+    }
+
     override suspend fun all() =
         requestHandler {
             allProducts.ifEmpty { allProducts = endpoint.getProducts() }

@@ -32,6 +32,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
         get() = R.layout.fragment_favourite
 
     override fun setupViews() {
+        showLoading()
         favouriteViewModel.getAllFavouriteProducts()
     }
 
@@ -49,6 +50,7 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
 
     override fun setupObserver() {
         favouriteViewModel.favouriteProducts.observe(viewLifecycleOwner) { favoriteProducts ->
+            hideLoading()
             binding.llEmptyView.isVisible = favoriteProducts.isEmpty()
             binding.rvFavouriteProducts.isVisible = favoriteProducts.isNotEmpty()
 

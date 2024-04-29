@@ -58,10 +58,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
 
         authenticationViewModel.validateLogin(email, password) { response ->
-            CoroutineScope(Dispatchers.IO).launch {
+            showLoading()
+            CoroutineScope(Dispatchers.Main).launch {
                 ResponseResolver(response, onFailure = {
+                    hideLoading()
                     DialogUtils.generalDialog(requireContext(), description = it)
                 }, onSuccess = {
+                    hideLoading()
                     onLoginDetailsValidated(email, password)
                 })()
             }

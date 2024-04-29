@@ -46,9 +46,10 @@ class AuthenticationViewModel(
         registerDTO: RegisterDTO
     ) {
         viewModelScope.launch {
+            _isAuthenticationTokenReceived.value = State.Loading
             val response = authenticationUseCase.register(registerDTO)
             ResponseResolver(response, onFailure = {
-                return@ResponseResolver
+                _isAuthenticationTokenReceived.value = State.Default
             }, onSuccess = {
                 login(it.key, it.value)
             })()

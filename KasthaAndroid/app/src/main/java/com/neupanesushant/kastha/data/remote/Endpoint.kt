@@ -98,6 +98,9 @@ interface Endpoint {
     @GET("product/search")
     suspend fun getProductBySearch(@Field("value") value: String): List<Product>
 
+    @GET("product/recommended")
+    suspend fun getProductByRecommended(@Query("category_ids") categoryIds: List<Int>): Response<List<Product>>
+
     // Object Model
     // Image
     // Review

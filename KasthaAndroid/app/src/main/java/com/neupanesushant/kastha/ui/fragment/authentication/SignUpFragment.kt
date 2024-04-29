@@ -59,8 +59,18 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding>() {
             val location = etLocation.text.toString()
             val gender = etGender.text.toString()
             val email = etEmail.text.toString()
+            val confirmPassword = etConfirmPassword.text.toString()
 
-            if (!areValidDetails(firstName, lastName, email, password, location, gender)) {
+            if (!areValidDetails(
+                    firstName,
+                    lastName,
+                    email,
+                    password,
+                    location,
+                    gender,
+                    confirmPassword
+                )
+            ) {
                 return
             }
 
@@ -83,8 +93,10 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding>() {
         email: String,
         password: String,
         location: String,
-        gender: String
-    ): Boolean {
+        gender: String,
+        confirmPassword: String,
+
+        ): Boolean {
         // Clear any previous errors
         binding.apply {
             tilFirstName.error = null
@@ -118,6 +130,12 @@ class SignUpFragment : BaseFragment<FragmentSignupBinding>() {
         val passwordValidation = Validator.password(password)
         if (!passwordValidation.first) {
             binding.tilPassword.error = passwordValidation.second
+            allValid = false
+        }
+
+        if (!password.equals(confirmPassword, false)) {
+            binding.tilConfirmPassword.error =
+                "Confirmation password should match with the password above"
             allValid = false
         }
 

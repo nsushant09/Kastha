@@ -77,7 +77,7 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
                     "Login Error"
                 )
             }, onLoading = {
-//                showLoading()
+                showLoading()
             })()
         }
     }

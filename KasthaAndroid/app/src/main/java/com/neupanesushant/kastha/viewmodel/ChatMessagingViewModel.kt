@@ -29,7 +29,10 @@ class ChatMessagingViewModel(
     init {
         viewModelScope.launch {
             chatEventHandler.messageWithAction.collectLatest {
-                if (it == null) return@collectLatest
+                if (it == null) {
+                    _messages.value = tempChatLog
+                    return@collectLatest
+                }
                 if (it.second == ChatEventHandler.ACTION.ADD) tempChatLog.add(it.first)
                 if (it.second == ChatEventHandler.ACTION.DELETE) tempChatLog.remove(it.first)
                 _messages.value = tempChatLog

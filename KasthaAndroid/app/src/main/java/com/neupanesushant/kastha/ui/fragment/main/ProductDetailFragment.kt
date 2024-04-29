@@ -23,6 +23,7 @@ import com.neupanesushant.kastha.databinding.ItemReviewBinding
 import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.ReviewResponse
+import com.neupanesushant.kastha.extra.RecommendedDataManager
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.ui.dialog.DialogUtils
@@ -31,7 +32,6 @@ import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
 import com.neupanesushant.kastha.viewmodel.ReviewViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
@@ -66,6 +66,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             requireActivity().finish()
         }
         reviewViewModel.getProductReview(product.id)
+        RecommendedDataManager.saveCategory(product.id)
     }
 
     override fun setupViews() {
