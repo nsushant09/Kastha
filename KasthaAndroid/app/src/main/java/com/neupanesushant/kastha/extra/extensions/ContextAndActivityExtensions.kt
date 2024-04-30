@@ -14,6 +14,11 @@ fun Context.show(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
+fun Context.showKeyboard(view: View) {
+    val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+}
+
 fun Context.hideKeyboard() {
     val view = (this as Activity).currentFocus
     view?.let {

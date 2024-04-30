@@ -106,13 +106,12 @@ interface Endpoint {
     // Object Model
     // Image
     // Review
-    @FormUrlEncoded
-    @POST("review")
+    @POST("review/{product_id}/{user_id}")
     suspend fun addReview(
-        @Field("product_id") productId: Int,
-        @Field("user_id") userId: Int,
+        @Path("product_id") productId: Int,
+        @Path("user_id") userId: Int,
         @Body review: Review
-    ): Response<Review>
+    ): Response<ReviewResponse>
 
     @GET("review/{product_id}")
     suspend fun getReviewsOf(@Path("product_id") productId: Int): Response<List<ReviewResponse>>

@@ -97,4 +97,9 @@
     <string name="update_your_personal_details">Update your personal details</string>
     <string name="new_password_optional">New Password (Optional)</string>
     <string name="re_new_password_optional">Re-New Password (Optional)</string>
+    <string name="provide_your_feedback">Provide your feedback</string>
+    <string name="review">Review</string>
+    <string name="submit">Submit</string>
+    <string name="star">Star</string>
+    <string name="add_review">Add Review</string>
 </resources>

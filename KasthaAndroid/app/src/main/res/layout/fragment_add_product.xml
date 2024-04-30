@@ -149,9 +149,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
+                        android:lines="4"
                         android:imeOptions="actionDone"
-                        android:inputType="textLongMessage"
-                        android:minHeight="144dp" />
+                        android:inputType="textMultiLine"
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton

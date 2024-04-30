@@ -6,6 +6,6 @@ data class ReviewResponse(
     val id: Int,
     val description: String,
     val rating: Int,
-    val date: Date,
+    val date: String,
     val userName: String? = null
 )

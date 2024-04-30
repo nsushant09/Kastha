@@ -1,7 +1,9 @@
 package com.neupanesushant.kastha.ui.fragment.main
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.util.TypedValue
 import android.view.View
@@ -14,6 +16,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
+import com.google.android.material.color.MaterialColors
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.BaseFragment
@@ -24,6 +27,7 @@ import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.ReviewResponse
 import com.neupanesushant.kastha.extra.RecommendedDataManager
+import com.neupanesushant.kastha.extra.extensions.showKeyboard
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.ui.dialog.DialogUtils
@@ -47,6 +51,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private val cartViewModel: CartViewModel by sharedViewModel()
     private val favouriteViewModel: FavouriteViewModel by sharedViewModel()
     private val reviewViewModel: ReviewViewModel by sharedViewModel()
+
+    private var reviewRating: Int = 0
 
     private var isProductInFavourites = false
         set(value) {
@@ -78,11 +84,20 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             tvDescriptionContent.text = product.description
 
             layoutStockContainers.cvArFeatured.isVisible = product.model != null
+
+            if (product.stockQuantity == 0) {
+                layoutStockContainers.cvOutOfStock.isVisible = true
+            } else if (product.stockQuantity < 10) {
+                layoutStockContainers.cvLowStock.isVisible = true
+            }
+
             rvReviews.layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun setupEventListener() {
+        setupStartEventListener()
         binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
         binding.btnAugmentedView.setOnClickListener {
             if (product.model == null) return@setOnClickListener
@@ -126,12 +141,29 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                 }
             }
         }
+
+        binding.btnAddReview.setOnClickListener {
+
+            if (binding.llProvideReviewContainer.isVisible) {
+                binding.llProvideReviewContainer.isVisible = false
+            } else {
+                binding.llProvideReviewContainer.isVisible = true
+                binding.btnAddReview.text = "Hide Review"
+                binding.etDescription.requestFocus()
+                requireContext().showKeyboard(binding.etDescription)
+            }
+        }
+
+        binding.btnSubmitReview.setOnClickListener {
+            submitReview()
+        }
     }
 
     override fun setupObserver() {
         productViewModel.allProduct.observe(viewLifecycleOwner) {
             setupSearchView()
         }
+
         reviewViewModel.productReviews.observe(viewLifecycleOwner) { reviews ->
             binding.llReviewEmptyView.isVisible = reviews.isEmpty()
             setupReviews(reviews)
@@ -143,14 +175,13 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
         cartViewModel.allProducts.observe(viewLifecycleOwner) { cartProducts ->
             for (cartProduct in cartProducts) {
-                if (cartProduct.product.equals(product)) {
+                if (cartProduct.product == product) {
                     isProductInCart = true
                     return@observe
                 }
             }
             isProductInCart = false
         }
-
     }
 
     private fun setupCarouselView() {
@@ -271,5 +302,67 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                 requireContext(),
                 if (isInFavourites) R.drawable.ic_heart_filled else R.drawable.ic_heart
             )
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    private fun submitReview() {
+        binding.tilDescription.error = null
+        if (binding.etDescription.text.toString().isEmpty()) {
+            binding.tilDescription.error = "Please write a review for the product"
+        }
+        reviewViewModel.addReview(product.id, reviewRating, binding.etDescription.text.toString()) {
+            binding.llProvideReviewContainer.isVisible = false
+            binding.btnAddReview.text = "Add Review"
+        }
+    }
+
+    private fun setupStartEventListener() {
+        binding.layoutStars.apply {
+            star1.setOnClickListener(starOnClickListener)
+            star2.setOnClickListener(starOnClickListener)
+            star3.setOnClickListener(starOnClickListener)
+            star4.setOnClickListener(starOnClickListener)
+            star5.setOnClickListener(starOnClickListener)
+        }
+    }
+
+    @SuppressLint("ResourceType")
+    val starOnClickListener = View.OnClickListener { view ->
+        reviewRating = when (view.id) {
+            binding.layoutStars.star1.id -> 1
+            binding.layoutStars.star2.id -> 2
+            binding.layoutStars.star3.id -> 3
+            binding.layoutStars.star4.id -> 4
+            binding.layoutStars.star5.id -> 5
+            else -> 0
+        }
+        val stars = listOf(
+            binding.layoutStars.star1,
+            binding.layoutStars.star2,
+            binding.layoutStars.star3,
+            binding.layoutStars.star4,
+            binding.layoutStars.star5
+        )
+
+        stars.forEach {
+            it.imageTintList = ColorStateList.valueOf(
+                MaterialColors.getColor(
+                    requireContext(),
+                    com.google.android.material.R.attr.colorOnSurface,
+                    ContextCompat.getColor(requireContext(), R.color.black)
+                )
+            )
+        }
+
+        for (i in 0 until reviewRating) {
+            stars[i].imageTintList = ColorStateList.valueOf(
+                MaterialColors.getColor(
+                    requireContext(),
+                    com.google.android.material.R.attr.colorPrimaryVariant,
+                    ContextCompat.getColor(requireContext(), R.color.green_30)
+                )
+            )
+        }
     }
 }

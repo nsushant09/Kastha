@@ -5,6 +5,6 @@ import com.neupanesushant.kastha.domain.model.Review
 import com.neupanesushant.kastha.domain.model.ReviewResponse
 
 interface ReviewRepo {
-    suspend fun add(productId: Int, userId: Int, review: Review): Response<Review>
+    suspend fun add(productId: Int, userId: Int, review: Review): Response<ReviewResponse>
     suspend fun getReviewOf(productId: Int): Response<List<ReviewResponse>>
 }
