@@ -17,13 +17,13 @@ data class Review(
     val id: Int,
     val description: String,
     val rating: Int,
-    val date: Date,
+    var date: String,
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    var product: Product,
+    var product: Product? = null,
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    var user: User
+    var user: User? = null
 )

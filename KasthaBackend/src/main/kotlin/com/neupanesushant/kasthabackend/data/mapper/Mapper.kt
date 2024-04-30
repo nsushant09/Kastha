@@ -20,6 +20,6 @@ object Mapper {
             review.description,
             review.rating,
             review.date,
-            "${review.user.firstName} ${review.user.lastName}"
+            "${review.user?.firstName} ${review.user?.lastName}"
         )
 }

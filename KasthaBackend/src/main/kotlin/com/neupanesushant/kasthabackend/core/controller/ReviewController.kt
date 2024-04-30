@@ -20,13 +20,15 @@ import org.springframework.web.bind.annotation.RestController
 class ReviewController(
     @Autowired private val reviewService: ReviewService
 ) {
-    @PostMapping
+    @PostMapping("/{product_id}/{user_id}")
     fun insert(
-        @RequestParam("product_id") productId: Int,
-        @RequestParam("user_id") userId: Int,
+        @PathVariable("product_id") productId: Int,
+        @PathVariable("user_id") userId: Int,
         @RequestBody review: Review
-    ): ResponseEntity<Review> {
-        return ResponseEntity.ok(reviewService.insert(review, userId, productId))
+    ): ResponseEntity<ReviewDTO> {
+        val newReview =
+            reviewService.insert(review, userId, productId) ?: return ResponseEntity.notFound().build<ReviewDTO>()
+        return ResponseEntity.ok(Mapper.toDto(newReview))
     }
 
     @GetMapping("/{product_id}")
