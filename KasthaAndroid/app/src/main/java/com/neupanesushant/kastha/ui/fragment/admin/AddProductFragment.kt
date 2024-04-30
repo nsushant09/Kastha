@@ -1,5 +1,6 @@
 package com.neupanesushant.kastha.ui.fragment.admin
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -10,10 +11,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
+import com.neupanesushant.kastha.core.StateResolver
 import com.neupanesushant.kastha.databinding.FragmentAddProductBinding
 import com.neupanesushant.kastha.databinding.ItemImageBinding
 import com.neupanesushant.kastha.extra.helper.Validator
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
+import com.neupanesushant.kastha.ui.dialog.DialogUtils
 import com.neupanesushant.kastha.viewmodel.CategoryViewModel
 import com.neupanesushant.kastha.viewmodel.ProductCRUDViewModel
 import okhttp3.MediaType
@@ -43,6 +46,17 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
     override fun setupObserver() {
         categoryViewModel.categories.observe(viewLifecycleOwner) {
             setupCategoryAutoCompleteView(it.map { it.name }.toTypedArray())
+        }
+
+        productCRUDViewModel.addProductState.observe(viewLifecycleOwner) {
+            StateResolver(
+                it,
+                onLoading = { showLoading() },
+                onError = {
+                    hideLoading()
+                    DialogUtils.generalDialog(requireContext(), it, "Error!!!")
+                },
+                onSuccess = { hideLoading() })()
         }
     }
 
@@ -84,13 +98,14 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
         modelSelectorRequestLauncher.launch(Intent.createChooser(intent, "Select model"))
     }
 
+    @SuppressLint("SetTextI18n")
     private val modelSelectorRequestLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
         val data = result.data ?: return@registerForActivityResult
-        data.data?.let {
-            val inputStream = requireContext().contentResolver.openInputStream(it)
+        data.data?.let { uri ->
+            val inputStream = requireContext().contentResolver.openInputStream(uri)
             inputStream?.use {
                 val byteArray = it.readBytes()
                 val requestBody =
@@ -101,6 +116,7 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
                     requestBody
                 )
                 productCRUDViewModel.setProductModel(part)
+                binding.btnSelectModel.text = "Object Model Added"
             }
         }
     }
@@ -117,8 +133,31 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
     }
 
     private fun addProduct() {
-        productCRUDViewModel.addModel()
-        productCRUDViewModel.addImages()
+        binding.apply {
+            val name = binding.etName.text.toString()
+            val category = binding.etCategory.text.toString()
+            val price = binding.etPrice.text.toString()
+            val stock = binding.etStock.text.toString()
+            val description = binding.etDescription.text.toString()
+
+            if (!areValidDetails(name, category, price, stock, description)) {
+                return
+            }
+
+            val selectedCategory = categoryViewModel.categories.value?.find { it.name == category }
+            if (selectedCategory == null) {
+                binding.tilCategory.error = "Could not select this category"
+                return
+            }
+
+            productCRUDViewModel.addProduct(
+                name,
+                description,
+                price.toFloat(),
+                stock.toInt(),
+                selectedCategory
+            )
+        }
     }
 
     private fun areValidDetails(
@@ -135,6 +174,7 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
             tilPrice.error = null
             tilStock.error = null
             tilDescription.error = null
+            btnSelectImages.error = null
         }
 
         var allValid = true
@@ -168,6 +208,12 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
             binding.tilDescription.error = descriptionValidation.second
             allValid = false
         }
+
+        if (productCRUDViewModel.productImages.value.isNullOrEmpty()) {
+            binding.btnSelectImages.error = "Select at least one image"
+            allValid = false
+        }
+
         return allValid
     }
 }

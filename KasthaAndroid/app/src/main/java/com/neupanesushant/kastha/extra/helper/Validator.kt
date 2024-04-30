@@ -60,6 +60,10 @@ object Validator {
         if (value.isBlank()) {
             return Pair(false, "Input cannot be empty.")
         }
-        return Pair(true, "Valid number")
+        return if (value.matches(Regex("^-?\\d+(\\.\\d+)?$"))) {
+            Pair(true, "Valid number")
+        } else {
+            Pair(false, "Input is not a valid number.")
+        }
     }
 }

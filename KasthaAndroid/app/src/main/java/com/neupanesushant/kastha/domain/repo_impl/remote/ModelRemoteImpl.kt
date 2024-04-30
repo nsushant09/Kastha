@@ -4,6 +4,7 @@ import com.neupanesushant.kastha.core.Response
 import com.neupanesushant.kastha.core.requestHandler
 import com.neupanesushant.kastha.data.remote.Endpoint
 import com.neupanesushant.kastha.data.repo.ModelRepo
+import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.domain.model.dto.BaseResponse
 import okhttp3.MultipartBody
 

@@ -3,6 +3,8 @@ package com.neupanesushant.kastha.data.remote
 import com.neupanesushant.kastha.domain.model.Alignment
 import com.neupanesushant.kastha.domain.model.CartProduct
 import com.neupanesushant.kastha.domain.model.Category
+import com.neupanesushant.kastha.domain.model.Image
+import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.Review
 import com.neupanesushant.kastha.domain.model.ReviewResponse
