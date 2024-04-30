@@ -1,7 +1,9 @@
 package com.neupanesushant.kasthabackend.core.controller
 
+import com.neupanesushant.kasthabackend.core.repo.ModelRepo
 import com.neupanesushant.kasthabackend.core.services.FileService
 import com.neupanesushant.kasthabackend.data.model.BaseResponse
+import com.neupanesushant.kasthabackend.data.model.ObjectModel
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -18,7 +20,8 @@ import java.util.*
 @RestController
 @RequestMapping("/api/model")
 class ObjectModelController(
-    @Autowired private val fileService: FileService
+    @Autowired private val fileService: FileService,
+    @Autowired private val modelRepo: ModelRepo
 ) {
     @Value("\${user.home}/kastha_data/glb")
     private lateinit var uploadDirectory: String
@@ -37,6 +40,6 @@ class ObjectModelController(
         return fileService.get(uploadDirectory, MediaType.parseMediaType("model/gltf-binary"), fileName)
     }
 
-    private fun fileUrl(fileName: String) = "api/model/$fileName"
+    private fun fileUrl(fileName: String) = "model/$fileName"
 
 }

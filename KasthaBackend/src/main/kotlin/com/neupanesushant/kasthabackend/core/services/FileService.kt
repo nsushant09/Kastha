@@ -17,7 +17,7 @@ class FileService {
             return "Please select a file to upload."
         }
         val uuid = UUID.randomUUID()
-        val fileName = StringUtils.cleanPath(file.originalFilename ?: uuid.toString()) + extension
+        val fileName = StringUtils.cleanPath(uuid.toString()) + extension
         val filePath = "$uploadDirectory/$fileName"
         FileOutputStream(filePath).use { outputStream ->
             outputStream.write(file.bytes)

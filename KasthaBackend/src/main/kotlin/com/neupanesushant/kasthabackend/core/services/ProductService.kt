@@ -1,8 +1,11 @@
 package com.neupanesushant.kasthabackend.core.services
 
+import com.neupanesushant.kasthabackend.core.repo.ImageRepo
+import com.neupanesushant.kasthabackend.core.repo.ModelRepo
 import com.neupanesushant.kasthabackend.core.repo.ProductRepo
 import com.neupanesushant.kasthabackend.data.model.Category
 import com.neupanesushant.kasthabackend.data.model.Product
+import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
@@ -11,10 +14,23 @@ import kotlin.math.min
 
 @Service
 class ProductService(
-    @Autowired private val productRepo: ProductRepo
+    @Autowired private val productRepo: ProductRepo,
+    @Autowired private val modelRepo: ModelRepo,
+    @Autowired private val imageRepo: ImageRepo
 ) {
 
-    fun insert(product: Product) = productRepo.save(product)
+    @Transactional
+    fun insert(product: Product): Product {
+        val savedModel = product.model?.let {
+            return@let modelRepo.save(it)
+        }
+
+        val savedImages = product.images.map {
+            imageRepo.save(it)
+        }
+        return productRepo.save(product.copy(images = savedImages, model = savedModel))
+    }
+
     fun update(product: Product) = productRepo.save(product)
     fun delete(product: Product) = productRepo.delete(product)
 
