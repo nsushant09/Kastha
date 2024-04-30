@@ -68,7 +68,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun setupCarouselView() {
         binding.carouselRecyclerView.apply {
             val snapHelper = CarouselSnapHelper()
-            snapHelper.attachToRecyclerView(this)
+            if (this.adapter == null) {
+                snapHelper.attachToRecyclerView(this)
+            }
             val carouselLayoutManager = CarouselLayoutManager()
             carouselLayoutManager.carouselAlignment = CarouselLayoutManager.ALIGNMENT_START
             layoutManager = carouselLayoutManager
@@ -94,7 +96,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             tvRecyclerViewTitle.text = title
             titledRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            snapHelper.attachToRecyclerView(titledRecyclerView)
+            if (titledRecyclerView.adapter == null) {
+                snapHelper.attachToRecyclerView(titledRecyclerView)
+            }
             titledRecyclerView.adapter = getMiniProductCardAdapter(products)
         }
     }
@@ -106,7 +110,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             tvRecyclerViewTitle.text = title
             titledRecyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            snapHelper.attachToRecyclerView(titledRecyclerView)
+            if (titledRecyclerView.adapter == null) {
+                snapHelper.attachToRecyclerView(titledRecyclerView)
+            }
             titledRecyclerView.adapter = getMiniProductCardAdapter(products)
         }
     }

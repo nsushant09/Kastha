@@ -156,7 +156,9 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private fun setupCarouselView() {
         binding.rvProductImages.apply {
             val snapHelper = CarouselSnapHelper()
-            snapHelper.attachToRecyclerView(this)
+            if (binding.rvProductImages.adapter == null) {
+                snapHelper.attachToRecyclerView(this)
+            }
             val carouselLayoutManager = CarouselLayoutManager()
             carouselLayoutManager.carouselAlignment = CarouselLayoutManager.ALIGNMENT_START
             layoutManager = carouselLayoutManager
