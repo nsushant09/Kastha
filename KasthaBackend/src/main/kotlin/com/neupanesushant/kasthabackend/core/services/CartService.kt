@@ -42,13 +42,15 @@ class CartService(
         return savedCart.products
     }
 
+    @Transactional
     fun remove(cartProductIds: List<Int>): Collection<CartProduct>? {
         val firstCartProduct = cartProductRepo.findById(cartProductIds.first()).orElse(null) ?: return null
         val cart = firstCartProduct.cart
         cartProductIds.forEach { cartProductId ->
-            cartProductRepo.deleteById(cartProductId)
-            cart.products.removeIf {
-                it.id == cartProductId
+            val cartProduct = cartProductRepo.findById(cartProductId).getOrNull()
+            cartProduct?.let {
+                cartProductRepo.delete(it)
+                cart.products.remove(it)
             }
         }
         val savedCart = cartRepo.save(cart)
