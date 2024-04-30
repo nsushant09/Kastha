@@ -54,6 +54,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 data
             )
         }
+
+        binding.btnEditProfile.setOnClickListener {
+            RouteHelper.routeFullScreenContainerActivity(
+                requireActivity(),
+                RouteConfig.PROFILE_UPDATE_FRAGMENT
+            )
+        }
     }
 
     override fun setupObserver() {

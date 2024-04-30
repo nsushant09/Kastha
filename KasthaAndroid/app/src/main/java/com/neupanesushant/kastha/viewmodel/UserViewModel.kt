@@ -7,14 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.neupanesushant.kastha.core.ResponseResolver
 import com.neupanesushant.kastha.data.repo.UserRepo
 import com.neupanesushant.kastha.domain.model.User
+import com.neupanesushant.kastha.domain.model.dto.UserUpdateDTO
 import com.neupanesushant.kastha.extra.Preferences
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class UserViewModel(
     private val userRepo: UserRepo
-) : ViewModel(){
+) : ViewModel() {
 
     private val _userDetail: MutableLiveData<User> = MutableLiveData()
     val userDetail: LiveData<User> get() = _userDetail
@@ -31,4 +30,15 @@ class UserViewModel(
             _userDetail.value = it
         })()
     }
+
+    fun updateUser(user: UserUpdateDTO, onSuccess: () -> Unit, onFailure: () -> Unit) =
+        viewModelScope.launch {
+            val response = userRepo.updateUserDetail(user)
+            ResponseResolver(response, onFailure = {
+                onFailure()
+            }, onSuccess = {
+                _userDetail.value = it
+                onSuccess()
+            })()
+        }
 }

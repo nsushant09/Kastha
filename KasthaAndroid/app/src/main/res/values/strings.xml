@@ -93,4 +93,8 @@
     <string name="action_delete">Delete</string>
     <string name="action_share">Share</string>
     <string name="action_cancel">Cancel</string>
+    <string name="update">Update</string>
+    <string name="update_your_personal_details">Update your personal details</string>
+    <string name="new_password_optional">New Password (Optional)</string>
+    <string name="re_new_password_optional">Re-New Password (Optional)</string>
 </resources>

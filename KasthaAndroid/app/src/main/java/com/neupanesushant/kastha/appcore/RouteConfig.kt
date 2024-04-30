@@ -29,4 +29,5 @@ object RouteConfig {
 
     //ADMIN
     const val ADD_PRODUCT_FRAGMENT = "ADD_PRODUCT_FRAGMENT"
+    const val PROFILE_UPDATE_FRAGMENT = "PROFILE_UPDATE_FRAGMENT"
 }

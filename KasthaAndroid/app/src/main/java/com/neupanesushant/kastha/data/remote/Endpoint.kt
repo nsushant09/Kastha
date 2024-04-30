@@ -3,13 +3,12 @@ package com.neupanesushant.kastha.data.remote
 import com.neupanesushant.kastha.domain.model.Alignment
 import com.neupanesushant.kastha.domain.model.CartProduct
 import com.neupanesushant.kastha.domain.model.Category
-import com.neupanesushant.kastha.domain.model.Image
-import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.Review
 import com.neupanesushant.kastha.domain.model.ReviewResponse
 import com.neupanesushant.kastha.domain.model.User
 import com.neupanesushant.kastha.domain.model.dto.BaseResponse
+import com.neupanesushant.kastha.domain.model.dto.UserUpdateDTO
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -18,6 +17,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
@@ -119,6 +119,9 @@ interface Endpoint {
 
     @GET("user/{user_id}")
     suspend fun getUserDetail(@Path("user_id") userId: Int): Response<User>
+
+    @PATCH("user")
+    suspend fun updateUserDetail(@Body user: UserUpdateDTO): Response<User>
 
     @Multipart
     @POST("image/multiple")

@@ -12,13 +12,13 @@ import com.neupanesushant.kastha.appcore.koin_module.vmModule
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.extra.AppContext
 import com.neupanesushant.kastha.extra.Preferences
-import com.neupanesushant.kastha.extra.RecommendedDataManager
 import com.neupanesushant.kastha.extra.Utils
 import com.neupanesushant.kastha.ui.activity.AugmentedViewActivity
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
 import com.neupanesushant.kastha.ui.activity.FullScreenContainerActivity
 import com.neupanesushant.kastha.ui.activity.MainActivity
 import com.neupanesushant.kastha.ui.fragment.admin.AddProductFragment
+import com.neupanesushant.kastha.ui.fragment.admin.ProfileUpdateFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.FPEmailVerificationFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.FPResetFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.LoginFragment
@@ -89,6 +89,7 @@ class BaseApplication : Application() {
 
             // Admin
             put(RouteConfig.ADD_PRODUCT_FRAGMENT, AddProductFragment::class.java)
+            put(RouteConfig.PROFILE_UPDATE_FRAGMENT, ProfileUpdateFragment::class.java)
         }
     }
 
