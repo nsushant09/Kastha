@@ -127,13 +127,15 @@ class FavouriteFragment : BaseFragment<FragmentFavouriteBinding>() {
     }
 
     private fun deleteSelection() {
-        favouriteViewModel.removeFromFavourite(selectionItemsIdSet) {
+        showLoading()
+        favouriteViewModel.removeFromFavourite(selectionItemsIdSet, onFailure = {
+            hideLoading()
             DialogUtils.generalDialog(
                 requireContext(),
                 "An error occurred while removing the product to your favourites. Please try again later.",
                 "Error Removing from Favourites"
             )
-        }
+        }, onSuccess = { hideLoading() })
         isSelectionEnabled = false
     }
 

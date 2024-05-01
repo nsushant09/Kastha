@@ -31,15 +31,27 @@ class CartViewModel(
         })()
     }
 
-    fun addProductToCart(productId: Int, onFailure: (String) -> Unit) = viewModelScope.launch {
-        val response = cartRepo.add(productId, Preferences.getUserId())
-        ResponseResolver(response, onFailure = onFailure, onSuccess = {
-            _allProducts.value = it
-            it.find { it.product.id == productId }?.let { cartProductDao.add(it) }
-        })()
-    }
+    fun addProductToCart(productId: Int, onFailure: (String) -> Unit, onSuccess: () -> Unit) =
+        viewModelScope.launch {
 
-    fun removeProducts(cartProductIds: Collection<Int>, onFailure: (String) -> Unit) =
+            if (!allProducts.value?.filter { it.product.id == productId }.isNullOrEmpty()) {
+                onFailure("Product already added to cart")
+                return@launch
+            }
+
+            val response = cartRepo.add(productId, Preferences.getUserId())
+            ResponseResolver(response, onFailure = onFailure, onSuccess = {
+                _allProducts.value = it
+                it.find { it.product.id == productId }?.let { cartProductDao.add(it) }
+                onSuccess()
+            })()
+        }
+
+    fun removeProducts(
+        cartProductIds: Collection<Int>,
+        onFailure: (String) -> Unit,
+        onSuccess: () -> Unit
+    ) =
         viewModelScope.launch {
             val response = cartRepo.remove(cartProductIds.toList())
             ResponseResolver(response, onFailure = onFailure, onSuccess = {
@@ -47,6 +59,7 @@ class CartViewModel(
                 cartProductIds.forEach { id ->
                     cartProductDao.remove(id)
                 }
+                onSuccess()
             })()
         }
 
@@ -70,6 +83,9 @@ class CartViewModel(
         })
     }
 
-    fun removeProduct(productId: Int, onFailure: (String) -> Unit) =
-        removeProducts(listOf(productId), onFailure)
+    fun removeProduct(productId: Int, onFailure: (String) -> Unit, onSuccess: () -> Unit) {
+        val cartProductId = _allProducts.value?.find { it.product.id == productId }?.id ?: -1
+        removeProducts(listOf(cartProductId), onFailure, onSuccess)
+    }
+
 }

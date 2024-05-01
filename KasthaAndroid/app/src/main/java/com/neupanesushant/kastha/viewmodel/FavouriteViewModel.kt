@@ -33,15 +33,25 @@ class FavouriteViewModel(
         })()
     }
 
-    fun addToFavourite(product: Product, onFailure: (String) -> Unit) = viewModelScope.launch {
-        val response = favoriteRepo.add(product.id, Preferences.getUserId())
-        ResponseResolver(response, onFailure = onFailure, onSuccess = {
-            _favouriteProducts.value = it
-            favouriteDao.addFavorite(FavouriteProduct(product = product))
-        })()
-    }
+    fun addToFavourite(product: Product, onFailure: (String) -> Unit, onSuccess: () -> Unit) =
+        viewModelScope.launch {
+            if (_favouriteProducts.value?.contains(product) == true) {
+                onFailure("Product already added to favourites")
+                return@launch
+            }
+            val response = favoriteRepo.add(product.id, Preferences.getUserId())
+            ResponseResolver(response, onFailure = onFailure, onSuccess = {
+                _favouriteProducts.value = it
+                favouriteDao.addFavorite(FavouriteProduct(product = product))
+                onSuccess()
+            })()
+        }
 
-    fun removeFromFavourite(productIds: Collection<Int>, onFailure: (String) -> Unit) =
+    fun removeFromFavourite(
+        productIds: Collection<Int>,
+        onFailure: (String) -> Unit,
+        onSuccess: () -> Unit = {}
+    ) =
         viewModelScope.launch {
             val response = favoriteRepo.remove(productIds.toList(), Preferences.getUserId())
             ResponseResolver(response, onFailure = onFailure, onSuccess = {
@@ -52,7 +62,8 @@ class FavouriteViewModel(
             })()
         }
 
-    fun removeFromFavourite(productId: Int, onFailure: (String) -> Unit) = removeFromFavourite(
-        listOf(productId), onFailure
-    )
+    fun removeFromFavourite(productId: Int, onFailure: (String) -> Unit, onSuccess: () -> Unit) =
+        removeFromFavourite(
+            listOf(productId), onFailure, onSuccess
+        )
 }

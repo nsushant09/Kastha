@@ -10,6 +10,8 @@ import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.ActivityMainBinding
 import com.neupanesushant.kastha.extra.Preferences
 import com.neupanesushant.kastha.extra.RecommendedDataManager
+import com.neupanesushant.kastha.viewmodel.ProductViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override val layoutId: Int

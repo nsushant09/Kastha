@@ -84,6 +84,7 @@ class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding>() {
                 return
             }
 
+            showLoading()
             userViewModel.updateUser(
                 UserUpdateDTO(
                     id,
@@ -95,8 +96,14 @@ class ProfileUpdateFragment : BaseFragment<FragmentProfileUpdateBinding>() {
                     gender,
                     roles
                 ),
-                onFailure = { toast("Could not update user profile") },
-                onSuccess = { toast("User profile updated") }
+                onFailure = {
+                    hideLoading()
+                    toast("Could not update user profile")
+                },
+                onSuccess = {
+                    hideLoading()
+                    toast("User profile updated")
+                }
             )
 
         }

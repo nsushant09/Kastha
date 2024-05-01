@@ -34,6 +34,7 @@ class ProductViewModel(
             _allProducts.value = productDao.getAllProducts()
         }) { products ->
             _allProducts.value = products
+            productDao.deleteAllProducts()
             products.forEach { productDao.insert(it) }
         }()
     }

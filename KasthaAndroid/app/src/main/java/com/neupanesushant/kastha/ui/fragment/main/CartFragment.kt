@@ -217,13 +217,15 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
     }
 
     private fun deleteSelection() {
-        cartViewModel.removeProducts(selectionItemsIdSet) {
+        showLoading()
+        cartViewModel.removeProducts(selectionItemsIdSet, onFailure = {
+            hideLoading()
             DialogUtils.generalDialog(
                 requireContext(),
                 "An error occurred while removing products from cart. Please try again later.",
                 "Error Removing from cart"
             )
-        }
+        }, onSuccess = { hideLoading() })
         isSelectionEnabled = false
     }
 

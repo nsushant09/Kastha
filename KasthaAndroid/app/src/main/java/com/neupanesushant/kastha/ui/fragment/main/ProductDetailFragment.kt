@@ -27,10 +27,10 @@ import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.ReviewResponse
 import com.neupanesushant.kastha.extra.RecommendedDataManager
+import com.neupanesushant.kastha.extra.extensions.Snackbar
 import com.neupanesushant.kastha.extra.extensions.showKeyboard
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
-import com.neupanesushant.kastha.ui.dialog.DialogUtils
 import com.neupanesushant.kastha.viewmodel.CartViewModel
 import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
@@ -54,16 +54,6 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
     private var reviewRating: Int = 0
 
-    private var isProductInFavourites = false
-        set(value) {
-            field = value
-            onFavouritesStatusChange(value)
-        }
-    private var isProductInCart = false
-        set(value) {
-            field = value
-            onCartStatusChange(value)
-        }
 
     override fun initialize() {
         try {
@@ -104,42 +94,30 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             requestCameraPermission()
         }
         binding.btnAddToCart.setOnClickListener {
-            if (isProductInCart) {
-                cartViewModel.removeProduct(product.id) {
-                    DialogUtils.generalDialog(
-                        requireContext(),
-                        "An error occurred while removing products from cart. Please try again later.",
-                        "Error Removing from cart"
-                    )
-                }
-            } else {
-                cartViewModel.addProductToCart(product.id) {
-                    DialogUtils.generalDialog(
-                        requireContext(),
-                        "An error occurred while adding the product to the cart. Please try again later.",
-                        "Error Adding to Cart"
-                    )
-                }
-            }
+            cartViewModel.addProductToCart(product.id, onSuccess = {
+                binding.root.Snackbar(
+                    "Added to cart",
+                    anchorView = binding.llBottomButtonsContainer
+                )
+            }, onFailure = {
+                binding.root.Snackbar(
+                    it,
+                    anchorView = binding.llBottomButtonsContainer
+                )
+            })
         }
         binding.btnFavourites.setOnClickListener {
-            if (isProductInFavourites) {
-                favouriteViewModel.removeFromFavourite(product.id) {
-                    DialogUtils.generalDialog(
-                        requireContext(),
-                        "An error occurred while removing the product to your favourites. Please try again later.",
-                        "Error Removing from Favourites"
-                    )
-                }
-            } else {
-                favouriteViewModel.addToFavourite(product) {
-                    DialogUtils.generalDialog(
-                        requireContext(),
-                        "An error occurred while adding the product to your favourites. Please try again later.",
-                        "Error Adding to Favourites"
-                    )
-                }
-            }
+            favouriteViewModel.addToFavourite(product, onSuccess = {
+                binding.root.Snackbar(
+                    "Added to favourites",
+                    anchorView = binding.llBottomButtonsContainer
+                )
+            }, onFailure = {
+                binding.root.Snackbar(
+                    it,
+                    anchorView = binding.llBottomButtonsContainer
+                )
+            })
         }
 
         binding.btnAddReview.setOnClickListener {
@@ -169,19 +147,9 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             setupReviews(reviews)
         }
 
-        favouriteViewModel.favouriteProducts.observe(viewLifecycleOwner) { favProducts ->
-            isProductInFavourites = favProducts.contains(product)
-        }
+        favouriteViewModel.favouriteProducts.observe(viewLifecycleOwner) { _ -> }
 
-        cartViewModel.allProducts.observe(viewLifecycleOwner) { cartProducts ->
-            for (cartProduct in cartProducts) {
-                if (cartProduct.product == product) {
-                    isProductInCart = true
-                    return@observe
-                }
-            }
-            isProductInCart = false
-        }
+        cartViewModel.allProducts.observe(viewLifecycleOwner) { _ -> }
     }
 
     private fun setupCarouselView() {
@@ -202,7 +170,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             R.layout.item_home_carousel,
             imageUrls
         ) { mBinding, data, _ ->
-            GlideManager.load(requireContext(), data, mBinding.carouselImageView, 800)
+            GlideManager.load(requireContext(), data, mBinding.carouselImageView, size = 600)
         }
         binding.rvProductImages.adapter = adapter
     }
@@ -293,10 +261,12 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     }
 
     private fun onCartStatusChange(isInCart: Boolean) {
+        hideLoading()
         binding.btnAddToCart.text = if (isInCart) "Remove from cart" else "Add to cart"
     }
 
     private fun onFavouritesStatusChange(isInFavourites: Boolean) {
+        hideLoading()
         binding.btnFavourites.icon =
             ContextCompat.getDrawable(
                 requireContext(),
@@ -350,7 +320,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                 MaterialColors.getColor(
                     requireContext(),
                     com.google.android.material.R.attr.colorOnSurface,
-                    ContextCompat.getColor(requireContext(), R.color.black)
+                    null
                 )
             )
         }
