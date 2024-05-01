@@ -75,8 +75,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         authenticationViewModel.sendOTP(email)
         val bundle = bundleOf(
             OTPFragment.OTP_ACTION to OTPFragment.OTPAction.LOGIN,
-            OTPFragment.LOGIN_EMAIL_ARGUMENT to email,
-            OTPFragment.LOGIN_PASSWORD_ARGUMENT to password
+            OTPFragment.EMAIL_ARGUMENT to email,
+            OTPFragment.PASSWORD_ARGUMENT to password
         )
 
         Router(requireActivity(), bundle).route(

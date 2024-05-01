@@ -10,6 +10,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 interface AuthenticationEndpoint {
@@ -32,5 +33,18 @@ interface AuthenticationEndpoint {
     @POST("auth/loginValidation")
     suspend fun validateLogin(
         @Body loginDTO: LoginDTO
+    ): Response<BaseResponse<String>>
+
+    @FormUrlEncoded
+    @POST("mail/password_reset_otp")
+    suspend fun sendPasswordResetOTP(
+        @Field("email") email: String
+    ): Response<OTPMailResponse>
+
+    @FormUrlEncoded
+    @PATCH("user/resetPassword")
+    suspend fun resetPassword(
+        @Field("email") email: String,
+        @Field("password") password: String
     ): Response<BaseResponse<String>>
 }

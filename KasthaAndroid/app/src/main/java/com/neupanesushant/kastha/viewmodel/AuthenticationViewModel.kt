@@ -76,6 +76,24 @@ class AuthenticationViewModel(
         }
     }
 
+    fun sendPasswordResetOTP(email: String) {
+        viewModelScope.launch {
+            val response = authenticationUseCase.sendPasswordResetOTP(email)
+            ResponseResolver(response, onSuccess = {
+                _oneTimePassword.value = it
+            })()
+        }
+    }
+
+    fun resetPassword(
+        email: String,
+        password: String,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    ) = viewModelScope.launch {
+        val response = authenticationUseCase.resetPassword(email, password)
+        ResponseResolver(response, onSuccess = { onSuccess() }, onFailure = onFailure)()
+    }
 
     fun resetOTP() {
         _oneTimePassword.value = null

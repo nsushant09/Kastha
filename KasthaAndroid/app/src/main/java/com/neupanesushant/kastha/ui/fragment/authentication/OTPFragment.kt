@@ -1,7 +1,10 @@
 package com.neupanesushant.kastha.ui.fragment.authentication
 
 import android.os.Parcelable
+import androidx.core.os.bundleOf
 import com.neupanesushant.kastha.R
+import com.neupanesushant.kastha.appcore.RouteConfig
+import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.core.StateResolver
@@ -23,8 +26,8 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
         const val OTP_ACTION = "OTP_ACTION"
         const val OTP_ARGUMENT = "OTP_ARGUMENT"
 
-        const val LOGIN_EMAIL_ARGUMENT = "LOGIN_EMAIL_ARGUMENT"
-        const val LOGIN_PASSWORD_ARGUMENT = "LOGIN_PASSWORD_ARGUMENT"
+        const val EMAIL_ARGUMENT = "LOGIN_EMAIL_ARGUMENT"
+        const val PASSWORD_ARGUMENT = "LOGIN_PASSWORD_ARGUMENT"
 
         const val REGISTER_DTO_ARGUMENT = "REGISTER_DTO_ARGUMENT"
     }
@@ -108,8 +111,8 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
     }
 
     private fun logInAction() {
-        val email = getParcelable<String>(LOGIN_EMAIL_ARGUMENT)
-        val password = getParcelable<String>(LOGIN_PASSWORD_ARGUMENT)
+        val email = getParcelable<String>(EMAIL_ARGUMENT)
+        val password = getParcelable<String>(PASSWORD_ARGUMENT)
         if (email == null || password == null) {
             toast("An error occured during login")
         } else {
@@ -117,7 +120,20 @@ class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
         }
     }
 
-    private fun passwordResetAction() {}
+    private fun passwordResetAction() {
+        val email = getParcelable<String>(EMAIL_ARGUMENT)
+        if (email == null) {
+            toast("An error occured during verification")
+        } else {
+            val bundle = bundleOf(FPResetFragment.EMAIL_ARGUMENT to email)
+            Router(requireActivity(), bundle)
+                .route(
+                    R.id.authentication_fragment_container,
+                    AppConfig.getFragment(RouteConfig.FP_RESET_FRAGMENT)
+                )
+        }
+    }
+
     private fun registerAction() {
         val registerDTO = getParcelable<RegisterDTO>(REGISTER_DTO_ARGUMENT)
         if (registerDTO == null) {
