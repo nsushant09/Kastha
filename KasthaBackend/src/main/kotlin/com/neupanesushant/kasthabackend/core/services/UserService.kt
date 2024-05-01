@@ -31,4 +31,10 @@ class UserService(
         val updatedUser = userRepo.save(toUpdateUser)
         return updatedUser
     }
+
+    fun resetPassword(email: String, password: String): User? {
+        val user = userRepo.findByEmail(email) ?: return null
+        val updatedUser = userRepo.save(user.copy(password = passwordEncoder.encode(password)))
+        return updatedUser
+    }
 }

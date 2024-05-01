@@ -34,7 +34,13 @@ class SecurityConfig @Autowired constructor(
     public fun securityFilterChain(http: HttpSecurity): SecurityFilterChain =
         http.csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("/api/auth/**", "/api/mail/**", "/api/image/**", "api/model/**").permitAll()
+                it.requestMatchers(
+                    "/api/auth/**",
+                    "/api/mail/**",
+                    "/api/image/**",
+                    "api/model/**",
+                    "/api/user/resetPassword"
+                ).permitAll()
                 it.anyRequest().authenticated()
             }
             .exceptionHandling { it.authenticationEntryPoint(point) }
