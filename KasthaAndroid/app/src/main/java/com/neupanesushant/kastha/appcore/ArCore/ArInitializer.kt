@@ -1,4 +1,4 @@
-package com.neupanesushant.learnar.ArCore
+package com.neupanesushant.kastha.appcore.ArCore
 
 import android.app.Activity
 import com.google.ar.core.ArCoreApk
@@ -11,20 +11,20 @@ class ArInitializer(private val activity: Activity) {
         return availability.isSupported && availability == ArCoreApk.Availability.SUPPORTED_INSTALLED
     }
 
-    fun onArAvailable(onArCoreAvailable: () -> Unit) {
-        val availability = ArCoreApk.getInstance().checkAvailability(activity.baseContext)
+    fun isArInstalled(onArCoreInstalled: () -> Unit) {
+        val availability = ArCoreApk.getInstance().checkAvailability(activity.applicationContext)
         if (availability.isSupported && availability == ArCoreApk.Availability.SUPPORTED_INSTALLED) {
-            onArCoreAvailable()
+            onArCoreInstalled()
         } else {
             requestInstall()
         }
     }
 
-    fun requestInstall() {
+    private fun requestInstall() {
         ArCoreApk.getInstance().requestInstall(activity, true);
     }
 
-    fun getSession() : Session{
+    fun getSession(): Session {
         val session = Session(activity.baseContext)
         val config = Config(session)
         session.configure(config)

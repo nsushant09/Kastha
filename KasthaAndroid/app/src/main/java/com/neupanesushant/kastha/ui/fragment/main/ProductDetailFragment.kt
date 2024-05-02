@@ -31,10 +31,12 @@ import com.neupanesushant.kastha.extra.extensions.Snackbar
 import com.neupanesushant.kastha.extra.extensions.showKeyboard
 import com.neupanesushant.kastha.ui.adapter.ProductHorizontalCardAdapter
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
+import com.neupanesushant.kastha.ui.dialog.DialogUtils
 import com.neupanesushant.kastha.viewmodel.CartViewModel
 import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
 import com.neupanesushant.kastha.viewmodel.ReviewViewModel
+import com.neupanesushant.kastha.appcore.ArCore.ArInitializer
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
@@ -53,6 +55,10 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     private val reviewViewModel: ReviewViewModel by sharedViewModel()
 
     private var reviewRating: Int = 0
+
+    private val arInitializer: ArInitializer by lazy {
+        ArInitializer(requireActivity())
+    }
 
 
     override fun initialize() {
@@ -91,7 +97,17 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
         binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
         binding.btnAugmentedView.setOnClickListener {
             if (product.model == null) return@setOnClickListener
-            requestCameraPermission()
+            if (arInitializer.isArAvailable()) {
+                arInitializer.isArInstalled {
+                    requestCameraPermission()
+                }
+            } else {
+                DialogUtils.generalDialog(
+                    requireContext(),
+                    "Augmented reality features are not available on your device",
+                    "Not Supported"
+                )
+            }
         }
         binding.btnAddToCart.setOnClickListener {
             cartViewModel.addProductToCart(product.id, onSuccess = {

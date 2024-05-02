@@ -1,6 +1,5 @@
 package com.neupanesushant.kastha.ui.fragment.main
 
-import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -12,7 +11,7 @@ import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.extra.extensions.show
 import com.neupanesushant.kastha.ui.activity.AugmentedViewActivity
-import com.neupanesushant.learnar.ArCore.ArInitializer
+import com.neupanesushant.kastha.appcore.ArCore.ArInitializer
 import com.neupanesushant.learnar.ArCore.ModelManager
 
 class AugmentedViewFragment : ArFragment() {
@@ -41,7 +40,6 @@ class AugmentedViewFragment : ArFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkArAvailability()
         initialize()
         setupView()
         setupEventListener()
@@ -50,6 +48,7 @@ class AugmentedViewFragment : ArFragment() {
 
     private fun initialize() {
         session = arInitializer.getSession()
+        // session.config.planeFindingMode = Config.PlaneFindingMode.HORIZONTAL
         try {
             objectModel = arguments?.getParcelable<ObjectModel>(MODEL_ARGUMENT)!!
         } catch (_: Exception) {
@@ -73,20 +72,21 @@ class AugmentedViewFragment : ArFragment() {
         setOnTapArPlaneListener { hitResult, plane, motionEvent ->
             if (isModelSet) return@setOnTapArPlaneListener
             val anchor = hitResult.createAnchor()
-            modelManager.buildModel(Uri.parse(BuildConfig.BASE_URL + objectModel.url)) {
-                node = modelManager.addTransformableNodeModel(this, anchor, it)
-            }
+            modelManager.buildModel(
+                Uri.parse(BuildConfig.BASE_URL + objectModel.url),
+                onModelBuilt = {
+                    node = modelManager.addTransformableNodeModel(this, anchor, it)
+                }, onModelFailure = {
+                    requireContext().show(it ?: "Could not show object")
+                    isModelSet = false
+                })
             requireContext().show("Displaying Augmented Object")
             isModelSet = true
         }
     }
 
-    private fun setupObserver() {}
-
-    @SuppressLint("CommitTransaction")
-    private fun checkArAvailability() {
-        if (!arInitializer.isArAvailable())
-            requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
+    private fun setupObserver() {
+        session.update()
     }
 
     private fun removeCurrentModel() {
@@ -99,9 +99,6 @@ class AugmentedViewFragment : ArFragment() {
 
     private fun onModelValueChange(isModelSet: Boolean) {
         augmentedViewActivity().binding().btnRemove.isVisible = isModelSet
-        if (isModelSet) {
-        } else {
-        }
     }
 
     override fun onDestroy() {
