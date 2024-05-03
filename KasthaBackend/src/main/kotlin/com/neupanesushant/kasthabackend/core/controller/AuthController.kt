@@ -10,6 +10,7 @@ import com.neupanesushant.kasthabackend.data.dtomodel.UserDTO
 import com.neupanesushant.kasthabackend.data.model.BaseResponse
 import com.neupanesushant.kasthabackend.data.model.User
 import com.neupanesushant.kasthabackend.security.JwtHelper
+import org.apache.coyote.Response
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
@@ -36,6 +37,10 @@ class AuthController @Autowired constructor(
     private val passwordEncoder: PasswordEncoder,
     private val jwtGenerator: JwtHelper
 ) {
+
+    @GetMapping("/encodedPassword")
+    private fun encodedPassword(@RequestParam("password") password: String) =
+        ResponseEntity.ok(BaseResponse(true, passwordEncoder.encode(password)))
 
     @PostMapping("/login")
     private fun login(
