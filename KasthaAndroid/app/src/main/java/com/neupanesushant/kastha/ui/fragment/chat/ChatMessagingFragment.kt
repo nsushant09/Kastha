@@ -80,13 +80,11 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
             isMessageWritten(!it.isNullOrEmpty())
         }
         binding.ivRecordAudioMessage.setOnTouchListener { _, event ->
-//            toast("This feature will be added soon")
-//            return@setOnTouchListener true
             requestAudioPermission(event)
             true
         }
         binding.btnSend.setOnClickListener {
-            if (binding.etWriteMessage.text.isNullOrEmpty()) {
+            if (!binding.etWriteMessage.text.isNullOrEmpty()) {
                 chatMessagingViewModel.sendTextMessage(binding.etWriteMessage.text.toString())
                 binding.etWriteMessage.text?.clear()
             }

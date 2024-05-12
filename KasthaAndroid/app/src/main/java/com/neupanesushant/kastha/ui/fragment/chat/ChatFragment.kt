@@ -3,6 +3,7 @@ package com.neupanesushant.kastha.ui.fragment.chat
 import android.annotation.SuppressLint
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.appcore.RouteConfig
 import com.neupanesushant.kastha.core.AppConfig
@@ -86,7 +87,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     private val onLatestChatClick: (otherUser: User) -> Unit =
         { otherUser ->
-            val userId = Preferences.getUserId()
+            //TODO Change ADMIN ID Here
+            val userId = BuildConfig.ADMIN_ID
             val data = bundleOf(
                 ChatMessagingFragment.CURRENT_USER_ID to userId,
                 ChatMessagingFragment.USER_ARGUMENT to otherUser

@@ -76,6 +76,7 @@ class AugmentedViewFragment : ArFragment() {
                 Uri.parse(BuildConfig.BASE_URL + objectModel.url),
                 onModelBuilt = {
                     node = modelManager.addTransformableNodeModel(this, anchor, it)
+
                 }, onModelFailure = {
                     requireContext().show(it ?: "Could not show object")
                     isModelSet = false
@@ -86,7 +87,6 @@ class AugmentedViewFragment : ArFragment() {
     }
 
     private fun setupObserver() {
-        session.update()
     }
 
     private fun removeCurrentModel() {

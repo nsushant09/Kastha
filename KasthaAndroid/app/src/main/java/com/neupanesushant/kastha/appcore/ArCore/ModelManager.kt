@@ -6,9 +6,7 @@ import com.google.ar.core.Anchor
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.assets.RenderableSource
-import com.google.ar.sceneform.rendering.MaterialFactory
 import com.google.ar.sceneform.rendering.ModelRenderable
-import com.google.ar.sceneform.rendering.Texture
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import com.neupanesushant.learnar.ArCore.UriRetriever.getRawUri
@@ -19,16 +17,13 @@ class ModelManager(private val context: Context) {
         onModelBuilt: (ModelRenderable) -> Unit,
         onModelFailure: (String?) -> Unit = {}
     ) {
-        val futureTexture = Texture.builder().setSource(context, uri).build()
         ModelRenderable.builder().setSource(
             context,
             RenderableSource.builder().setSource(context, uri, RenderableSource.SourceType.GLB)
                 .build()
         ).setRegistryId(uri.toString()).build()
-            .thenAcceptBoth(futureTexture) { renderable, texture ->
-                val newRenderable = renderable;
-                newRenderable.material.setTexture(MaterialFactory.MATERIAL_TEXTURE, texture)
-                onModelBuilt(newRenderable)
+            .thenAccept {
+                onModelBuilt(it)
             }.exceptionally {
                 onModelFailure(it.message)
                 null

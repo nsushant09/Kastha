@@ -27,7 +27,7 @@ android {
                 "proguard-rules.pro"
             )
             buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
-            buildConfigField("int", "ADMIN_ID", "0")
+            buildConfigField("int", "ADMIN_ID", "1")
 //            buildConfigField("String", "BASE_URL", "\"http://192.168.1.76:8080/api/\"")
         }
 
@@ -37,9 +37,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
-//            buildConfigField("String", "BASE_URL", "\"http://192.168.1.76:8080/api/\"")
-            buildConfigField("int", "ADMIN_ID", "0")
+//                        buildConfigField("String", "BASE_URL", "\"http://192.168.1.76:8080/api/\"")
+//            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/api/\"")
+            buildConfigField("String", "BASE_URL", "\"http://3.218.102.152:8080/api/\"")
+            buildConfigField("int", "ADMIN_ID", "1")
         }
     }
 
