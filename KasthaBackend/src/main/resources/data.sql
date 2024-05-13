@@ -61,9 +61,17 @@ VALUES
 (26, "model/sofa_premium.glb"),
 (27, "model/table_coffee.glb"),
 (28, "model/table_ornamental.glb"),
-(39, "model/table_round.glb"),
+(29, "model/table_round.glb"),
 (30, "model/table_wooden.glb"),
-(31, "model/table_wooden_picnic.glb");
+(31, "model/table_wooden_picnic.glb"),
+(32, "model/mirror_carved.glb"),
+(33, "model/mirror_honeycomb.glb"),
+(34, "model/mirror_normal.glb"),
+(35, "model/sofa_bean_bag.glb"),
+(36, "model/sofa_dining.glb"),
+(37, "model/wall_clock.glb"),
+(38, "model/wall_tiles.glb"),
+(39, "model/wardrobe_bedroom.glb");
 
 -- Bed Products
 INSERT IGNORE INTO product(id, name, price, stock_quantity, category_id, model_id, description)
@@ -93,12 +101,20 @@ VALUES
 (23, "Leather Sofa", 45000, 8, 6, 23, "Elevate your living room with our Leather Sofa. Crafted from premium leather and sturdy wood, this sofa combines luxury and durability. With its timeless design and comfortable seating, it offers a sophisticated centerpiece for any home."),
 (24, "Normal Sofa", 20000, 20, 6, 24, "Experience everyday comfort with our Normal Sofa. Featuring a classic design and durable construction, this sofa provides a cozy retreat for relaxation and socializing. Its versatile style and neutral upholstery make it a timeless addition to any living space."),
 (25, "Persian Sofa", 60000, 4, 6, 25, "Add a touch of opulence to your home with our Persian Sofa. Inspired by traditional Persian design, this sofa features intricate patterns and luxurious fabrics, creating a stunning focal point for your living room. With its plush cushions and elegant silhouette, it offers both comfort and style."),
-(26, "Premium Sofa", 55000, 5, 6, 27, "Indulge in luxury with our Premium Sofa. Featuring premium materials and exquisite craftsmanship, this sofa epitomizes elegance and sophistication. Its timeless design and superior comfort make it the perfect centerpiece for any upscale living space."),
-(27, "Coffee Table", 10000, 25, 7, 28, "Complete your living room with our stylish Coffee Table. Featuring a contemporary design and durable construction, this table offers both form and function. Its spacious surface and lower shelf provide ample space for books, magazines, and decor, making it a practical addition to any home."),
-(28, "Ornamental Table", 15000, 15, 7, 29, "Add a touch of elegance to your living space with our Ornamental Table. Featuring intricate detailing and a sophisticated design, this table serves as both a functional surface and a decorative accent. Its versatile style makes it perfect for any room in your home."),
-(29, "Round Table", 8000, 20, 7, 30, "Gather around our Round Table for stylish dining or entertaining. With its classic design and sturdy construction, this table provides a versatile setting for meals, games, or conversation. Its compact size makes it perfect for smaller spaces or cozy dining nooks."),
-(30, "Wooden Table", 12000, 18, 7, 31, "Enhance your dining experience with our Wooden Table. Crafted from solid wood and featuring a timeless design, this table brings warmth and character to any dining room. Its sturdy construction and spacious surface make it perfect for family meals and gatherings."),
-(31, "Picnic Table", 9000, 10, 7, 32, "Enjoy outdoor dining with our Picnic Table. Made from durable wood and designed for convenience, this table is perfect for picnics, barbecues, or camping trips. Its compact size and foldable design make it easy to transport and store, allowing you to dine al fresco wherever you go.");
+(26, "Premium Sofa", 55000, 5, 6, 26, "Indulge in luxury with our Premium Sofa. Featuring premium materials and exquisite craftsmanship, this sofa epitomizes elegance and sophistication. Its timeless design and superior comfort make it the perfect centerpiece for any upscale living space."),
+(27, "Coffee Table", 10000, 25, 7, 27, "Complete your living room with our stylish Coffee Table. Featuring a contemporary design and durable construction, this table offers both form and function. Its spacious surface and lower shelf provide ample space for books, magazines, and decor, making it a practical addition to any home."),
+(28, "Ornamental Table", 15000, 15, 7, 28, "Add a touch of elegance to your living space with our Ornamental Table. Featuring intricate detailing and a sophisticated design, this table serves as both a functional surface and a decorative accent. Its versatile style makes it perfect for any room in your home."),
+(29, "Round Table", 8000, 20, 7, 29, "Gather around our Round Table for stylish dining or entertaining. With its classic design and sturdy construction, this table provides a versatile setting for meals, games, or conversation. Its compact size makes it perfect for smaller spaces or cozy dining nooks."),
+(30, "Wooden Table", 12000, 18, 7, 30, "Enhance your dining experience with our Wooden Table. Crafted from solid wood and featuring a timeless design, this table brings warmth and character to any dining room. Its sturdy construction and spacious surface make it perfect for family meals and gatherings."),
+(31, "Picnic Table", 9000, 10, 7, 31, "Enjoy outdoor dining with our Picnic Table. Made from durable wood and designed for convenience, this table is perfect for picnics, barbecues, or camping trips. Its compact size and foldable design make it easy to transport and store, allowing you to dine al fresco wherever you go."),
+(32, "Carved Mirror", 15000, 15, 5, 32, "Add a touch of elegance to your space with our Carved Mirror. Featuring intricate carvings and a classic design, this mirror serves as both a functional piece and a decorative accent, perfect for any room in your home."),
+(33, "Honeycomb Mirror", 12000, 10, 5, 33, "Make a statement with our Honeycomb Mirror. Crafted with a unique honeycomb pattern and sleek frame, this mirror adds a modern touch to your space while providing a reflective surface for checking your appearance or enhancing the visual depth of a room."),
+(34, "Mirror", 8000, 20, 5, 34, "Complete your decor with our versatile Mirror. Featuring a simple yet stylish design, this mirror blends seamlessly into any room, adding light and depth to your space. Hang it in your hallway, bedroom, or living room for a practical and decorative touch."),
+(35, "Bean Bag", 5000, 30, 6, 35, "Relax in comfort with our Bean Bag. Perfect for lounging, reading, or watching TV, this bean bag offers cozy support and casual style. Its lightweight design makes it easy to move from room to room, providing flexible seating wherever you need it."),
+(36, "Dining Chair", 6000, 40, 6, 36, "Upgrade your dining experience with our stylish Dining Chair. Featuring a classic design and sturdy construction, this chair provides comfortable seating for family meals or dinner parties. Its timeless appeal and versatile style make it a perfect addition to any dining room."),
+(37, "Wall Clock", 7000, 25, 8, 37, "Keep track of time in style with our Wall Clock. Featuring a sleek design and reliable quartz movement, this clock adds both function and flair to your space. Hang it in your kitchen, living room, or office for a touch of modern elegance."),
+(38, "Wall Tiles", 10000, 20, 8, 38, "Enhance your walls with our decorative Wall Tiles. Featuring a variety of patterns and colors, these tiles add texture and visual interest to any room. Whether used as a backsplash in your kitchen or an accent wall in your bathroom, they bring personality and charm to your space."),
+(39, "Bedroom Closet", 35000, 8, 9, 39, "Organize your clothes and accessories with our Bedroom Closet. Featuring ample storage space and a sleek design, this closet offers both functionality and style. Its adjustable shelves and hanging rods allow for customizable storage solutions, while its modern aesthetic complements any bedroom decor.");
 
 
 -- Images
@@ -134,5 +150,12 @@ VALUES
 ('image/table_ornamental.png', 28),
 ('image/table_round.png', 29),
 ('image/table_wooden.png', 30),
-('image/table_wooden_picnic.png', 31);
-
+('image/table_wooden_picnic.png', 31),
+('image/mirror_carved.png', 32),
+('image/mirror_honeycomb.png', 33),
+('image/mirror_normal.png', 34),
+('image/sofa_bean_bag.png', 35),
+('image/sofa_dining.png', 36),
+('image/wall_clock.png', 37),
+('image/wall_tiles.png', 38),
+('image/wardrobe_bedroom.png', 39);
