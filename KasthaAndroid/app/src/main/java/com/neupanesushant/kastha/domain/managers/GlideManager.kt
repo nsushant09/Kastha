@@ -26,7 +26,6 @@ object GlideManager {
             .asBitmap()
             .load(BuildConfig.BASE_URL + url)
             .override(300)
-            .skipMemoryCache(true)
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(object : SimpleTarget<Bitmap>() {
                 override fun onResourceReady(
@@ -39,11 +38,10 @@ object GlideManager {
 
     }
 
-    fun load(context: Context, url: String, view: ImageView, size: Int = 250) {
+    fun load(context: Context, url: String, view: ImageView, size: Int = 200) {
         Glide.with(context)
             .load(BuildConfig.BASE_URL + url)
             .override(size)
-            .skipMemoryCache(true)
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(view)
     }

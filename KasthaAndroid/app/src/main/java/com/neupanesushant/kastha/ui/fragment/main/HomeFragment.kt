@@ -38,7 +38,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun setupViews() {
         showLoading()
-        productViewModel.getRecommendedProducts()
+        if (productViewModel.recommendedProducts.value == null) {
+            productViewModel.getRecommendedProducts()
+        }
         setupCarouselView()
         setupSearchView()
         setCarouselData(Constants.CAROUSEL_IMAGES.map { it.url })
