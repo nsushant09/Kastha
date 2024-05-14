@@ -14,13 +14,13 @@ import com.neupanesushant.kastha.extra.Preferences
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
 import com.neupanesushant.kastha.ui.fragment.chat.ChatMessagingFragment
 import com.neupanesushant.kastha.viewmodel.UserViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_profile
 
-    private val userViewModel: UserViewModel by viewModel()
+    private val userViewModel: UserViewModel by sharedViewModel()
     override fun setupViews() {
 //        showLoading()
     }

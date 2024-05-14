@@ -36,6 +36,7 @@ class ProductViewModel(
             _allProducts.value = products
             productDao.deleteAllProducts()
             products.forEach { productDao.insert(it) }
+            productRepo.cacheAllProducts(products)
         }()
     }
 

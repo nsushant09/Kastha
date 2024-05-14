@@ -18,7 +18,14 @@ class LargeProductCardAdapter(
     private val itemWidth: Int
 ) : RecyclerView.Adapter<LargeProductCardAdapter.ViewHolder>() {
 
+    private var renderableProducts = products.take(PAGE_SIZE).toMutableList()
     private val itemHeight = (itemWidth * 4) / 3
+    private var isLoading = false
+    private var currentPage = 1
+
+    companion object {
+        private const val PAGE_SIZE = 10
+    }
 
     inner class ViewHolder(val binding: ItemLargeProductCardBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -29,13 +36,12 @@ class LargeProductCardAdapter(
         )
     }
 
-    override fun getItemCount(): Int =
-        products.size
+    override fun getItemCount(): Int = renderableProducts.size
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val mBinding = holder.binding
-        val data = products[position]
+        val data = renderableProducts[position]
 
         holder.itemView.layoutParams.width = itemWidth
         mBinding.cvProductImage.layoutParams.height = itemHeight
@@ -60,7 +66,20 @@ class LargeProductCardAdapter(
                 mBinding.ivProductImage.setImageBitmap(bitmap)
             }
         }
+    }
 
+    fun loadMoreItems() {
+        if (isLoading) return
 
+        val start = currentPage * PAGE_SIZE
+        if (start >= products.size) return
+
+        isLoading = true
+        currentPage++
+
+        val nextItems = products.drop(start).take(PAGE_SIZE)
+        renderableProducts.addAll(nextItems)
+        notifyItemRangeInserted(start, nextItems.size)
+        isLoading = false
     }
 }

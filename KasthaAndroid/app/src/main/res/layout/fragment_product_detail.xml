@@ -33,7 +33,7 @@
 
                     tools:itemCount="10"
                     tools:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
-                    tools:listitem="@layout/item_home_carousel" />
+                    tools:listitem="@layout/item_product_detail_carousel" />
 
                 <TextView
                     android:id="@+id/tvProductTitle"

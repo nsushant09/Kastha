@@ -33,9 +33,16 @@ class ProductRemoteImpl(
 
     override suspend fun all() =
         requestHandler {
-            allProducts.ifEmpty { allProducts = endpoint.getProducts() }
-            Response.success(allProducts)
+            if (allProducts.isEmpty()) {
+                endpoint.getProducts()
+            } else {
+                Response.success(allProducts)
+            }
         }
+
+    override fun cacheAllProducts(products: List<Product>) {
+        allProducts = products
+    }
 }
 
 

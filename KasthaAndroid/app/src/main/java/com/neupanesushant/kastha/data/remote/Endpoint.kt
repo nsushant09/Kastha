@@ -88,7 +88,7 @@ interface Endpoint {
     suspend fun updateProduct(@Body product: Product): Product
 
     @GET("product")
-    suspend fun getProducts(): List<Product>
+    suspend fun getProducts(): Response<List<Product>>
 
     @GET("product/id/{product_id}")
     suspend fun getProductById(@Path("product_id") productId: Int): Product

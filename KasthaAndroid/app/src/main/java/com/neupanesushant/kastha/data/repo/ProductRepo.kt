@@ -12,4 +12,6 @@ interface ProductRepo {
     suspend fun getProductsBySearch(value: String): List<Product>
     suspend fun getProductByRecommended(categoryIds: List<Int>): Response<List<Product>>
     suspend fun all(): Response<List<Product>>
+
+    fun cacheAllProducts(products: List<Product>)
 }

@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
@@ -36,14 +37,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val productViewModel: ProductViewModel by sharedViewModel()
 
-    override fun setupViews() {
-        showLoading()
+    override fun initialize() {
         if (productViewModel.recommendedProducts.value == null) {
             productViewModel.getRecommendedProducts()
         }
+    }
+
+    override fun setupViews() {
+        showLoading()
         setupCarouselView()
-        setupSearchView()
         setCarouselData(Constants.CAROUSEL_IMAGES.map { it.url })
+        setupSearchView()
     }
 
     override fun setupEventListener() {
@@ -129,11 +133,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             tvRecyclerViewTitle.text = title
             titledRecyclerView.layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-            titledRecyclerView.adapter = LargeProductCardAdapter(
+            val adapter = LargeProductCardAdapter(
                 requireActivity(),
                 products,
                 itemSize(requireContext(), 0.5f, 24)
             )
+            titledRecyclerView.adapter = adapter
+            titledRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val totalItemCount = layoutManager.itemCount
+                    val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+
+                    if (totalItemCount <= (lastVisibleItem + 2)) {
+                        adapter.loadMoreItems()
+                    }
+                }
+            })
         }
     }
 
