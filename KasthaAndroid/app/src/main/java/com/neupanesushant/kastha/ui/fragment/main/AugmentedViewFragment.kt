@@ -4,20 +4,23 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import com.google.ar.core.Config
 import com.google.ar.core.Session
 import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.ux.ArFragment
 import com.neupanesushant.kastha.BuildConfig
+import com.neupanesushant.kastha.appcore.ArCore.ArInitializer
+import com.neupanesushant.kastha.domain.model.Alignment
 import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.extra.extensions.show
 import com.neupanesushant.kastha.ui.activity.AugmentedViewActivity
-import com.neupanesushant.kastha.appcore.ArCore.ArInitializer
 import com.neupanesushant.learnar.ArCore.ModelManager
 
 class AugmentedViewFragment : ArFragment() {
 
     companion object {
         const val MODEL_ARGUMENT = "MODEL_ARGUMENT"
+        const val ALIGNMENT_ARGUMENT = "ALIGNMENT_ARGUMENT"
     }
 
     private val arInitializer by lazy {
@@ -48,9 +51,9 @@ class AugmentedViewFragment : ArFragment() {
 
     private fun initialize() {
         session = arInitializer.getSession()
-        // session.config.planeFindingMode = Config.PlaneFindingMode.HORIZONTAL
         try {
             objectModel = arguments?.getParcelable<ObjectModel>(MODEL_ARGUMENT)!!
+            val alignment = arguments?.getParcelable<Alignment>(ALIGNMENT_ARGUMENT)!!
         } catch (_: Exception) {
             requireActivity().finish()
         }

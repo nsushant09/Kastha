@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.Router
+import com.neupanesushant.kastha.domain.model.Alignment
 import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.ui.activity.FullScreenContainerActivity
@@ -44,9 +45,10 @@ object RouteHelper {
         ).route(AppConfig.getActivity(RouteConfig.FULL_SCREEN_CONTAINER_ACTIVITY))
     }
 
-    fun routeAugmentedView(activity: Activity, objectModel: ObjectModel) {
+    fun routeAugmentedView(activity: Activity, objectModel: ObjectModel, alignment: Alignment) {
         val data = bundleOf(
-            AugmentedViewFragment.MODEL_ARGUMENT to objectModel
+            AugmentedViewFragment.MODEL_ARGUMENT to objectModel,
+            AugmentedViewFragment.ALIGNMENT_ARGUMENT to alignment
         )
         Router(
             activity,

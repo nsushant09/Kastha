@@ -27,10 +27,9 @@ class LatestMessageRetriever() : ValueEventListener {
 
     override fun onDataChange(snapshot: DataSnapshot) {
         try {
-            val messages = snapshot.getValue<List<Message?>>()
-                ?.filterNotNull()
-                ?.sortedByDescending { it.timeStamp }
-                ?: return
+            val messages = snapshot.children.mapNotNull {
+                it.getValue<Message?>()
+            }.sortedByDescending { it.timeStamp }
 
             Log.d("DATA_TAG", messages.toString())
             CoroutineScope(Dispatchers.IO).launch {
@@ -50,9 +49,7 @@ class LatestMessageRetriever() : ValueEventListener {
     private fun getMessageFromSnapshot(snapshot: DataSnapshot) {
         val dataList = snapshot.value as? List<Map<String, Any>?>
 
-        val messages = dataList
-            ?.filterNotNull()
-            ?.map { dataMap ->
+        val messages = dataList?.filterNotNull()?.map { dataMap ->
                 val timeStamp = dataMap["timeStamp"] as Long
                 val toUid = dataMap["toUid"] as String
                 val messageBody = dataMap["messageBody"] as String

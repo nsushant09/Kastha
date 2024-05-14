@@ -18,6 +18,7 @@ import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
 import com.google.android.material.color.MaterialColors
 import com.neupanesushant.kastha.R
+import com.neupanesushant.kastha.appcore.ArCore.ArInitializer
 import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentProductDetailBinding
@@ -36,7 +37,6 @@ import com.neupanesushant.kastha.viewmodel.CartViewModel
 import com.neupanesushant.kastha.viewmodel.FavouriteViewModel
 import com.neupanesushant.kastha.viewmodel.ProductViewModel
 import com.neupanesushant.kastha.viewmodel.ReviewViewModel
-import com.neupanesushant.kastha.appcore.ArCore.ArInitializer
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
@@ -245,7 +245,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
     private fun onCameraPermissionGranted() {
         product.model?.let {
-            RouteHelper.routeAugmentedView(requireActivity(), it)
+            RouteHelper.routeAugmentedView(requireActivity(), it, product.category.alignment)
         }
     }
 
