@@ -128,6 +128,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             val params = titledRecyclerView.layoutParams as ConstraintLayout.LayoutParams
             params.setMargins(dpToPx(requireContext(), 16f).toInt(), 0, 0, 0)
             titledRecyclerView.layoutParams = params
+            titledRecyclerView.isNestedScrollingEnabled = false
 
             val title = "All Products"
             tvRecyclerViewTitle.text = title
