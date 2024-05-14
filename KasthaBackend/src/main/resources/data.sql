@@ -5,8 +5,7 @@ VALUES
 ('USER');
 
 INSERT IGNORE INTO `user` (id, first_name, last_name, email, password, gender, location)
-VALUES (1, 'Kastha', 'Administrator', 'freemanurbanstore@gmail.com', '$2a$10$geKAgQBZ2hRj7ZIC6jeFLuywOauNReceuvtMCZ/c7ap9/8U4E3plCd', 'Male', 'Kathmandu, Nepal');
-
+VALUES (1, 'Kastha', 'Administrator', 'freemanurbanstore@gmail.com', '$2a$10$wauVe9DAhTgW5iRXPQSPYOvjKsri.uBB85KhCKrowNQQYNFDucjES', 'Male', 'Kathmandu, Nepal');
 INSERT INTO user_role (user_id, role_id) VALUES (1, 1);
 
 --Alignment Data
