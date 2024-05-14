@@ -14,6 +14,7 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.neupanesushant.kastha.BuildConfig
+import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.extra.extensions.show
 
 object GlideManager {
@@ -25,6 +26,7 @@ object GlideManager {
         Glide.with(context)
             .asBitmap()
             .load(BuildConfig.BASE_URL + url)
+            .placeholder(R.drawable.image_placeholder)
             .override(300)
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(object : SimpleTarget<Bitmap>() {
@@ -41,6 +43,7 @@ object GlideManager {
     fun load(context: Context, url: String, view: ImageView, size: Int = 200) {
         Glide.with(context)
             .load(BuildConfig.BASE_URL + url)
+            .placeholder(R.drawable.image_placeholder)
             .override(size)
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(view)
