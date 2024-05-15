@@ -22,7 +22,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private val userViewModel: UserViewModel by sharedViewModel()
     override fun setupViews() {
-        showLoading()
+//        showLoading()
     }
 
     override fun setupEventListener() {

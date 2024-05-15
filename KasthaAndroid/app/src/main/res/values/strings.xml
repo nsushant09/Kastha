@@ -103,4 +103,7 @@
     <string name="star">Star</string>
     <string name="add_review">Add Review</string>
     <string name="enter_your_one_time_password">Enter your one time password</string>
+    <string name="new_messages_will_be_displayed_once_the_customer_reaches_you_out">New messages will be displayed once the customer reaches you out</string>
+    <string name="there_are_no_messages_yet">There are no messages yet.</string>
+    <string name="new_chat_will_be_loaded_once_you_re_connected_to_a_network">New chat will be loaded once you\'re connected to a network.</string>
 </resources>

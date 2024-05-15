@@ -45,25 +45,4 @@ class LatestMessageRetriever() : ValueEventListener {
 
     override fun onCancelled(error: DatabaseError) {
     }
-
-    private fun getMessageFromSnapshot(snapshot: DataSnapshot) {
-        val dataList = snapshot.value as? List<Map<String, Any>?>
-
-        val messages = dataList?.filterNotNull()?.map { dataMap ->
-                val timeStamp = dataMap["timeStamp"] as Long
-                val toUid = dataMap["toUid"] as String
-                val messageBody = dataMap["messageBody"] as String
-                val messageTypeString = dataMap["messageType"] as String
-                val messageType = when (messageTypeString) {
-                    "TEXT" -> MessageType.TEXT
-                    "AUDIO" -> MessageType.AUDIO
-                    "IMAGE" -> MessageType.IMAGE
-                    else -> throw IllegalArgumentException("Unsupported message type: $messageTypeString")
-                }
-
-                val fromUid = dataMap["fromUid"] as String
-                val message = Message(fromUid, toUid, messageType, messageBody, timeStamp)
-                message
-            } ?: return
-    }
 }

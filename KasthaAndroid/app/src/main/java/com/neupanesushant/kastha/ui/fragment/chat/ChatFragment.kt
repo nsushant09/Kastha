@@ -2,8 +2,8 @@ package com.neupanesushant.kastha.ui.fragment.chat
 
 import android.annotation.SuppressLint
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.neupanesushant.kastha.BuildConfig
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.appcore.RouteConfig
 import com.neupanesushant.kastha.core.AppConfig
@@ -15,6 +15,7 @@ import com.neupanesushant.kastha.databinding.ItemLatestChatBinding
 import com.neupanesushant.kastha.domain.model.User
 import com.neupanesushant.kastha.domain.model.chat.Message
 import com.neupanesushant.kastha.domain.model.chat.MessageType
+import com.neupanesushant.kastha.extra.AppContext
 import com.neupanesushant.kastha.extra.Preferences
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.ui.dialog.DialogUtils
@@ -28,6 +29,10 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
     private val chatViewModel: ChatViewModel by inject()
 
     override fun setupViews() {
+        if (AppContext.isOffline) {
+            binding.llEmptyView.isVisible = true
+            binding.emptyViewDescription.setText(R.string.new_chat_will_be_loaded_once_you_re_connected_to_a_network)
+        }
         binding.rvLatestMessages.layoutManager = LinearLayoutManager(requireContext())
     }
 
@@ -40,7 +45,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
             StateResolver(
                 it,
                 onLoading = {
-                    showLoading()
+                    if (AppContext.isOnline)
+                        showLoading()
                 },
                 onSuccess = {
                     hideLoading()
@@ -87,8 +93,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     private val onLatestChatClick: (otherUser: User) -> Unit =
         { otherUser ->
-            //TODO Change ADMIN ID Here
-            val userId = BuildConfig.ADMIN_ID
+            val userId = Preferences.getUserId()
             val data = bundleOf(
                 ChatMessagingFragment.CURRENT_USER_ID to userId,
                 ChatMessagingFragment.USER_ARGUMENT to otherUser

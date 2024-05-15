@@ -16,6 +16,42 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:id="@+id/llEmptyView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp_16"
+
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/outfit_regular"
+                        android:text="@string/there_are_no_messages_yet"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="@dimen/dp_4"
+                        />
+
+                    <TextView
+                        android:id="@+id/emptyViewDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/titillium_regular"
+                        android:text="@string/new_messages_will_be_displayed_once_the_customer_reaches_you_out"
+
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="@dimen/dp_8"
+                        />
+
+                </LinearLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvLatestMessages"
                     android:layout_width="match_parent"

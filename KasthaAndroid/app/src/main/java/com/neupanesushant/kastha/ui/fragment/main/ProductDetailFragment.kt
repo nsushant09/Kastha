@@ -117,7 +117,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                 )
             }, onFailure = {
                 binding.root.Snackbar(
-                    it,
+                    "$it. Could not add to cart",
                     anchorView = binding.llBottomButtonsContainer
                 )
             })
@@ -130,7 +130,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                 )
             }, onFailure = {
                 binding.root.Snackbar(
-                    it,
+                    "$it. Could not add to favourites",
                     anchorView = binding.llBottomButtonsContainer
                 )
             })

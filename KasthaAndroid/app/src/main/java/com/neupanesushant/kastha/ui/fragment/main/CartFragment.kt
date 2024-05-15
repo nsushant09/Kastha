@@ -54,6 +54,9 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         binding.btnHomeFragment.setOnClickListener {
             (requireActivity() as MainActivity).setSelectedItem(R.id.menuBnvHome)
         }
+        binding.btnCheckout.setOnClickListener {
+            toast("This feature will be added soon")
+        }
     }
 
     override fun setupObserver() {
