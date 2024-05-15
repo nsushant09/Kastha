@@ -19,7 +19,8 @@ import com.neupanesushant.kastha.databinding.DialogLoadingBinding
 class LoadingDialog private constructor(
     private val infoText: String = "Loading...",
     private val showBackground: Boolean = true,
-    private val showInfoText: Boolean = true
+    private val showInfoText: Boolean = true,
+    private val isDialogCancelable: Boolean = false
 
 ) : DialogFragment() {
     private lateinit var binding: DialogLoadingBinding
@@ -29,8 +30,8 @@ class LoadingDialog private constructor(
         Runnable {
             try {
                 instance.dismiss()
-                showRequested = false
-                handler.removeCallbacksAndMessages(null)
+//                showRequested = false
+//                handler.removeCallbacksAndMessages(null)
             } catch (e: Exception) {
                 handler.postDelayed(dismissRunnable, 200)
             }
@@ -54,7 +55,7 @@ class LoadingDialog private constructor(
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        this.isCancelable = false
+        this.isCancelable = isDialogCancelable
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         binding.dialogInfoText.text = infoText
         binding.dialogInfoText.isVisible = showInfoText
@@ -77,8 +78,22 @@ class LoadingDialog private constructor(
         handler.post(dismissRunnable)
     }
 
+    override fun dismiss() {
+        super.dismiss()
+        showRequested = false
+        handler.removeCallbacksAndMessages(null)
+    }
+
     companion object {
         val instance: LoadingDialog = LoadingDialog()
+        fun getInstance(
+            infoText: String = "Loading...",
+            showBackground: Boolean = true,
+            showInfoText: Boolean = true,
+            isDialogCancelable: Boolean = false
+        ) = LoadingDialog(
+            infoText, showBackground, showInfoText, isDialogCancelable
+        )
     }
 
 }

@@ -35,6 +35,7 @@
                 android:layout_marginTop="@dimen/dp_4"
                 android:fontFamily="@font/titillium_regular"
                 android:textColor="?attr/colorOnSurface"
+                android:textAlignment="center"
                 tools:text="Loading..." />
 
         </LinearLayout>

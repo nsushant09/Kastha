@@ -22,7 +22,7 @@ import com.neupanesushant.kastha.appcore.ArCore.ArInitializer
 import com.neupanesushant.kastha.appcore.RouteHelper
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentProductDetailBinding
-import com.neupanesushant.kastha.databinding.ItemHomeCarouselBinding
+import com.neupanesushant.kastha.databinding.ItemProductDetailCarouselBinding
 import com.neupanesushant.kastha.databinding.ItemReviewBinding
 import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.Product
@@ -182,8 +182,8 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     }
 
     private fun setProductImagesData(imageUrls: List<String>) {
-        val adapter = RVAdapter<String, ItemHomeCarouselBinding>(
-            R.layout.item_home_carousel,
+        val adapter = RVAdapter<String, ItemProductDetailCarouselBinding>(
+            R.layout.item_product_detail_carousel,
             imageUrls
         ) { mBinding, data, _ ->
             GlideManager.load(requireContext(), data, mBinding.carouselImageView, size = 600)

@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import com.google.ar.core.Config
 import com.google.ar.core.Session
 import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.ux.ArFragment
@@ -14,6 +13,7 @@ import com.neupanesushant.kastha.domain.model.Alignment
 import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.extra.extensions.show
 import com.neupanesushant.kastha.ui.activity.AugmentedViewActivity
+import com.neupanesushant.kastha.ui.dialog.LoadingDialog
 import com.neupanesushant.learnar.ArCore.ModelManager
 
 class AugmentedViewFragment : ArFragment() {
@@ -40,6 +40,10 @@ class AugmentedViewFragment : ArFragment() {
             onModelValueChange(value)
         }
     private var node: Node? = null
+    private val loadingDialog = LoadingDialog.getInstance(
+        infoText = "Rendering 3D Model\nThis can take up to 30 seconds",
+        isDialogCancelable = true
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,13 +78,15 @@ class AugmentedViewFragment : ArFragment() {
 
         setOnTapArPlaneListener { hitResult, plane, motionEvent ->
             if (isModelSet) return@setOnTapArPlaneListener
+            loadingDialog.show(childFragmentManager)
             val anchor = hitResult.createAnchor()
             modelManager.buildModel(
                 Uri.parse(BuildConfig.BASE_URL + objectModel.url),
                 onModelBuilt = {
+                    loadingDialog.dismiss()
                     node = modelManager.addTransformableNodeModel(this, anchor, it)
-
                 }, onModelFailure = {
+                    loadingDialog.dismiss()
                     requireContext().show(it ?: "Could not show object")
                     isModelSet = false
                 })
@@ -108,5 +114,6 @@ class AugmentedViewFragment : ArFragment() {
         super.onDestroy()
         if (this::session.isInitialized)
             session.close()
+        loadingDialog.remove()
     }
 }
