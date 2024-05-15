@@ -93,6 +93,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             .setMessage("Are you sure you want to sign out?")
             .setPositiveButton("YES") { dialog, value ->
                 Preferences.onLogOut()
+                userViewModel.removeUser()
                 Router(requireActivity()).routeClearTask(AuthenticationActivity::class.java)
             }
             .setNegativeButton("CANCEL") { dialog, value ->

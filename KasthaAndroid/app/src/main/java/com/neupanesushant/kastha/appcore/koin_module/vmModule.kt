@@ -4,6 +4,7 @@ import com.neupanesushant.kastha.data.local.CartProductDao
 import com.neupanesushant.kastha.data.local.CategoryDao
 import com.neupanesushant.kastha.data.local.FavouriteDao
 import com.neupanesushant.kastha.data.local.ProductDao
+import com.neupanesushant.kastha.data.local.UserDao
 import com.neupanesushant.kastha.data.repo.CartRepo
 import com.neupanesushant.kastha.data.repo.CategoryRepo
 import com.neupanesushant.kastha.data.repo.FavoriteRepo
@@ -51,7 +52,7 @@ val vmModule = module {
     }
 
     viewModel {
-        UserViewModel(get<UserRepo>())
+        UserViewModel(get<UserRepo>(), get<UserDao>())
     }
 
     viewModel {

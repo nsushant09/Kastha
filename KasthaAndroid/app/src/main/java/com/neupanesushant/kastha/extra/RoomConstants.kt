@@ -7,4 +7,5 @@ object RoomConstants {
     const val IMAGE = "IMAGE"
     const val CART = "CART"
     const val FAVORITE = "FAVORITE"
+    const val USER = "USER"
 }

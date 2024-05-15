@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.neupanesushant.kastha.core.Response
 import com.neupanesushant.kastha.core.ResponseResolver
 import com.neupanesushant.kastha.core.State
+import com.neupanesushant.kastha.data.local.UserDao
 import com.neupanesushant.kastha.domain.model.OTPMailResponse
 import com.neupanesushant.kastha.domain.model.dto.AuthResponse
 import com.neupanesushant.kastha.domain.model.dto.BaseResponse
@@ -100,5 +101,4 @@ class AuthenticationViewModel(
     fun resetOTP() {
         _oneTimePassword.value = null
     }
-
 }

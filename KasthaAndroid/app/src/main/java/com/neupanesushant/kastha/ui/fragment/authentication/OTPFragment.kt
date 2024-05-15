@@ -14,14 +14,15 @@ import com.neupanesushant.kastha.extra.Utils.getParcelable
 import com.neupanesushant.kastha.ui.activity.MainActivity
 import com.neupanesushant.kastha.ui.dialog.DialogUtils
 import com.neupanesushant.kastha.viewmodel.AuthenticationViewModel
+import com.neupanesushant.kastha.viewmodel.UserViewModel
 import com.otpview.OTPListener
 import kotlinx.parcelize.Parcelize
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OTPFragment : BaseFragment<FragmentOtpBinding>(), OTPListener {
 
     private val authenticationViewModel by sharedViewModel<AuthenticationViewModel>()
-
     companion object {
         const val OTP_ACTION = "OTP_ACTION"
         const val OTP_ARGUMENT = "OTP_ARGUMENT"

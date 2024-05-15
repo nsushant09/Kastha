@@ -9,9 +9,10 @@ import com.neupanesushant.kastha.domain.model.FavouriteProduct
 import com.neupanesushant.kastha.domain.model.Image
 import com.neupanesushant.kastha.domain.model.ObjectModel
 import com.neupanesushant.kastha.domain.model.Product
+import com.neupanesushant.kastha.domain.model.User
 
 @Database(
-    entities = [CartProduct::class, Category::class, FavouriteProduct::class, Image::class, ObjectModel::class, Product::class],
+    entities = [CartProduct::class, Category::class, FavouriteProduct::class, Image::class, ObjectModel::class, Product::class, User::class],
     version = 1,
     exportSchema = false
 )
@@ -21,4 +22,5 @@ abstract class KasthaDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun favouriteDao(): FavouriteDao
     abstract fun productDao(): ProductDao
+    abstract fun userDao(): UserDao
 }

@@ -10,15 +10,18 @@ import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.ActivityMainBinding
 import com.neupanesushant.kastha.extra.Preferences
 import com.neupanesushant.kastha.extra.RecommendedDataManager
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import com.neupanesushant.kastha.viewmodel.UserViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     override val layoutId: Int
         get() = R.layout.activity_main
 
+    private val userViewModel: UserViewModel by viewModel<UserViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.bnvMain.selectedItemId = R.id.menuBnvHome
+        userViewModel.getUserDetail()
     }
 
     override fun setupViews() {

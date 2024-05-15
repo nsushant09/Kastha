@@ -3,9 +3,9 @@ package com.neupanesushant.kastha.data.local
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.neupanesushant.kastha.domain.model.Alignment
 import com.neupanesushant.kastha.domain.model.Image
 import com.neupanesushant.kastha.domain.model.Product
+import com.neupanesushant.kastha.domain.model.Role
 
 class RoomConvertors {
 
@@ -55,5 +55,16 @@ class RoomConvertors {
     fun toProductSet(productsString: String): Set<Product> {
         val type = object : TypeToken<Set<Product>>() {}.type
         return Gson().fromJson(productsString, type)
+    }
+
+    @TypeConverter
+    fun fromRolesList(roles: List<Role>): String {
+        return Gson().toJson(roles)
+    }
+
+    @TypeConverter
+    fun toRolesList(rolesString: String): List<Role> {
+        val type = object : TypeToken<List<Role>>() {}.type
+        return Gson().fromJson(rolesString, type)
     }
 }

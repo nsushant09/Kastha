@@ -64,4 +64,8 @@ val dataModule = module {
     single {
         get<KasthaDatabase>().productDao()
     }
+
+    single {
+        get<KasthaDatabase>().userDao()
+    }
 }
