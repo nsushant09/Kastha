@@ -105,9 +105,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     private fun setupViewBasedOnRole(user: User) {
         val roles = user.roles
         val isAdmin = roles.filter { it.name.equals("ADMIN") }.isNotEmpty()
-
-        binding.btnChatWithAdmin.isVisible = !isAdmin
-        binding.btnChatWithCustomers.isVisible = isAdmin
-
+        binding.llAdminContainer.isVisible = isAdmin
     }
 }

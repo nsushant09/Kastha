@@ -54,6 +54,7 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        // Take from preferences
         currentUserId = getParcelable<Int>(CURRENT_USER_ID) ?: 0
         otherUser = getParcelable<User>(USER_ARGUMENT)
 

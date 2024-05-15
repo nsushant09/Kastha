@@ -15,11 +15,18 @@ import java.util.UUID
 
 
 object Utils {
-    inline fun <reified T> Fragment.getParcelable(key: String): T? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelable(key, T::class.java)
-        } else {
-            arguments?.getParcelable(key)
+    inline fun <reified T> Fragment.getParcelable(
+        key: String,
+        clazz: Class<T> = T::class.java
+    ): T? {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            return arguments?.getParcelable(key, T::class.java)
+        }
+
+        return when (clazz) {
+            String::class.java -> arguments?.getString(key) as? T
+            Int::class.java -> arguments?.getInt(key) as? T
+            else -> arguments?.getParcelable(key)
         }
     }
 
