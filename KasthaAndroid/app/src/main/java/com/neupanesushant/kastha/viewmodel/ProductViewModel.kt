@@ -8,7 +8,6 @@ import com.neupanesushant.kastha.core.ResponseResolver
 import com.neupanesushant.kastha.data.local.ProductDao
 import com.neupanesushant.kastha.data.repo.ProductRepo
 import com.neupanesushant.kastha.domain.model.Product
-import com.neupanesushant.kastha.extra.RecommendedDataManager
 import com.neupanesushant.kastha.extra.Utils
 import kotlinx.coroutines.launch
 
@@ -40,8 +39,12 @@ class ProductViewModel(
         }()
     }
 
-    fun getRecommendedProducts() = viewModelScope.launch {
-        val categoryIds = RecommendedDataManager.recommendedCategories
+    fun getRecommendedProducts(categoryIds: List<Int>) = viewModelScope.launch {
+        if (categoryIds.isEmpty()) {
+            _recommendedProducts.value = getDefaultRecommendedProducts().toList()
+            return@launch
+        }
+
         val response = productRepo.getProductByRecommended(categoryIds)
         ResponseResolver(response, onFailure = {
             _recommendedProducts.value = productDao.getRecommendedProducts(categoryIds)
@@ -49,6 +52,25 @@ class ProductViewModel(
             _recommendedProducts.value = products
         }()
     }
+
+    private fun getDefaultRecommendedProducts(): Collection<Product> {
+        val categoryIdWithCountMap = HashMap<Int, Int>()
+        val filteredProducts = mutableSetOf<Product>()
+        _allProducts.value?.forEach { product ->
+            if (categoryIdWithCountMap.containsKey(product.category.id)) {
+                if (categoryIdWithCountMap[product.category.id]!! < 2) {
+                    filteredProducts.add(product)
+                    categoryIdWithCountMap[product.category.id] =
+                        categoryIdWithCountMap[product.category.id]!! + 1
+                }
+            } else {
+                filteredProducts.add(product)
+                categoryIdWithCountMap[product.category.id] = 1
+            }
+        }
+        return filteredProducts
+    }
+
 
     fun getSearchResults(searchValue: String) = _allProducts.value?.filter {
         Utils.isStringInTarget(it.name, searchValue)

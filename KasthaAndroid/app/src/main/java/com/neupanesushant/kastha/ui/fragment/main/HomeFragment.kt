@@ -23,6 +23,7 @@ import com.neupanesushant.kastha.databinding.ItemMiniProductCardBinding
 import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.extra.Constants
+import com.neupanesushant.kastha.extra.RecommendedDataManager
 import com.neupanesushant.kastha.extra.extensions.dpToPx
 import com.neupanesushant.kastha.extra.extensions.itemSize
 import com.neupanesushant.kastha.ui.adapter.LargeProductCardAdapter
@@ -39,7 +40,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun initialize() {
         if (productViewModel.recommendedProducts.value == null) {
-            productViewModel.getRecommendedProducts()
+            getRecommendedProducts(false)
         }
     }
 
@@ -61,6 +62,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun setupObserver() {
         productViewModel.allProduct.observe(viewLifecycleOwner) { products ->
+            getRecommendedProducts(true)
             setupLatestProducts(products.sortedByDescending { it.id }.slice(0..9))
             setupAllProducts(products)
             hideLoading()
@@ -200,6 +202,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.layoutSearchView.apply {
             rvSearchView.layoutManager = LinearLayoutManager(requireContext())
             rvSearchView.adapter = ProductHorizontalCardAdapter(requireActivity(), products)
+        }
+    }
+
+    private fun getRecommendedProducts(ifEmptyOrIssue: Boolean) {
+        val ids = RecommendedDataManager.recommendedCategories.filter { it != -1 }.toMutableList()
+        if (ifEmptyOrIssue) {
+            if (ids.isEmpty()) {
+                productViewModel.getRecommendedProducts(ids)
+            }
+        } else {
+            if (ids.isNotEmpty()) {
+                productViewModel.getRecommendedProducts(ids)
+            }
         }
     }
 }

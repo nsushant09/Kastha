@@ -68,7 +68,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
             requireActivity().finish()
         }
         reviewViewModel.getProductReview(product.id)
-        RecommendedDataManager.saveCategory(product.id)
+        RecommendedDataManager.saveCategory(product.category.id)
     }
 
     override fun setupViews() {
