@@ -6,16 +6,17 @@ import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.databinding.FragmentCategoriesBinding
 import com.neupanesushant.kastha.domain.model.Category
+import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.ui.adapter.CategoryViewPagerAdapter
-import com.neupanesushant.kastha.viewmodel.CategoryViewModel
+import com.neupanesushant.kastha.viewmodel.ProductViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CategoriesFragment : BaseFragment<FragmentCategoriesBinding>() {
     override val layoutId: Int
         get() = R.layout.fragment_categories
 
-    private val categoryViewModel: CategoryViewModel by sharedViewModel()
+    //    private val categoryViewModel: CategoryViewModel by sharedViewModel()
+    private val productViewModel: ProductViewModel by sharedViewModel()
 
     override fun setupViews() {
         showLoading()
@@ -25,11 +26,17 @@ class CategoriesFragment : BaseFragment<FragmentCategoriesBinding>() {
     }
 
     override fun setupObserver() {
-        categoryViewModel.categories.observe(viewLifecycleOwner) {
+        productViewModel.allProduct.observe(viewLifecycleOwner) { products ->
             hideLoading()
-            setupViewPager(it)
-            setupTabLayout(it)
+            val categories = products.map { it.category }.distinct()
+            setupViewPager(categories)
+            setupTabLayout(categories)
         }
+//        categoryViewModel.categories.observe(viewLifecycleOwner) {
+//            hideLoading()
+//            setupViewPager(it)
+//            setupTabLayout(it)
+//        }
     }
 
     @SuppressLint("CheckResult")

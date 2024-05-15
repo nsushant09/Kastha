@@ -26,8 +26,10 @@ class AuthenticationViewModel(
     private var _oneTimePassword: MutableLiveData<OTPMailResponse> = MutableLiveData()
     val oneTimePassword: LiveData<OTPMailResponse> get() = _oneTimePassword
 
-    fun login(email: String, password: String) {
-        _isAuthenticationTokenReceived.value = State.Loading
+    fun login(email: String, password: String, setStateLoading: Boolean = true) {
+        if (setStateLoading) {
+            _isAuthenticationTokenReceived.value = State.Loading
+        }
         viewModelScope.launch {
             val response = authenticationUseCase.login(email, password)
             ResponseResolver(response, onFailure = {
@@ -49,9 +51,9 @@ class AuthenticationViewModel(
             _isAuthenticationTokenReceived.value = State.Loading
             val response = authenticationUseCase.register(registerDTO)
             ResponseResolver(response, onFailure = {
-                _isAuthenticationTokenReceived.value = State.Default
+                _isAuthenticationTokenReceived.value = State.Error(it)
             }, onSuccess = {
-                login(it.key, it.value)
+                login(it.key, it.value, setStateLoading = false)
             })()
         }
     }
