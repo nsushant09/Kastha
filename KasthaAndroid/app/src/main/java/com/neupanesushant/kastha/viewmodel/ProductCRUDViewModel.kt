@@ -30,11 +30,14 @@ class ProductCRUDViewModel(
     private val _addProductState = MutableLiveData<State<Product>>(State.Default)
     val addProductState: LiveData<State<Product>> get() = _addProductState
 
+    private val _updateProductState = MutableLiveData<State<Product>>(State.Default)
+    val updateProductState: LiveData<State<Product>> get() = _updateProductState
+
     private val _productImages = MutableLiveData<List<Bitmap>>()
     val productImages get() : LiveData<List<Bitmap>> = _productImages
 
     private val _productModel = MutableLiveData<MultipartBody.Part>()
-    val productModel get() : LiveData<MultipartBody.Part> = _productModel
+    private val productModel get() : LiveData<MultipartBody.Part> = _productModel
 
     suspend fun addImages(): List<String> {
         return withContext(Dispatchers.IO) {
@@ -99,4 +102,33 @@ class ProductCRUDViewModel(
             _addProductState.value = State.Success(it)
         })()
     }
+
+    fun updateProduct(
+        id: Int, name: String, description: String, price: Float, stockQuantity: Int, category: Category
+    ) = viewModelScope.launch {
+
+        _addProductState.value = State.Loading
+
+        val deferredImage = async { addImages() }
+        val deferredModel = async { addModel() }
+        val product = Product(
+            id = id,
+            name = name,
+            description = description,
+            price = price,
+            stockQuantity = stockQuantity,
+            category = category,
+            images = deferredImage.await().map { Image(0, it) },
+            model = deferredModel.await()?.let { ObjectModel(0, it) }
+        )
+
+        val response = productRepo.update(product)
+        ResponseResolver(response, onFailure = {
+            _updateProductState.value = State.Error("Could not update product. Please try again")
+        }, onSuccess = {
+            _updateProductState.value = State.Success(it)
+        })()
+    }
+
+
 }

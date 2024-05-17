@@ -18,7 +18,9 @@ import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
 import com.neupanesushant.kastha.ui.activity.FullScreenContainerActivity
 import com.neupanesushant.kastha.ui.activity.MainActivity
 import com.neupanesushant.kastha.ui.fragment.admin.AddProductFragment
+import com.neupanesushant.kastha.ui.fragment.admin.ProductEditFragment
 import com.neupanesushant.kastha.ui.fragment.admin.ProfileUpdateFragment
+import com.neupanesushant.kastha.ui.fragment.admin.UpdateProductFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.FPEmailVerificationFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.FPResetFragment
 import com.neupanesushant.kastha.ui.fragment.authentication.LoginFragment
@@ -90,6 +92,8 @@ class BaseApplication : Application() {
             // Admin
             put(RouteConfig.ADD_PRODUCT_FRAGMENT, AddProductFragment::class.java)
             put(RouteConfig.PROFILE_UPDATE_FRAGMENT, ProfileUpdateFragment::class.java)
+            put(RouteConfig.PRODUCT_EDIT_FRAGMENT, ProductEditFragment::class.java)
+            put(RouteConfig.UPDATE_PRODUCT_FRAGMENT, UpdateProductFragment::class.java)
         }
     }
 

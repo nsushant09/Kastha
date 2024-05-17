@@ -154,6 +154,17 @@
                         android:textColor="?attr/surface_grey" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnUpdateProduct"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:fontFamily="@font/titillium_medium"
+                        android:text="@string/update_product"
+                        android:textAlignment="textStart"
+                        android:textColor="?attr/surface_grey" />
+
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnChatWithCustomers"
                         style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_width="match_parent"

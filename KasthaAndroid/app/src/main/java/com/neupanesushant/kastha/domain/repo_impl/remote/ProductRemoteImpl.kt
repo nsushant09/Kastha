@@ -15,8 +15,9 @@ class ProductRemoteImpl(
     override suspend fun add(product: Product) =
         requestHandler { endpoint.addProduct(product) }
 
-    override suspend fun update(product: Product): Product =
-        Mapper.toBaseUrl(endpoint.updateProduct(product))
+    override suspend fun update(product: Product) = requestHandler {
+        endpoint.updateProduct(product)
+    }
 
     override suspend fun getProductOfId(id: Int): Product =
         Mapper.toBaseUrl(endpoint.getProductById(id))

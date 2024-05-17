@@ -12,8 +12,10 @@ import com.bumptech.glide.Glide
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.core.BaseFragment
 import com.neupanesushant.kastha.core.StateResolver
-import com.neupanesushant.kastha.databinding.FragmentAddProductBinding
+import com.neupanesushant.kastha.databinding.FragmentUpdateProductBinding
 import com.neupanesushant.kastha.databinding.ItemImageBinding
+import com.neupanesushant.kastha.domain.model.Product
+import com.neupanesushant.kastha.extra.Utils.getParcelable
 import com.neupanesushant.kastha.extra.helper.Validator
 import com.neupanesushant.kastha.ui.adapter.RVAdapter
 import com.neupanesushant.kastha.ui.dialog.DialogUtils
@@ -22,24 +24,48 @@ import com.neupanesushant.kastha.viewmodel.ProductCRUDViewModel
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.UUID
 
-class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
+class UpdateProductFragment : BaseFragment<FragmentUpdateProductBinding>() {
+
+    companion object {
+        const val PRODUCT_ARGUMENT = "PRODUCT_ARGUMENT"
+    }
+
     override val layoutId: Int
-        get() = R.layout.fragment_add_product
+        get() = R.layout.fragment_update_product
 
     private val productCRUDViewModel: ProductCRUDViewModel by viewModel()
-    private val categoryViewModel: CategoryViewModel by viewModel()
+    private val categoryViewModel: CategoryViewModel by sharedViewModel()
+    private lateinit var product: Product
+    override fun initialize() {
+        val argumentProduct = getParcelable<Product>(PRODUCT_ARGUMENT)
+        if (argumentProduct == null) requireActivity().onBackPressedDispatcher.onBackPressed()
+        argumentProduct?.let {
+            product = it
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
     override fun setupViews() {
+        binding.etName.setText(product.name)
+        binding.etDescription.setText(product.name)
+        binding.etPrice.setText(product.price.toString())
+        binding.etStock.setText(product.stockQuantity.toString())
+        binding.rvSelectedImages.adapter = getImageAdapterUrl(product.images.map { it.url })
+        product.model?.let {
+            binding.btnSelectModel.text = "Object Model Added"
+        }
     }
 
     override fun setupEventListener() {
         binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
         binding.btnSelectImages.setOnClickListener { chooseImage() }
         binding.btnSelectModel.setOnClickListener { chooseModel() }
-        binding.btnAddProduct.setOnClickListener {
-            addProduct()
+        binding.btnUpdateProduct.setOnClickListener {
+            updateProduct()
         }
     }
 
@@ -48,7 +74,7 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
             setupCategoryAutoCompleteView(it.map { it.name }.toTypedArray())
         }
 
-        productCRUDViewModel.addProductState.observe(viewLifecycleOwner) {
+        productCRUDViewModel.updateProductState.observe(viewLifecycleOwner) {
             StateResolver(
                 it,
                 onLoading = { showLoading() },
@@ -58,7 +84,7 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
                 },
                 onSuccess = {
                     hideLoading()
-                    toast("Product Added")
+                    toast("Product Detail updated")
                 })()
         }
     }
@@ -95,6 +121,18 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
         binding.rvSelectedImages.adapter = getImageAdapter(selectedImagesUri)
     }
 
+    private fun getImageAdapter(files: List<Uri>) = RVAdapter<Uri, ItemImageBinding>(
+        R.layout.item_image, files
+    ) { mBinding, data, _ ->
+        Glide.with(mBinding.root.context).load(data).into(mBinding.ivProductImage)
+    }
+
+    private fun getImageAdapterUrl(url: List<String>) = RVAdapter<String, ItemImageBinding>(
+        R.layout.item_image, url
+    ) { mBinding, data, _ ->
+        Glide.with(mBinding.root.context).load(data).into(mBinding.ivProductImage)
+    }
+
     private fun chooseModel() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "*/*"
@@ -124,18 +162,12 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
         }
     }
 
-    private fun getImageAdapter(files: List<Uri>) = RVAdapter<Uri, ItemImageBinding>(
-        R.layout.item_image, files
-    ) { mBinding, data, _ ->
-        Glide.with(mBinding.root.context).load(data).into(mBinding.ivProductImage)
-    }
-
     private fun setupCategoryAutoCompleteView(options: Array<String>) {
         val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, options)
         binding.etCategory.setAdapter(adapter)
     }
 
-    private fun addProduct() {
+    private fun updateProduct() {
         binding.apply {
             val name = binding.etName.text.toString()
             val category = binding.etCategory.text.toString()
@@ -153,7 +185,8 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
                 return
             }
 
-            productCRUDViewModel.addProduct(
+            productCRUDViewModel.updateProduct(
+                product.id,
                 name,
                 description,
                 price.toFloat(),

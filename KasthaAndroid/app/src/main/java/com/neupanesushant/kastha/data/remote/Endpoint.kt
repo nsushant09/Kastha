@@ -85,7 +85,7 @@ interface Endpoint {
     suspend fun addProduct(@Body product: Product): Response<Product>
 
     @PUT("product")
-    suspend fun updateProduct(@Body product: Product): Product
+    suspend fun updateProduct(@Body product: Product): Response<Product>
 
     @GET("product")
     suspend fun getProducts(): Response<List<Product>>

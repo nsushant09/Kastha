@@ -1,6 +1,5 @@
 package com.neupanesushant.kastha.ui.fragment.main
 
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.neupanesushant.kastha.R
@@ -12,7 +11,6 @@ import com.neupanesushant.kastha.databinding.FragmentProfileBinding
 import com.neupanesushant.kastha.domain.model.User
 import com.neupanesushant.kastha.extra.Preferences
 import com.neupanesushant.kastha.ui.activity.AuthenticationActivity
-import com.neupanesushant.kastha.ui.fragment.chat.ChatMessagingFragment
 import com.neupanesushant.kastha.viewmodel.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -34,6 +32,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             RouteHelper.routeFullScreenContainerActivity(
                 requireActivity(),
                 RouteConfig.ADD_PRODUCT_FRAGMENT
+            )
+        }
+
+        binding.btnUpdateProduct.setOnClickListener {
+            RouteHelper.routeFullScreenContainerActivity(
+                requireActivity(),
+                RouteConfig.PRODUCT_EDIT_FRAGMENT
             )
         }
 
