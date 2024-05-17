@@ -45,13 +45,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         }
 
         binding.btnChatWithAdmin.setOnClickListener {
-            val data = bundleOf(
-                ChatMessagingFragment.CURRENT_USER_ID to Preferences.getUserId()
-            )
             RouteHelper.routeFullScreenContainerActivity(
                 requireActivity(),
-                RouteConfig.CHAT_MESSAGING_FRAGMENT,
-                data
+                RouteConfig.CHAT_MESSAGING_FRAGMENT
             )
         }
 

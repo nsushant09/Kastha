@@ -55,7 +55,7 @@ class ChatMessagingFragment : BaseFragment<FragmentChatMessagingBinding>() {
         }
 
         // Take from preferences
-        currentUserId = getParcelable<Int>(CURRENT_USER_ID) ?: 0
+        currentUserId = Preferences.getUserId()
         otherUser = getParcelable<User>(USER_ARGUMENT)
 
 

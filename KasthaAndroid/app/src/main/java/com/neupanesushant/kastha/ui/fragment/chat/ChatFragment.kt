@@ -93,9 +93,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>() {
 
     private val onLatestChatClick: (otherUser: User) -> Unit =
         { otherUser ->
-            val userId = Preferences.getUserId()
             val data = bundleOf(
-                ChatMessagingFragment.CURRENT_USER_ID to userId,
                 ChatMessagingFragment.USER_ARGUMENT to otherUser
             )
             Router(requireActivity(), data).route(
