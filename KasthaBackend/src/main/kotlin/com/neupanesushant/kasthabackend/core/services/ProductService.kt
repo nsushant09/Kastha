@@ -4,12 +4,15 @@ import com.neupanesushant.kasthabackend.core.repo.ImageRepo
 import com.neupanesushant.kasthabackend.core.repo.ModelRepo
 import com.neupanesushant.kasthabackend.core.repo.ProductRepo
 import com.neupanesushant.kasthabackend.data.model.Category
+import com.neupanesushant.kasthabackend.data.model.Image
+import com.neupanesushant.kasthabackend.data.model.ObjectModel
 import com.neupanesushant.kasthabackend.data.model.Product
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.jvm.optionals.getOrNull
 import kotlin.math.min
 
 @Service
@@ -31,7 +34,28 @@ class ProductService(
         return productRepo.save(product.copy(images = savedImages, model = savedModel))
     }
 
-    fun update(product: Product) = productRepo.save(product)
+    @Transactional
+    fun update(product: Product, isModelChanged: Boolean, areImagesChanged: Boolean): Product {
+        val originalProduct = productRepo.findById(product.id).getOrNull()
+        val savedModel: ObjectModel? = if (isModelChanged) {
+            if (product.model == null) null
+            else modelRepo.save(product.model)
+        } else {
+            product.model
+        }
+
+        val savedImages: List<Image> = if (areImagesChanged) {
+            originalProduct?.let {
+                it.images.forEach { imageRepo.delete(it) }
+            }
+            product.images.map { imageRepo.save(it) }
+        } else {
+            product.images
+        }
+
+        return productRepo.save(product.copy(images = savedImages, model = savedModel))
+    }
+
     fun delete(product: Product) = productRepo.delete(product)
 
     val all

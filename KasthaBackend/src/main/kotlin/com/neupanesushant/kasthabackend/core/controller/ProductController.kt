@@ -30,9 +30,13 @@ class ProductController(
         return ResponseEntity.ok(productService.insert(product))
     }
 
-    @PutMapping
-    fun update(@RequestBody product: Product): ResponseEntity<Product> {
-        return ResponseEntity.ok(productService.update(product))
+    @PutMapping("/{isModelChanged}/{areImagesChanged}")
+    fun update(
+        @RequestBody product: Product,
+        @PathVariable("isModelChanged") isModelChanged: Boolean,
+        @PathVariable("areImagesChanged") areImagesChanged: Boolean
+    ): ResponseEntity<Product> {
+        return ResponseEntity.ok(productService.update(product, isModelChanged, areImagesChanged))
     }
 
     @GetMapping("/id/{product_id}")
