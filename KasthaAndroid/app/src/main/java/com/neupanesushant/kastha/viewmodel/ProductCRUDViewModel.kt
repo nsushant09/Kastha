@@ -84,16 +84,14 @@ class ProductCRUDViewModel(
 
         val deferredImage = async { addImages() }
         val deferredModel = async { addModel() }
-        val product = Product(
-            id = 0,
+        val product = Product(id = 0,
             name = name,
             description = description,
             price = price,
             stockQuantity = stockQuantity,
             category = category,
             images = deferredImage.await().map { Image(0, it) },
-            model = deferredModel.await()?.let { ObjectModel(0, it) }
-        )
+            model = deferredModel.await()?.let { ObjectModel(0, it) })
 
         val response = productRepo.add(product)
         ResponseResolver(response, onFailure = {
@@ -104,13 +102,33 @@ class ProductCRUDViewModel(
     }
 
     fun updateProduct(
-        id: Int, name: String, description: String, price: Float, stockQuantity: Int, category: Category
+        id: Int,
+        name: String,
+        description: String,
+        price: Float,
+        stockQuantity: Int,
+        category: Category,
+        isModelChanged: Boolean,
+        areImagesChanged: Boolean,
+        originalProduct: Product
     ) = viewModelScope.launch {
 
-        _addProductState.value = State.Loading
+        _updateProductState.value = State.Loading
 
-        val deferredImage = async { addImages() }
-        val deferredModel = async { addModel() }
+        val images: List<Image> = if (areImagesChanged) {
+            val deferredImage = async { addImages() }
+            deferredImage.await().map { Image(0, it) }
+        } else {
+            originalProduct.images
+        }
+
+        val model: ObjectModel? = if (isModelChanged) {
+            val defferedModel = async { addModel() }
+            defferedModel.await()?.let { ObjectModel(0, it) }
+        } else {
+            originalProduct.model
+        }
+
         val product = Product(
             id = id,
             name = name,
@@ -118,13 +136,13 @@ class ProductCRUDViewModel(
             price = price,
             stockQuantity = stockQuantity,
             category = category,
-            images = deferredImage.await().map { Image(0, it) },
-            model = deferredModel.await()?.let { ObjectModel(0, it) }
+            images = images,
+            model = model
         )
 
-        val response = productRepo.update(product)
+        val response = productRepo.update(product, isModelChanged, areImagesChanged)
         ResponseResolver(response, onFailure = {
-            _updateProductState.value = State.Error("Could not update product. Please try again")
+            _updateProductState.value = State.Error("Could not update product. Please try again.")
         }, onSuccess = {
             _updateProductState.value = State.Success(it)
         })()

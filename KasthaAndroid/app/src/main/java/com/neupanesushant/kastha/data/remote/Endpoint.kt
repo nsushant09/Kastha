@@ -84,8 +84,12 @@ interface Endpoint {
     @POST("product")
     suspend fun addProduct(@Body product: Product): Response<Product>
 
-    @PUT("product")
-    suspend fun updateProduct(@Body product: Product): Response<Product>
+    @PUT("product/{isModelChanged}/{areImagesChanged}")
+    suspend fun updateProduct(
+        @Body product: Product,
+        @Path("isModelChanged") isModelChanged: Boolean,
+        @Path("areImagesChanged") areImagesChanged: Boolean
+    ): Response<Product>
 
     @GET("product")
     suspend fun getProducts(): Response<List<Product>>

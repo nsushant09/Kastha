@@ -28,7 +28,7 @@ class ReviewViewModel(
             _productReviews.value = emptyList()
         }, onSuccess = {
             _productReviews.value = it
-        })
+        })()
     }
 
     @SuppressLint("SimpleDateFormat")

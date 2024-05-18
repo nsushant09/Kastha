@@ -15,8 +15,12 @@ class ProductRemoteImpl(
     override suspend fun add(product: Product) =
         requestHandler { endpoint.addProduct(product) }
 
-    override suspend fun update(product: Product) = requestHandler {
-        endpoint.updateProduct(product)
+    override suspend fun update(
+        product: Product,
+        isModelChanged: Boolean,
+        areImagesChanged: Boolean
+    ) = requestHandler {
+        endpoint.updateProduct(product, isModelChanged, areImagesChanged)
     }
 
     override suspend fun getProductOfId(id: Int): Product =

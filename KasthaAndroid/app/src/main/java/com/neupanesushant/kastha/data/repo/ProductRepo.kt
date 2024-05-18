@@ -5,7 +5,11 @@ import com.neupanesushant.kastha.domain.model.Product
 
 interface ProductRepo {
     suspend fun add(product: Product): Response<Product>
-    suspend fun update(product: Product): Response<Product>
+    suspend fun update(
+        product: Product,
+        isModelChanged: Boolean,
+        areImagesChanged: Boolean
+    ): Response<Product>
 
     suspend fun getProductOfId(id: Int): Product
     suspend fun getProductsOfCategory(categoryId: Int): List<Product>
