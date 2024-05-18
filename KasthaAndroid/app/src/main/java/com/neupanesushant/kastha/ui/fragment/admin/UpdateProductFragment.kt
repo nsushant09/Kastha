@@ -171,7 +171,7 @@ class UpdateProductFragment : BaseFragment<FragmentUpdateProductBinding>() {
     private fun setupCategoryAutoCompleteView(options: Array<String>) {
         val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, options)
         binding.etCategory.setAdapter(adapter)
-        binding.etCategory.setSelection(options.indexOf(product.category.name))
+        binding.etCategory.setText(product.category.name, false)
     }
 
     private fun updateProduct() {
