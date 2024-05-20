@@ -4,6 +4,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
+import com.google.ar.core.Config
+import com.google.ar.core.Config.PlaneFindingMode
 import com.google.ar.core.Session
 import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.ux.ArFragment
@@ -54,10 +56,15 @@ class AugmentedViewFragment : ArFragment() {
     }
 
     private fun initialize() {
-        session = arInitializer.getSession()
         try {
             objectModel = arguments?.getParcelable<ObjectModel>(MODEL_ARGUMENT)!!
             val alignment = arguments?.getParcelable<Alignment>(ALIGNMENT_ARGUMENT)!!
+            if (alignment.name.equals("horizontal", true)) {
+                setupAlignment(Config.PlaneFindingMode.HORIZONTAL)
+            }
+            if (alignment.name.equals("vertical", true)) {
+                setupAlignment(Config.PlaneFindingMode.VERTICAL)
+            }
         } catch (_: Exception) {
             requireActivity().finish()
         }
@@ -108,6 +115,16 @@ class AugmentedViewFragment : ArFragment() {
 
     private fun onModelValueChange(isModelSet: Boolean) {
         augmentedViewActivity().binding().btnRemove.isVisible = isModelSet
+    }
+
+    private fun setupAlignment(planeFindingMode: PlaneFindingMode) {
+        this.arSceneView.setupSession(arInitializer.getSession())
+        val config = this.arSceneView.session?.config
+        if (config != null) {
+            config.updateMode = Config.UpdateMode.LATEST_CAMERA_IMAGE
+            config.planeFindingMode = planeFindingMode
+            this.arSceneView.session?.configure(config)
+        }
     }
 
     override fun onDestroy() {
