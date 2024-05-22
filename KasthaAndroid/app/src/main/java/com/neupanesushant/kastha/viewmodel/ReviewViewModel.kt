@@ -1,7 +1,6 @@
 package com.neupanesushant.kastha.viewmodel
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,13 +31,17 @@ class ReviewViewModel(
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun addReview(productId: Int, rating: Int, description: String, onSuccess: () -> Unit) =
+    fun addReview(
+        productId: Int,
+        rating: Int,
+        description: String,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    ) =
         viewModelScope.launch {
             val review = Review(0, description, rating, Date(System.currentTimeMillis()).toString())
             val response = reviewRepo.add(productId, Preferences.getUserId(), review)
-            ResponseResolver(response, onFailure = {
-                Log.d("TAG", it)
-            }, onSuccess = {
+            ResponseResolver(response, onFailure = onFailure, onSuccess = {
                 val temp = _productReviews.value?.toMutableList() ?: mutableListOf()
                 temp.add(it)
                 _productReviews.value = temp

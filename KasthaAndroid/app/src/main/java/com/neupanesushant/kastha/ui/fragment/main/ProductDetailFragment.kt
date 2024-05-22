@@ -27,6 +27,7 @@ import com.neupanesushant.kastha.databinding.ItemReviewBinding
 import com.neupanesushant.kastha.domain.managers.GlideManager
 import com.neupanesushant.kastha.domain.model.Product
 import com.neupanesushant.kastha.domain.model.ReviewResponse
+import com.neupanesushant.kastha.extra.AppContext
 import com.neupanesushant.kastha.extra.RecommendedDataManager
 import com.neupanesushant.kastha.extra.extensions.Snackbar
 import com.neupanesushant.kastha.extra.extensions.showKeyboard
@@ -97,6 +98,14 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
         binding.btnBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
         binding.btnAugmentedView.setOnClickListener {
             if (product.model == null) return@setOnClickListener
+            if (AppContext.isOffline) {
+                DialogUtils.generalDialog(
+                    requireContext(),
+                    "Please check your internet connection and try again.",
+                    "Network Issue"
+                )
+                return@setOnClickListener
+            }
             if (arInitializer.isArAvailable()) {
                 arInitializer.isArInstalled {
                     requestCameraPermission()
@@ -296,11 +305,14 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
         binding.tilDescription.error = null
         if (binding.etDescription.text.toString().isEmpty()) {
             binding.tilDescription.error = "Please write a review for the product"
+            return
         }
-        reviewViewModel.addReview(product.id, reviewRating, binding.etDescription.text.toString()) {
+        reviewViewModel.addReview(product.id, reviewRating, binding.etDescription.text.toString(), {
             binding.llProvideReviewContainer.isVisible = false
             binding.btnAddReview.text = "Add Review"
-        }
+        }, {
+            DialogUtils.generalDialog(requireContext(), it, "Could not submit review")
+        })
     }
 
     private fun setupStartEventListener() {
