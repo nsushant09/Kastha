@@ -67,7 +67,7 @@ class LoadingDialog private constructor(
     fun show(fragmentManager: FragmentManager) {
         showRequested = true
         handler.postDelayed({
-            if (showRequested) {
+            if (showRequested && !fragmentManager.isDestroyed) {
                 super.show(fragmentManager, this::class.java.name)
             }
         }, 200)
