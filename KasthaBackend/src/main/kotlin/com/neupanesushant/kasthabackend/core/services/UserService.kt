@@ -20,9 +20,10 @@ class UserService(
 
     fun updateUser(user: UserUpdateDTO): User {
         var password = user.password
-        password = passwordEncoder.encode(password)
-        if (password.isEmpty()) {
-            password = userRepo.findById(user.id).getOrNull()?.password ?: ""
+        password = if (password.isEmpty()) {
+            userRepo.findById(user.id).getOrNull()?.password ?: ""
+        }else{
+            passwordEncoder.encode(password)
         }
         val toUpdateUser = User(
             user.id, user.firstName, user.lastName, user.email, password, user.gender, user.location, user.roles
