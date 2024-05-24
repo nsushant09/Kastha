@@ -8,6 +8,7 @@ import jakarta.persistence.*
 data class Image(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Int,
-    val url : String
+    val id: Int,
+    @Column(unique = true)
+    val url: String
 )

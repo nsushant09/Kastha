@@ -10,6 +10,8 @@ import javax.sql.DataSource
 @Component
 class SqlScriptInitializer {
 
+    private var attemptCount = 0;
+
     @Autowired
     private lateinit var dataSource: DataSource
 
@@ -23,7 +25,11 @@ class SqlScriptInitializer {
             val sqlResource = ClassPathResource("data.sql")
             ScriptUtils.executeSqlScript(dataSource.connection, sqlResource)
         } catch (e: Exception) {
-            e.printStackTrace()
+            attemptCount++;
+            if (attemptCount < 5)
+                prePopulateData()
+            else
+                e.printStackTrace()
         }
     }
 }

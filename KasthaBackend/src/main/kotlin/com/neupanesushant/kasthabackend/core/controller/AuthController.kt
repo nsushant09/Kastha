@@ -1,14 +1,16 @@
 package com.neupanesushant.kasthabackend.core.controller
 
-import com.neupanesushant.kasthabackend.core.appcore.NetworkResponse
+import com.neupanesushant.kastha.domain.model.KeyValue
 import com.neupanesushant.kasthabackend.core.repo.RoleRepo
 import com.neupanesushant.kasthabackend.core.repo.UserRepo
 import com.neupanesushant.kasthabackend.data.dtomodel.AuthResponseDTO
 import com.neupanesushant.kasthabackend.data.dtomodel.LoginDTO
 import com.neupanesushant.kasthabackend.data.dtomodel.RegisterDTO
 import com.neupanesushant.kasthabackend.data.dtomodel.UserDTO
+import com.neupanesushant.kasthabackend.data.model.BaseResponse
 import com.neupanesushant.kasthabackend.data.model.User
 import com.neupanesushant.kasthabackend.security.JwtHelper
+import org.apache.coyote.Response
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
@@ -17,6 +19,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -35,6 +38,10 @@ class AuthController @Autowired constructor(
     private val jwtGenerator: JwtHelper
 ) {
 
+    @GetMapping("/encodedPassword")
+    private fun encodedPassword(@RequestParam("password") password: String) =
+        ResponseEntity.ok(BaseResponse(true, passwordEncoder.encode(password)))
+
     @PostMapping("/login")
     private fun login(
         @RequestBody loginDTO: LoginDTO
@@ -48,11 +55,12 @@ class AuthController @Autowired constructor(
             )
         SecurityContextHolder.getContext().authentication = authentication
         val token = jwtGenerator.generateToken(authentication)
-        return ResponseEntity.ok(AuthResponseDTO(accessToken = token))
+        val user = userRepo.findByEmail(loginDTO.email) ?: return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(AuthResponseDTO(userId = user.id, accessToken = token))
     }
 
     @PostMapping("/register")
-    private fun register(@RequestBody registerDTO: RegisterDTO): ResponseEntity<AuthResponseDTO> {
+    private fun register(@RequestBody registerDTO: RegisterDTO): ResponseEntity<KeyValue<String, String>> {
         if (userRepo.existsByEmail(registerDTO.email)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
         }
@@ -64,15 +72,22 @@ class AuthController @Autowired constructor(
             registerDTO.lastName,
             registerDTO.email,
             passwordEncoder.encode(registerDTO.password),
+            registerDTO.gender,
+            registerDTO.location,
             Collections.singletonList(roles)
         )
         userRepo.save(user)
-        return login(LoginDTO(user.email, user.password))
+        return ResponseEntity.ok(KeyValue(registerDTO.email, registerDTO.password))
     }
 
-    @PostMapping("/otp")
-    private fun register(@RequestParam("email") email: String) {
-
+    @PostMapping("/loginValidation")
+    private fun loginValidation(
+        @RequestBody loginDTO: LoginDTO
+    ): ResponseEntity<out Any> {
+        val user = userRepo.findByEmail(loginDTO.email) ?: return ResponseEntity.badRequest()
+            .body("Please provide a registered email")
+        if (!passwordEncoder.matches(loginDTO.password, user.password)) return ResponseEntity.badRequest()
+            .body("The provided password does not match")
+        return ResponseEntity.ok(BaseResponse(success = true, "Valid Details"))
     }
-
 }

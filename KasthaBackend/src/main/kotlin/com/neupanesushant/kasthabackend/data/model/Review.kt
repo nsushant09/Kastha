@@ -14,16 +14,16 @@ import java.sql.Date
 data class Review(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Int,
-    val description : Int,
-    val rating : Int,
-    val date : Date,
+    val id: Int,
+    val description: String,
+    val rating: Int,
+    var date: String,
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    val product: Product,
+    var product: Product? = null,
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    val user : User
+    var user: User? = null
 )

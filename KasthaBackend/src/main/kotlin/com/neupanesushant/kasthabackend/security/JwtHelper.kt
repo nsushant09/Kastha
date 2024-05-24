@@ -11,37 +11,41 @@ import java.util.*
 
 @Component
 object JwtHelper {
-    private const val JWT_TOKEN_VALIDITY = 5 * 60 * 60
-    private const val SECRET = "afafasfafafasfasfasfafacasdasfasxASFACASDFACASDFASFASFDAFASFASDAADSCSDFADCVSGCFVADXCcadwavfsfarvf"
+    private const val JWT_TOKEN_VALIDITY_IN_DAYS = 90
+    private const val MILLIS_PER_DAY: Long = 24 * 60 * 60 * 1000
+    private const val SECRET =
+        "afafasfafafasfasfasfafacasdasfasxASFACASDFACASDFASFASFDAFASFASDAADSCSDFADCVSGCFVADXCcadwavfsfarvf"
 
-    fun getUsernameFromToken(token : String) =
+    fun getUsernameFromToken(token: String) =
         getClaimFromToken(token, Claims::getSubject)
 
-    fun getExpirationDateFromToken(token : String) =
+    fun getExpirationDateFromToken(token: String) =
         getClaimFromToken(token, Claims::getExpiration)
-    fun <T> getClaimFromToken(token : String, claimsResolver: (Claims) -> T) : T{
+
+    fun <T> getClaimFromToken(token: String, claimsResolver: (Claims) -> T): T {
         val claims = getAllClaimsFromToken(token)
         return claimsResolver.invoke(claims)
     }
-    private fun getAllClaimsFromToken(token : String): Claims =
-        Jwts.parser().setSigningKey(SECRET).parseClaimsJwt(token).body
 
-    private fun isTokenExpired(token : String) =
+    private fun getAllClaimsFromToken(token: String): Claims =
+        Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).body
+
+    private fun isTokenExpired(token: String) =
         getExpirationDateFromToken(token).before(Date())
 
-    fun generateToken(authentication: Authentication) : String =
+    fun generateToken(authentication: Authentication): String =
         doGenerateToken(subject = authentication.name)
 
-    private fun doGenerateToken(claims : Map<String, Any> = hashMapOf(), subject : String) : String =
+    private fun doGenerateToken(claims: Map<String, Any> = hashMapOf(), subject: String): String =
         Jwts.builder()
             .setClaims(claims)
             .setSubject(subject)
             .setIssuedAt(Date(System.currentTimeMillis()))
-            .setExpiration(Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
+            .setExpiration(Date(System.currentTimeMillis() + (JWT_TOKEN_VALIDITY_IN_DAYS * MILLIS_PER_DAY)))
             .signWith(SignatureAlgorithm.HS512, SECRET)
             .compact()
 
-    fun validateToken(token : String, userDetails : UserDetails) : Boolean {
+    fun validateToken(token: String, userDetails: UserDetails): Boolean {
         val username = getUsernameFromToken(token)
         return username.equals(userDetails.username) && !isTokenExpired(token)
     }
