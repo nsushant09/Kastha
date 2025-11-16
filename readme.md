@@ -23,7 +23,8 @@
 
 ---
 
-##  Overview
+<a name="overview"></a>
+## Overview 🪄
 
 **Kastha** revolutionizes the online furniture shopping experience by integrating **Augmented Reality (AR)**.  
 Users can preview 3D models of furniture in their homes before buying, while store administrators manage inventory, track user feedback, and engage in real-time chat with customers.
@@ -35,8 +36,10 @@ The system consists of:
 
 ---
 
+<a name="features"></a>
 ## 🌟 Features
 
+<a name="user-features"></a>
 ### 👤 User Features
 - 🔐 **User Authentication** (Sign-in, Registration, OTP verification)
 - 🏠 **Home Page** with personalized recommendations
@@ -48,6 +51,7 @@ The system consists of:
 - 💬 **Chat with Administrator**
 - 🪩 **Augmented Reality View (ARCore)**
 
+<a name="admin-features"></a>
 ### 🧑‍💼 Admin Features
 - 🔑 **Secure Admin Login**
 - ➕ **Add New Products**
@@ -58,6 +62,7 @@ The system consists of:
 
 ---
 
+<a name="tech-stack"></a>
 ## 🧰 Tech Stack
 
 | Category | Technology |
@@ -73,6 +78,7 @@ The system consists of:
 
 ---
 
+<a name="system-architecture"></a>
 ## 🧩 System Architecture
 
 ![System Diagram](images/report_page7_1.png)
@@ -85,8 +91,10 @@ The architecture follows a **client-server model** where:
 
 ---
 
+<a name="installation-guide"></a>
 ## ⚙️ Installation Guide
 
+<a name="macos"></a>
 ### 🖥️ macOS
 
 1. **Install MySQL**
@@ -122,7 +130,8 @@ The architecture follows a **client-server model** where:
 
 ---
 
-## 💻 Windows Installation
+<a name="windows"></a>
+### 💻 Windows
 
 1. **Install MySQL**
    - Download MySQL from the official website
@@ -156,6 +165,7 @@ The architecture follows a **client-server model** where:
    gradlew build
    java -jar build/libs/kastha.jar
 
+<a name="running-the-application"></a>
 ## 🚀 Running the Application
 
 ### **Backend (Spring Boot)**
@@ -213,6 +223,8 @@ To run the Kastha Android mobile application:
 - AR experience requires good lighting for plane detection  
 
 ---
+
+<a name="screenshots"></a>
 
 <!-- ## 📸 Screenshots
 
@@ -280,8 +292,12 @@ To run the Kastha Android mobile application:
 - **Chat With Customers**  
   ![Chat](images/admin_chat.png) -->
 
+<a name="contributors"></a>
+## Contributors
+
 ---
 
+<a name="license"></a>
 ## 📜 License
 
 This project was developed as part of the academic curriculum under  
