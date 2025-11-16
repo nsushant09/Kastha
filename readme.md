@@ -23,7 +23,7 @@
 
 ---
 
-## 🪄 Overview
+##  Overview
 
 **Kastha** revolutionizes the online furniture shopping experience by integrating **Augmented Reality (AR)**.  
 Users can preview 3D models of furniture in their homes before buying, while store administrators manage inventory, track user feedback, and engage in real-time chat with customers.
