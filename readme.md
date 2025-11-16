@@ -16,7 +16,6 @@
   - [macOS](#macos)
   - [Windows](#windows)
 - [Running the Application](#running-the-application)
-- [Screenshots](#screenshots)
 - [Augmented Reality Highlights](#augmented-reality-highlights)
 - [Contributors](#contributors)
 - [License](#license)
@@ -80,8 +79,6 @@ The system consists of:
 
 <a name="system-architecture"></a>
 ## 🧩 System Architecture
-
-![System Diagram](images/report_page7_1.png)
 
 The architecture follows a **client-server model** where:
 - The **Android app** interacts with the **Spring Boot API**
