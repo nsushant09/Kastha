@@ -1,11 +1,17 @@
 package com.neupanesushant.kastha.ui.activity
 
+import android.content.Context
+import android.content.Intent
+import android.util.AttributeSet
+import android.util.Log
+import android.view.View
 import com.neupanesushant.kastha.R
 import com.neupanesushant.kastha.appcore.RouteConfig
 import com.neupanesushant.kastha.core.AppConfig
 import com.neupanesushant.kastha.core.BaseActivity
 import com.neupanesushant.kastha.core.Router
 import com.neupanesushant.kastha.databinding.ActivityAuthenticationBinding
+import com.neupanesushant.kastha.extra.Preferences
 
 class AuthenticationActivity : BaseActivity<ActivityAuthenticationBinding>() {
     override val layoutId: Int
